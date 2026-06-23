@@ -534,38 +534,14 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
     <div class="page" id="page-events">
       <div class="section-header">
         <div class="section-title">Community Events</div>
+        <div id="admin-add-event-btn" style="display:none">
+          <button id="btn-add-event" style="background:var(--pink);color:var(--white);border:none;border-radius:20px;padding:8px 18px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;cursor:pointer">+ Add Event</button>
+        </div>
       </div>
-      <div class="event-list">
-        <div class="event-card">
-          <div class="event-date-box"><div class="event-date-month">Aug</div><div class="event-date-day">9</div></div>
-          <div class="event-info">
-            <div class="event-title">Pilates Sesh by K × Seattle Sorority — Vol. 2</div>
-            <div class="event-location">📍 Marina Beach Park, 470 Admiral Way, Edmonds WA · 8:30 AM</div>
-            <div class="event-tags"><span class="event-tag">Outdoor</span><span class="event-tag">All levels</span><span class="event-tag">$50</span><span class="event-tag">Goodie bags</span></div>
-          </div>
-          <button class="rsvp-btn" onclick="this.textContent='✓ RSVPd';this.className='rsvp-btn rsvpd'">RSVP</button>
-        </div>
-        <div class="event-card">
-          <div class="event-date-box"><div class="event-date-month">Sep</div><div class="event-date-day">13</div></div>
-          <div class="event-info">
-            <div class="event-title">100 Years of Pilates — Community Celebration</div>
-            <div class="event-location">📍 Lynnwood, WA — Venue TBD · 10:00 AM</div>
-            <div class="event-tags"><span class="event-tag">Special event</span><span class="event-tag">Centennial</span><span class="event-tag">All welcome</span></div>
-          </div>
-          <button class="rsvp-btn" onclick="this.textContent='✓ RSVPd';this.className='rsvp-btn rsvpd'">RSVP</button>
-        </div>
-        <div class="event-card">
-          <div class="event-date-box"><div class="event-date-month">Oct</div><div class="event-date-day">4</div></div>
-          <div class="event-info">
-            <div class="event-title">Fall Wellness Morning — Pilates + Local Vendors</div>
-            <div class="event-location">📍 Edmonds, WA — Details coming soon</div>
-            <div class="event-tags"><span class="event-tag">Wellness</span><span class="event-tag">Vendors</span><span class="event-tag">Sponsors</span></div>
-          </div>
-          <button class="rsvp-btn" onclick="this.textContent='✓ RSVPd';this.className='rsvp-btn rsvpd'">RSVP</button>
-        </div>
+      <div id="events-list" class="event-list">
+        <div style="text-align:center;padding:2rem;color:var(--text-muted);font-size:13px">Loading events...</div>
       </div>
     </div>
-
     <!-- ASK K -->
     <div class="page" id="page-ask-k">
       <div class="ask-intro">
@@ -693,32 +669,17 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
     <div class="page" id="page-sponsorship">
       <div class="section-header">
         <div class="section-title">Sponsorship Tracker</div>
-        <button class="add-sponsor-btn" onclick="alert('Add sponsor — coming soon!')">+ Add Brand</button>
+        <button id="btn-add-sponsor" style="background:var(--purple);color:var(--white);border:none;border-radius:20px;padding:8px 18px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;cursor:pointer">+ Add Brand</button>
       </div>
       <div class="stats-row" style="margin-bottom:1rem">
-        <div class="stat-card"><div class="stat-num">13</div><div class="stat-label">Brands tracked</div></div>
-        <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Confirmed</div></div>
-        <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">Interested</div></div>
-        <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Pending reply</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-total">-</div><div class="stat-label">Brands tracked</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-confirmed">-</div><div class="stat-label">Confirmed</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-interested">-</div><div class="stat-label">Interested</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-pending">-</div><div class="stat-label">Pending</div></div>
       </div>
-      <table class="sponsor-table">
-        <thead><tr><th>Brand</th><th>Category</th><th>Contact</th><th>Status</th><th>Last Contact</th><th>Notes</th></tr></thead>
-        <tbody>
-          <tr><td><strong>LMNT Electrolytes</strong></td><td>Nutrition</td><td>partner@drinklmnt.com</td><td><span class="status-pill interested">Interested</span></td><td>Jun 15</td><td>Applied to wholesale program</td></tr>
-          <tr><td><strong>Vuori</strong></td><td>Activewear</td><td>community@vuori.com</td><td><span class="status-pill contacted">Contacted</span></td><td>Jun 20</td><td>V1 Community application sent</td></tr>
-          <tr><td><strong>Alo Yoga</strong></td><td>Activewear</td><td>ambassador@aloyoga.com</td><td><span class="status-pill pending">Pending</span></td><td>Jun 18</td><td>Follow up due Jul 3</td></tr>
-          <tr><td><strong>212 Med Spa</strong></td><td>Local / Wellness</td><td>Walk-in</td><td><span class="status-pill confirmed">Confirmed</span></td><td>Jun 7</td><td>Event sponsor — June event ✅</td></tr>
-          <tr><td><strong>Narista Juice Bar</strong></td><td>Local / Food</td><td>DM on Instagram</td><td><span class="status-pill confirmed">Confirmed</span></td><td>Jun 5</td><td>Provided refreshments — June event ✅</td></tr>
-          <tr><td><strong>Head 2 Toe Therapy</strong></td><td>Local / Health</td><td>(425) 776-2936</td><td><span class="status-pill interested">Interested</span></td><td>Jun 22</td><td>Call scheduled for July</td></tr>
-          <tr><td><strong>MyProtein</strong></td><td>Supplements</td><td>ambassador@myprotein.com</td><td><span class="status-pill contacted">Contacted</span></td><td>Jun 25</td><td>Ambassador application pending</td></tr>
-          <tr><td><strong>Edmonds Vitamins</strong></td><td>Local / Nutrition</td><td>(425) 774-0747</td><td><span class="status-pill confirmed">Confirmed</span></td><td>Jun 10</td><td>Goodie bag items — June event ✅</td></tr>
-          <tr><td><strong>Fabletics</strong></td><td>Activewear</td><td>fabletics.com/ambassador</td><td><span class="status-pill pending">Pending</span></td><td>Jun 28</td><td>Application submitted online</td></tr>
-          <tr><td><strong>Lululemon</strong></td><td>Activewear</td><td>Lynnwood store</td><td><span class="status-pill contacted">Contacted</span></td><td>Jun 12</td><td>In-store intro, follow up needed</td></tr>
-          <tr><td><strong>Lotus Wellness</strong></td><td>Local / Spa</td><td>(425) 223-8048</td><td><span class="status-pill interested">Interested</span></td><td>Jun 19</td><td>Cross-promotion discussion ongoing</td></tr>
-          <tr><td><strong>Therabody</strong></td><td>Recovery</td><td>therabody.com/partners</td><td><span class="status-pill contacted">Contacted</span></td><td>Jun 30</td><td>Partner application sent</td></tr>
-          <tr><td><strong>Vital Proteins</strong></td><td>Nutrition</td><td>vitalproteins.com/ambassador</td><td><span class="status-pill declined">Declined</span></td><td>Jun 8</td><td>Too small at this stage — reapply at 5K followers</td></tr>
-        </tbody>
-      </table>
+      <div id="sponsor-list">
+        <div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading...</div>
+      </div>
     </div>
 
   
@@ -1250,6 +1211,7 @@ function showPage(id){
   if(id==='library'){loadVideoLibrary();initCalendar();}
   if(id==='schedule'){initCalendar();}
   if(id==='events'){loadEvents();}
+  if(id==='sponsorship'){loadSponsors();}
 }
 window.showPage = showPage;
 
@@ -1334,25 +1296,41 @@ document.addEventListener('DOMContentLoaded', function() {
   // Logout
   var btnLogout = document.getElementById('btn-logout');
   if(btnLogout) btnLogout.addEventListener('click', doLogout);
+  var btnAE = document.getElementById('btn-add-event');
+  if(btnAE) btnAE.addEventListener('click', addEvt);
+  var btnAS = document.getElementById('btn-add-sponsor');
+  if(btnAS) btnAS.addEventListener('click', addSponsor);
 
   // Enter key on password field
   var pwField = document.getElementById('login-password');
   if(pwField) pwField.addEventListener('keydown', function(e){
     if(e.key === 'Enter') doLogin();
   });
-  var btnAE = document.getElementById('btn-add-event');
-  if(btnAE) btnAE.addEventListener('click', addEvt);
 });
-
+// EVENTS
+var DEF_EVTS=[{id:"e1",month:"Aug",day:9,title:"Pilates Sesh by K x Seattle Sorority Vol. 2",location:"Marina Beach Park, Edmonds WA",time:"8:30 AM",tags:["Outdoor","All levels","$50","Goodie bags"],link:""},{id:"e2",month:"Sep",day:13,title:"100 Years of Pilates Community Celebration",location:"Lynnwood WA",time:"10:00 AM",tags:["Special event","Centennial","All welcome"],link:""},{id:"e3",month:"Oct",day:4,title:"Fall Wellness Morning",location:"Edmonds WA",time:"TBD",tags:["Wellness","Vendors","Sponsors"],link:""}];
 function loadEvents(){var list=document.getElementById("events-list");if(!list)return;db.collection("events").orderBy("sortKey").get().then(function(s){var e=[];s.forEach(function(d){e.push(Object.assign({id:d.id},d.data()));});renderEvts(e.length>0?e:DEF_EVTS);}).catch(function(){renderEvts(DEF_EVTS);});}
-var DEF_EVTS=[{id:"e1",month:"Aug",day:9,title:"Pilates Sesh by K x Seattle Sorority Vol. 2",location:"Marina Beach Park, Edmonds WA",time:"8:30 AM",tags:["Outdoor","All levels","$50"],link:""},{id:"e2",month:"Sep",day:13,title:"100 Years of Pilates Community Celebration",location:"Lynnwood WA",time:"10:00 AM",tags:["Special event","Centennial"],link:""},{id:"e3",month:"Oct",day:4,title:"Fall Wellness Morning",location:"Edmonds WA",time:"TBD",tags:["Wellness","Vendors"],link:""}];
-function renderEvts(evts){var list=document.getElementById("events-list");if(!list)return;list.innerHTML=evts.map(function(ev){var tags=(ev.tags||[]).map(function(t){return'<span class="event-tag">'+t+'</span>';}).join("");var del=isAdmin?'<button data-eid="'+ev.id+'" onclick="delEvt(this.dataset.eid)" style="margin-top:5px;background:#c62828;color:white;border:none;border-radius:10px;padding:3px 10px;font-size:10px;cursor:pointer">Delete</button>':"";
-return'<div class="event-card"><div class="event-date-box"><div class="event-date-month">'+ev.month+'</div><div class="event-date-day">'+ev.day+'</div></div><div class="event-info"><div class="event-title">'+ev.title+'</div><div class="event-location">'+ev.location+'</div><div class="event-tags">'+tags+'</div>'+del+'</div><button class="rsvp-btn" style="align-self:center" onclick="rsvpEvt(this)">RSVP</button></div>';}).join("");}
-function delEvt(id){if(!confirm("Delete this event?"))return;db.collection("events").doc(id).delete().then(function(){showToast("Deleted");loadEvents();});}
-window.delEvt=delEvt;
-function addEvt(){var t=prompt("Event title:");if(!t)return;var mo=prompt("Month:","Aug");var d=parseInt(prompt("Day:","1")||"1");var loc=prompt("Location:","");var ti=prompt("Time:","");var tg=prompt("Tags (comma separated):");var lk=prompt("RSVP Link:");var tags=tg?tg.split(",").map(function(x){return x.trim();}):[]; var months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];db.collection("events").add({title:t,month:mo,day:d,location:loc||"",time:ti||"",tags:tags,link:lk||"",sortKey:months.indexOf(mo)*100+d}).then(function(){showToast("Event added!");loadEvents();});}
-window.addEvt=addEvt;
 function rsvpEvt(btn){btn.textContent="RSVPd";btn.style.background="#2e7d32";}
+function renderEvts(evts){var list=document.getElementById("events-list");if(!list)return;list.innerHTML=evts.map(function(ev){var tags=(ev.tags||[]).map(function(t){return'<span class="event-tag">'+t+"</span>";}).join("");var del=isAdmin?'<div style="margin-top:6px"><button data-eid="'+ev.id+'" onclick="delEvt(this.dataset.eid)" style="background:#c62828;color:white;border:none;border-radius:10px;padding:3px 10px;font-size:10px;cursor:pointer;margin-right:5px">Delete</button><button data-eid="'+ev.id+'" onclick="editEvt(this.dataset.eid)" style="background:var(--purple);color:white;border:none;border-radius:10px;padding:3px 10px;font-size:10px;cursor:pointer">Edit</button></div>':"";return'<div class="event-card"><div class="event-date-box"><div class="event-date-month">'+ev.month+'</div><div class="event-date-day">'+ev.day+'</div></div><div class="event-info"><div class="event-title">'+ev.title+'</div><div class="event-location">'+(ev.location||"")+" "+(ev.time||"")+'</div><div class="event-tags">'+tags+"</div>"+del+'</div><button class="rsvp-btn" style="align-self:center;flex-shrink:0" onclick="rsvpEvt(this)">RSVP</button></div>';}).join("");}
+function delEvt(id){if(!confirm("Delete this event?"))return;db.collection("events").doc(id).delete().then(function(){showToast("Event deleted");loadEvents();});}
+window.delEvt=delEvt;
+function editEvt(id){db.collection("events").doc(id).get().then(function(snap){if(!snap.exists){return;}var ev=snap.data();var t=prompt("Title:",ev.title||"");if(t===null)return;var mo=prompt("Month:",ev.month||"Aug");if(mo===null)return;var d=prompt("Day:",String(ev.day||1));if(d===null)return;var loc=prompt("Location:",ev.location||"");if(loc===null)return;var ti=prompt("Time:",ev.time||"");if(ti===null)return;var tg=prompt("Tags:",(ev.tags||[]).join(", "));if(tg===null)return;var lk=prompt("RSVP Link:",ev.link||"");if(lk===null)return;var tags=tg?tg.split(",").map(function(x){return x.trim();}):[];var months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];db.collection("events").doc(id).update({title:t,month:mo,day:parseInt(d),location:loc,time:ti,tags:tags,link:lk,sortKey:months.indexOf(mo)*100+parseInt(d)}).then(function(){showToast("Event updated!");loadEvents();});});}
+window.editEvt=editEvt;
+function addEvt(){var t=prompt("Event title:");if(!t)return;var mo=prompt("Month (e.g. Aug):","Aug");if(!mo)return;var d=prompt("Day:","1");if(!d)return;var loc=prompt("Location:","");var ti=prompt("Time:","");var tg=prompt("Tags (comma separated)","");var lk=prompt("RSVP Link:","");var tags=tg?tg.split(",").map(function(x){return x.trim();}):[];var months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];db.collection("events").add({title:t,month:mo,day:parseInt(d),location:loc||"",time:ti||"",tags:tags,link:lk||"",sortKey:months.indexOf(mo)*100+parseInt(d)}).then(function(){showToast("Event added!");loadEvents();});}
+window.addEvt=addEvt;
+
+// SPONSORS
+var DEF_SPONSORS=[{id:"s1",brand:"LMNT Electrolytes",category:"Nutrition",contact:"partner@drinklmnt.com",status:"interested",lastContact:"Jun 15",notes:"Applied to wholesale program"},{id:"s2",brand:"Vuori",category:"Activewear",contact:"community@vuori.com",status:"contacted",lastContact:"Jun 20",notes:"V1 Community application sent"},{id:"s3",brand:"Alo Yoga",category:"Activewear",contact:"ambassador@aloyoga.com",status:"pending",lastContact:"Jun 18",notes:"Follow up due Jul 3"},{id:"s4",brand:"212 Med Spa",category:"Local/Wellness",contact:"Walk-in",status:"confirmed",lastContact:"Jun 7",notes:"Event sponsor June event"},{id:"s5",brand:"Narista Juice Bar",category:"Local/Food",contact:"DM Instagram",status:"confirmed",lastContact:"Jun 5",notes:"Refreshments June event"},{id:"s6",brand:"Head 2 Toe Therapy",category:"Local/Health",contact:"(425) 776-2936",status:"interested",lastContact:"Jun 22",notes:"Call scheduled July"},{id:"s7",brand:"MyProtein",category:"Supplements",contact:"ambassador@myprotein.com",status:"contacted",lastContact:"Jun 25",notes:"Application pending"},{id:"s8",brand:"Edmonds Vitamins",category:"Local/Nutrition",contact:"(425) 774-0747",status:"confirmed",lastContact:"Jun 10",notes:"Goodie bag items June event"},{id:"s9",brand:"Fabletics",category:"Activewear",contact:"fabletics.com/ambassador",status:"pending",lastContact:"Jun 28",notes:"Application submitted"},{id:"s10",brand:"Lululemon",category:"Activewear",contact:"Lynnwood store",status:"contacted",lastContact:"Jun 12",notes:"In-store intro follow up needed"},{id:"s11",brand:"Lotus Wellness",category:"Local/Spa",contact:"(425) 223-8048",status:"interested",lastContact:"Jun 19",notes:"Cross-promotion discussion"},{id:"s12",brand:"Therabody",category:"Recovery",contact:"therabody.com/partners",status:"contacted",lastContact:"Jun 30",notes:"Partner application sent"},{id:"s13",brand:"Vital Proteins",category:"Nutrition",contact:"vitalproteins.com/ambassador",status:"declined",lastContact:"Jun 8",notes:"Reapply at 5K followers"}];
+var SCOL={contacted:"#E3F2FD|#1565C0",interested:"#E8F5E9|#2E7D32",pending:"#FFF8E1|#F57F17",declined:"#FFEBEE|#C62828",confirmed:"#FCE4EC|#C2185B"};
+function loadSponsors(){var w=document.getElementById("sponsor-list");if(!w)return;db.collection("sponsors").orderBy("brand").get().then(function(s){var sp=[];s.forEach(function(d){sp.push(Object.assign({id:d.id},d.data()));});renderSponsors(sp.length>0?sp:DEF_SPONSORS);}).catch(function(){renderSponsors(DEF_SPONSORS);});}
+function renderSponsors(sp){var w=document.getElementById("sponsor-list");if(!w)return;var c={total:sp.length,confirmed:0,interested:0,pending:0};sp.forEach(function(s){if(s.status==="confirmed")c.confirmed++;if(s.status==="interested")c.interested++;if(s.status==="pending")c.pending++;});var st=document.getElementById("stat-total");if(st)st.textContent=c.total;var sc=document.getElementById("stat-confirmed");if(sc)sc.textContent=c.confirmed;var si=document.getElementById("stat-interested");if(si)si.textContent=c.interested;var sp2=document.getElementById("stat-pending");if(sp2)sp2.textContent=c.pending;var rows=sp.map(function(s){var col=(SCOL[s.status]||"#f0f0f0|#333").split("|");var pill='<span style="background:'+col[0]+";color:"+col[1]+';font-size:10px;font-weight:500;padding:3px 9px;border-radius:10px">'+(s.status||"")+"</span>";var eb='<button data-sid="'+s.id+'" onclick="editSp(this.dataset.sid)" style="background:var(--purple);color:white;border:none;border-radius:8px;padding:2px 8px;font-size:10px;cursor:pointer;margin-right:3px">Edit</button>';var db2='<button data-sid="'+s.id+'" onclick="delSp(this.dataset.sid)" style="background:#c62828;color:white;border:none;border-radius:8px;padding:2px 8px;font-size:10px;cursor:pointer">Del</button>';return"<tr><td><strong>"+(s.brand||"")+"</strong></td><td>"+(s.category||"")+"</td><td>"+(s.contact||"")+"</td><td>"+pill+"</td><td>"+(s.lastContact||"")+"</td><td>"+(s.notes||"")+"</td><td>"+eb+db2+"</td></tr>";}).join("");w.innerHTML='<table class="sponsor-table"><thead><tr><th>Brand</th><th>Category</th><th>Contact</th><th>Status</th><th>Last Contact</th><th>Notes</th><th>Actions</th></tr></thead><tbody>'+rows+"</tbody></table>";}
+function addSponsor(){var b=prompt("Brand name:");if(!b)return;var cat=prompt("Category:","");var con=prompt("Contact:","");var st=prompt("Status (contacted/interested/pending/confirmed/declined):","contacted");var lc=prompt("Last contact date:","");var n=prompt("Notes:","");db.collection("sponsors").add({brand:b,category:cat||"",contact:con||"",status:st||"contacted",lastContact:lc||"",notes:n||""}).then(function(){showToast("Sponsor added!");loadSponsors();});}
+window.addSponsor=addSponsor;
+function editSp(id){db.collection("sponsors").doc(id).get().then(function(snap){if(!snap.exists)return;var s=snap.data();var b=prompt("Brand:",s.brand||"");if(b===null)return;var cat=prompt("Category:",s.category||"");if(cat===null)return;var con=prompt("Contact:",s.contact||"");if(con===null)return;var st=prompt("Status:",s.status||"contacted");if(st===null)return;var lc=prompt("Last contact:",s.lastContact||"");if(lc===null)return;var n=prompt("Notes:",s.notes||"");if(n===null)return;db.collection("sponsors").doc(id).update({brand:b,category:cat,contact:con,status:st,lastContact:lc,notes:n}).then(function(){showToast("Updated!");loadSponsors();});});}
+window.editSp=editSp;
+function delSp(id){if(!confirm("Delete?"))return;db.collection("sponsors").doc(id).delete().then(function(){showToast("Deleted");loadSponsors();});}
+window.delSp=delSp;
+
 </script>
 </body>
 </html>
