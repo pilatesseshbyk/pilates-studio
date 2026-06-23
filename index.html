@@ -2,48 +2,43 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-<meta http-equiv="Pragma" content="no-cache"/>
-<meta http-equiv="Expires" content="0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Pilates Sesh by K — Virtual Studio v4</title>
+<title>Pilates Sesh by K - Virtual Studio</title>
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,500;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --pink:#E91E8C;--pink-light:#F8BBD9;--pink-dark:#C2185B;
   --green:#CDDC39;--green-dark:#9E9D24;
-  --teal:#00BCD4;--teal-dark:#0097A7;
-  --purple:#4A1942;--purple-light:#7B1FA2;
-  --gold:#C9A96E;
-  --blush:#FDF0F5;--blush2:#FCE4EC;
+  --teal:#00BCD4;--purple:#4A1942;
+  --gold:#C9A96E;--blush:#FDF0F5;--blush2:#FCE4EC;
   --white:#FFFFFF;--cream:#FFF9FA;
   --text:#2D1B2E;--text-muted:#7B556E;
-  --border:#F4C0D1;
-  --sidebar:220px;
+  --border:#F4C0D1;--sidebar:220px;
 }
 body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color:var(--text);min-height:100vh}
 
-/* ── LOGIN ── */
+/* LOGIN */
 #login-screen{min-height:100vh;background:linear-gradient(135deg,var(--purple) 0%,var(--pink-dark) 50%,var(--pink) 100%);display:flex;align-items:center;justify-content:center;padding:2rem;position:relative}
 .login-card{background:var(--white);border-radius:20px;padding:2.5rem 2rem;width:100%;max-width:400px;text-align:center;box-shadow:0 20px 60px rgba(74,25,66,0.3);position:relative;z-index:10}
 .login-brand{font-family:'Dancing Script',cursive;font-size:2.2rem;color:var(--pink);margin-bottom:4px}
 .login-sub{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2rem}
-.login-toggle{display:flex;background:var(--blush);border-radius:30px;padding:4px;margin-bottom:1.5rem;gap:4px}
+.login-toggle{display:flex;background:var(--blush);border-radius:30px;padding:4px;margin-bottom:1.5rem;gap:4px;position:relative;z-index:20}
 .login-toggle button{flex:1;padding:8px;border:none;border-radius:26px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;background:transparent;color:var(--text-muted);position:relative;z-index:10}
 .login-toggle button.active{background:var(--pink);color:var(--white)}
 .login-input{width:100%;padding:12px 16px;border:1px solid var(--border);border-radius:10px;font-family:'Jost',sans-serif;font-size:14px;margin-bottom:12px;outline:none;transition:border 0.2s}
 .login-input:focus{border-color:var(--pink)}
-.login-btn{width:100%;padding:13px;background:var(--pink);color:var(--white);border:none;border-radius:30px;font-family:'Jost',sans-serif;font-weight:500;font-size:14px;letter-spacing:0.1em;cursor:pointer;transition:background 0.2s;margin-top:4px;position:relative;z-index:10}
+.login-btn{padding:13px;background:var(--pink);color:var(--white);border:none;border-radius:30px;font-family:'Jost',sans-serif;font-weight:500;font-size:14px;letter-spacing:0.1em;cursor:pointer;transition:background 0.2s;margin-top:4px;position:relative;z-index:10}
 .login-btn:hover{background:var(--pink-dark)}
 .login-hint{font-size:11px;color:var(--text-muted);margin-top:1rem}
+#login-error{display:none;background:#FFEBEE;color:#C62828;font-size:11px;padding:8px 12px;border-radius:8px;margin-bottom:10px;text-align:left;line-height:1.5}
 
-/* ── APP SHELL ── */
+/* APP */
 #app{display:none;min-height:100vh;flex-direction:row}
 #app.visible{display:flex}
 
-/* ── SIDEBAR ── */
-.sidebar{width:var(--sidebar);background:var(--purple);min-height:100vh;display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:100;transition:transform 0.3s}
+/* SIDEBAR */
+.sidebar{width:var(--sidebar);background:var(--purple);min-height:100vh;display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:100}
 .sidebar-brand{padding:1.5rem 1.2rem 1rem;border-bottom:1px solid rgba(255,255,255,0.1)}
 .sidebar-brand-name{font-family:'Dancing Script',cursive;font-size:1.5rem;color:var(--white);line-height:1}
 .sidebar-brand-sub{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-top:2px}
@@ -60,24 +55,60 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 .logout-btn{width:100%;padding:8px;background:transparent;border:1px solid rgba(255,255,255,0.2);border-radius:20px;color:rgba(255,255,255,0.6);font-family:'Jost',sans-serif;font-size:11px;cursor:pointer;letter-spacing:0.08em;transition:all 0.2s}
 .logout-btn:hover{background:rgba(255,255,255,0.07);color:var(--white)}
 
-/* ── MAIN CONTENT ── */
+/* MAIN */
 .main{margin-left:var(--sidebar);flex:1;min-height:100vh;background:var(--blush)}
-
-/* ── TOP BAR ── */
 .topbar{background:var(--white);border-bottom:1px solid var(--border);padding:0.9rem 1.8rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
 .topbar-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:500;color:var(--purple)}
 .topbar-right{display:flex;align-items:center;gap:12px}
 .topbar-badge{background:var(--pink);color:var(--white);font-size:10px;font-weight:500;padding:3px 10px;border-radius:20px;letter-spacing:0.06em}
 .topbar-date{font-size:11px;color:var(--text-muted)}
 
-/* ── PAGE ── */
+/* PAGES */
 .page{display:none;padding:1.5rem 1.8rem;animation:fadeIn 0.3s ease}
 .page.active{display:block}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── DASHBOARD ── */
+/* CARDS & SECTIONS */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:10px}
+.section-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:500;color:var(--purple)}
+.card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.2rem;margin-bottom:10px}
+.stat-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1rem;text-align:center}
+.stat-num{font-size:24px;font-weight:500;color:var(--pink);margin-bottom:2px}
+.stat-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:1.2rem}
+
+/* BUTTONS */
+.btn-pink{background:var(--pink);color:var(--white);border:none;border-radius:20px;padding:8px 18px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:0.06em}
+.btn-pink:hover{background:var(--pink-dark)}
+.btn-purple{background:var(--purple);color:var(--white);border:none;border-radius:20px;padding:8px 18px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:0.06em}
+.btn-purple:hover{background:var(--pink)}
+.btn-teal{background:var(--teal);color:var(--white);border:none;border-radius:20px;padding:8px 18px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;cursor:pointer}
+.btn-sm{padding:4px 10px;font-size:10px;border-radius:10px;border:none;cursor:pointer;font-family:'Jost',sans-serif;font-weight:500}
+.btn-sm-red{background:#c62828;color:white}
+.btn-sm-purple{background:var(--purple);color:white}
+.btn-sm-teal{background:var(--teal);color:white}
+.btn-sm-green{background:#2e7d32;color:white}
+
+/* FORMS */
+.form-label{font-size:11px;font-weight:500;color:var(--purple);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:5px;display:block;margin-top:10px}
+.form-input,.form-textarea,.form-select{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-family:'Jost',sans-serif;font-size:13px;outline:none;transition:border 0.2s;background:var(--cream)}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--pink);background:var(--white)}
+.form-textarea{min-height:80px;resize:vertical}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(74,25,66,0.5);z-index:999;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--white);border-radius:18px;padding:1.5rem;width:90%;max-width:480px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(74,25,66,0.3)}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.modal-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:500;color:var(--purple)}
+.modal-close{background:none;border:none;font-size:18px;cursor:pointer;color:var(--text-muted);padding:4px}
+.modal-footer{display:flex;gap:8px;margin-top:1.2rem}
+.modal-footer .btn-cancel{flex:1;padding:10px;border:1px solid var(--border);border-radius:20px;background:var(--white);font-family:'Jost',sans-serif;font-size:13px;cursor:pointer;color:var(--text-muted)}
+
+/* DASHBOARD */
 .welcome-hero{background:linear-gradient(120deg,var(--purple),var(--pink-dark));border-radius:16px;padding:1.8rem;margin-bottom:1.2rem;color:var(--white);position:relative;overflow:hidden}
-.welcome-hero::after{content:'🌸';position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);font-size:3.5rem;opacity:0.3}
+.welcome-hero::after{content:'';position:absolute;right:-20px;top:-20px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,0.05)}
 .welcome-eyebrow{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--pink-light);margin-bottom:6px}
 .welcome-title{font-family:'Playfair Display',serif;font-style:italic;font-size:22px;margin-bottom:6px}
 .welcome-sub{font-size:13px;color:rgba(255,255,255,0.75);font-weight:200}
@@ -87,44 +118,49 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 .quick-card-icon{font-size:1.8rem;margin-bottom:8px;display:block}
 .quick-card-label{font-size:12px;font-weight:500;color:var(--purple);display:block}
 .quick-card-sub{font-size:10px;color:var(--text-muted)}
-.next-class-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.2rem;display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
-.next-class-badge{background:var(--pink);color:var(--white);font-size:10px;font-weight:500;padding:4px 10px;border-radius:20px;letter-spacing:0.06em;white-space:nowrap}
+.next-class-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.2rem;display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.next-class-badge{background:var(--pink);color:var(--white);font-size:10px;font-weight:500;padding:4px 10px;border-radius:20px;white-space:nowrap}
 .next-class-info{flex:1}
 .next-class-title{font-size:14px;font-weight:500;color:var(--purple);margin-bottom:2px}
 .next-class-time{font-size:12px;color:var(--text-muted)}
-.join-btn{background:var(--pink);color:var(--white);border:none;border-radius:20px;padding:8px 18px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;letter-spacing:0.06em}
+.join-btn{background:var(--pink);color:var(--white);border:none;border-radius:20px;padding:8px 18px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap}
 .join-btn:hover{background:var(--pink-dark)}
 
-/* ── CALENDAR ── */
-.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+/* CALENDAR */
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:10px}
 .cal-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:500;color:var(--purple)}
-.cal-legend{display:flex;gap:12px;font-size:11px;color:var(--text-muted)}
+.cal-legend{display:flex;gap:12px;font-size:11px;color:var(--text-muted);flex-wrap:wrap}
 .cal-legend-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:4px}
 .cal-grid-wrap{background:var(--white);border-radius:14px;overflow:hidden;border:1px solid var(--border)}
 .cal-day-headers{display:grid;grid-template-columns:repeat(7,1fr);background:var(--purple)}
 .cal-day-hdr{padding:8px;text-align:center;font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.7)}
 .cal-day-hdr.session-hdr{background:var(--pink);color:var(--white)}
 .cal-cells{display:grid;grid-template-columns:repeat(7,1fr)}
-.cal-cell{min-height:70px;border-right:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:6px;background:var(--cream)}
+.cal-cell{min-height:80px;border-right:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:5px;background:var(--cream)}
 .cal-cell.empty{background:#F5E8EE}
-.cal-cell.session{background:#FEF0F6;border-left:3px solid var(--pink)}
+.cal-cell.session-live{background:#FEF0F6;border-left:3px solid var(--pink)}
+.cal-cell.session-recorded{background:#E8F5E9;border-left:3px solid #2e7d32}
+.cal-cell.session-community{background:#E3F2FD;border-left:3px solid var(--teal)}
 .cal-cell.holiday{background:#FFF8E1}
 .cal-num{font-size:11px;font-weight:500;color:var(--text-muted);margin-bottom:3px}
-.cal-num.session-num{color:var(--pink);font-weight:500}
-.session-pill{background:var(--pink);color:var(--white);font-size:8px;border-radius:3px;padding:2px 5px;display:inline-block;margin-bottom:3px;cursor:pointer}
-.session-pill:hover{background:var(--pink-dark)}
-.session-time{font-size:8px;color:var(--purple);font-weight:400}
-.holiday-label{font-size:8px;color:#F57F17;font-weight:500}
+.cal-num.active-num{color:var(--pink);font-weight:500}
+.session-pill{color:var(--white);font-size:8px;border-radius:3px;padding:2px 5px;display:inline-block;margin-bottom:2px;cursor:pointer;width:100%}
+.session-pill.live{background:var(--pink)}
+.session-pill.recorded{background:#2e7d32}
+.session-pill.community{background:var(--teal)}
+.session-pill.holiday{background:#F57F17;color:white}
+.session-time{font-size:7px;color:var(--text-muted)}
+.session-name{font-size:7px;color:var(--purple);font-weight:500;margin-bottom:1px}
+.spots-text{font-size:7px;font-weight:500}
+.admin-dot{position:absolute;top:3px;right:3px;width:6px;height:6px;border-radius:50%;background:var(--green);opacity:0.8}
 
-/* ── LIBRARY ── */
-.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
-.section-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:500;color:var(--purple)}
+/* VIDEO LIBRARY */
 .lib-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
 .filter-pill{padding:5px 14px;border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--text-muted);transition:all 0.15s}
 .filter-pill.active,.filter-pill:hover{background:var(--pink);color:var(--white);border-color:var(--pink)}
 .video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
 .video-card{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:all 0.2s}
-.video-card:hover{border-color:var(--pink);transform:translateY(-2px);box-shadow:0 4px 14px rgba(233,30,140,0.1)}
+.video-card:hover{border-color:var(--pink);box-shadow:0 4px 14px rgba(233,30,140,0.1)}
 .video-thumb{height:100px;background:linear-gradient(135deg,var(--purple),var(--pink));display:flex;align-items:center;justify-content:center;font-size:2rem;position:relative}
 .video-duration{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,0.7);color:white;font-size:9px;padding:2px 5px;border-radius:3px}
 .video-info{padding:10px}
@@ -132,7 +168,7 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 .video-meta{font-size:10px;color:var(--text-muted)}
 .video-tag{display:inline-block;background:var(--blush2);color:var(--pink-dark);font-size:9px;border-radius:10px;padding:1px 7px;margin-top:4px}
 
-/* ── COMMUNITY EVENTS ── */
+/* EVENTS */
 .event-list{display:flex;flex-direction:column;gap:12px}
 .event-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.1rem;display:flex;gap:1rem;align-items:flex-start}
 .event-date-box{background:var(--pink);color:var(--white);border-radius:10px;padding:8px 12px;text-align:center;flex-shrink:0;min-width:52px}
@@ -141,34 +177,15 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 .event-info{flex:1}
 .event-title{font-size:14px;font-weight:500;color:var(--purple);margin-bottom:3px}
 .event-location{font-size:11px;color:var(--text-muted);margin-bottom:6px}
-.event-tags{display:flex;gap:5px;flex-wrap:wrap}
+.event-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px}
 .event-tag{font-size:10px;background:var(--blush);color:var(--pink-dark);border-radius:10px;padding:2px 8px;border:0.5px solid var(--border)}
-.rsvp-btn{background:var(--purple);color:var(--white);border:none;border-radius:20px;padding:7px 16px;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;cursor:pointer;white-space:nowrap;align-self:center;flex-shrink:0}
+.rsvp-btn{background:var(--purple);color:var(--white);border:none;border-radius:20px;padding:7px 16px;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;cursor:pointer;white-space:nowrap;align-self:center;flex-shrink:0;text-decoration:none;display:inline-block}
 .rsvp-btn:hover{background:var(--pink)}
-.rsvp-btn.rsvpd{background:var(--green-dark);color:var(--white)}
+.rsvp-btn.rsvpd{background:#2e7d32}
 
-/* ── ASK K ── */
-.ask-intro{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.2rem;margin-bottom:1rem;display:flex;gap:12px;align-items:flex-start}
-.k-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--pink));display:flex;align-items:center;justify-content:center;font-family:'Dancing Script',cursive;font-size:1.4rem;color:var(--white);flex-shrink:0}
-.ask-form{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.2rem}
-.form-label{font-size:11px;font-weight:500;color:var(--purple);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:5px;display:block}
-.form-input,.form-textarea,.form-select{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-family:'Jost',sans-serif;font-size:13px;margin-bottom:12px;outline:none;transition:border 0.2s;background:var(--cream)}
-.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--pink);background:var(--white)}
-.form-textarea{min-height:100px;resize:vertical}
-.submit-btn{background:var(--pink);color:var(--white);border:none;border-radius:20px;padding:10px 24px;font-family:'Jost',sans-serif;font-weight:500;font-size:13px;cursor:pointer;letter-spacing:0.06em}
-.submit-btn:hover{background:var(--pink-dark)}
-.past-questions{margin-top:1rem}
-.q-item{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1rem;margin-bottom:8px}
-.q-question{font-size:13px;font-weight:500;color:var(--purple);margin-bottom:6px}
-.q-answer{font-size:12px;color:var(--text-muted);line-height:1.6;padding:8px 10px;background:var(--blush);border-radius:8px;border-left:3px solid var(--pink)}
-.q-meta{font-size:10px;color:var(--text-muted);margin-top:5px}
-
-/* ── CHATBOT ── */
+/* ASK K */
 .chat-wrap{background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;height:480px}
 .chat-header{background:linear-gradient(120deg,var(--purple),var(--pink-dark));padding:1rem 1.2rem;display:flex;align-items:center;gap:10px}
-.chat-header-av{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-family:'Dancing Script',cursive;font-size:1.2rem;color:var(--white)}
-.chat-header-info p{font-size:13px;font-weight:500;color:var(--white);margin:0}
-.chat-header-info span{font-size:10px;color:rgba(255,255,255,0.65)}
 .chat-messages{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:10px;background:var(--blush)}
 .chat-msg{max-width:80%;display:flex;flex-direction:column;gap:4px}
 .chat-msg.bot{align-self:flex-start}
@@ -182,93 +199,79 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 .chat-input{flex:1;padding:10px 14px;border:1px solid var(--border);border-radius:20px;font-family:'Jost',sans-serif;font-size:13px;outline:none}
 .chat-input:focus{border-color:var(--pink)}
 .chat-send{background:var(--pink);color:var(--white);border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.chat-send:hover{background:var(--pink-dark)}
 .typing{display:flex;gap:4px;align-items:center;padding:10px 14px}
 .typing span{width:6px;height:6px;border-radius:50%;background:var(--text-muted);animation:bounce 1s infinite}
 .typing span:nth-child(2){animation-delay:0.15s}
 .typing span:nth-child(3){animation-delay:0.3s}
 @keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
 
-/* ── SHOP ── */
+/* SHOP */
 .shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
 .shop-card{background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all 0.2s}
 .shop-card:hover{border-color:var(--pink);box-shadow:0 4px 16px rgba(233,30,140,0.1)}
-.shop-img{height:120px;background:linear-gradient(135deg,var(--blush2),var(--pink-light));display:flex;align-items:center;justify-content:center;font-size:2.5rem}
+.shop-img{height:120px;background:linear-gradient(135deg,var(--blush2),var(--pink-light));display:flex;align-items:center;justify-content:center;font-size:2.5rem;position:relative}
 .shop-info{padding:10px}
 .shop-name{font-size:13px;font-weight:500;color:var(--purple);margin-bottom:3px}
 .shop-desc{font-size:11px;color:var(--text-muted);margin-bottom:8px;line-height:1.5}
 .shop-price{font-size:15px;font-weight:500;color:var(--pink);margin-bottom:8px}
-.shop-btn{width:100%;padding:8px;background:var(--purple);color:var(--white);border:none;border-radius:20px;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;cursor:pointer;letter-spacing:0.06em}
-.shop-btn:hover{background:var(--pink)}
 
-/* ── ADMIN: CONTENT PLANNER ── */
-.planner-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:1rem}
-.planner-day-hdr{background:var(--purple);color:var(--white);text-align:center;padding:6px;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;border-radius:6px}
-.planner-cell{min-height:90px;background:var(--white);border:1px solid var(--border);border-radius:8px;padding:6px;cursor:pointer;transition:border 0.15s}
-.planner-cell:hover{border-color:var(--pink)}
-.planner-cell-date{font-size:10px;color:var(--text-muted);margin-bottom:4px}
-.planner-item{background:var(--pink);color:var(--white);font-size:9px;border-radius:4px;padding:2px 5px;margin-bottom:3px;display:flex;align-items:center;gap:3px}
-.planner-item.email{background:var(--teal)}
-.planner-item.event{background:var(--purple)}
-.planner-item.reel{background:var(--green-dark)}
-.add-content-btn{background:var(--pink);color:var(--white);border:none;border-radius:20px;padding:8px 18px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:0.06em}
-
-/* ── ADMIN: SPONSORSHIP TRACKER ── */
-.sponsor-table{width:100%;border-collapse:collapse;background:var(--white);border-radius:14px;overflow:hidden;border:1px solid var(--border)}
-.sponsor-table th{background:var(--purple);color:var(--white);padding:10px 12px;text-align:left;font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase}
-.sponsor-table td{padding:10px 12px;border-bottom:0.5px solid var(--border);font-size:12px;color:var(--text)}
-.sponsor-table tr:last-child td{border-bottom:none}
-.sponsor-table tr:hover td{background:var(--blush)}
+/* TABLES */
+.data-table{width:100%;border-collapse:collapse;background:var(--white);border-radius:14px;overflow:hidden;border:1px solid var(--border)}
+.data-table th{background:var(--purple);color:var(--white);padding:10px 12px;text-align:left;font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase}
+.data-table td{padding:10px 12px;border-bottom:0.5px solid var(--border);font-size:12px;color:var(--text)}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:var(--blush)}
 .status-pill{display:inline-block;font-size:10px;font-weight:500;padding:3px 9px;border-radius:10px}
-.status-pill.contacted{background:#E3F2FD;color:#1565C0}
-.status-pill.interested{background:#E8F5E9;color:#2E7D32}
-.status-pill.pending{background:#FFF8E1;color:#F57F17}
-.status-pill.declined{background:#FFEBEE;color:#C62828}
-.status-pill.confirmed{background:#FCE4EC;color:#C2185B}
-.add-sponsor-btn{background:var(--purple);color:var(--white);border:none;border-radius:20px;padding:8px 18px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:0.06em}
-.add-sponsor-btn:hover{background:var(--pink)}
 
-/* ── STATS CARDS ── */
-.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:1.2rem}
-.stat-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1rem;text-align:center}
-.stat-num{font-size:24px;font-weight:500;color:var(--pink);margin-bottom:2px}
-.stat-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em}
+/* CONTENT PLANNER */
+.planner-toggle{display:flex;gap:6px;margin-bottom:1rem}
+.planner-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:1rem}
+.planner-day-hdr{background:var(--purple);color:var(--white);text-align:center;padding:6px;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;border-radius:6px}
+.planner-cell{min-height:80px;background:var(--white);border:1px solid var(--border);border-radius:8px;padding:5px}
+.planner-cell-date{font-size:10px;color:var(--text-muted);margin-bottom:4px}
+.planner-item{font-size:9px;border-radius:4px;padding:2px 5px;margin-bottom:3px;color:white;cursor:pointer}
+.pi-instagram{background:var(--pink)}
+.pi-email{background:var(--teal)}
+.pi-reel{background:var(--green-dark)}
+.pi-event{background:var(--purple)}
+.planner-list-item{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px}
+.content-type-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 
-/* ── CLASS DETAILS ── */
-.class-detail-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.2rem;margin-bottom:10px}
-.class-detail-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:500;color:var(--purple);margin-bottom:10px}
-.detail-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--border);font-size:13px}
+/* MY CLASSES (client) */
+.my-classes-list{display:flex;flex-direction:column;gap:10px}
+.my-class-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1rem;display:flex;align-items:center;gap:12px}
+.my-class-date{background:var(--pink);color:var(--white);border-radius:8px;padding:6px 10px;text-align:center;flex-shrink:0;min-width:48px}
+
+/* MEMBERS TABLE */
+.founding-badge{background:#FFF8E1;color:#F57F17;font-size:9px;padding:2px 7px;border-radius:10px;font-weight:500;border:1px solid #F57F17}
+.regular-badge{background:var(--blush);color:var(--pink-dark);font-size:9px;padding:2px 7px;border-radius:10px;font-weight:500}
+
+/* CLASS DETAILS */
+.detail-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--border)}
 .detail-row:last-child{border-bottom:none}
-.detail-icon{width:28px;height:28px;border-radius:8px;background:var(--blush);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.detail-icon{width:32px;height:32px;border-radius:8px;background:var(--blush);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
 .detail-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1px}
 .detail-val{font-size:13px;color:var(--text);font-weight:400}
 
-/* ── RESPONSIVE ── */
-@media(max-width:700px){
-  :root{--sidebar:0px}
-  .sidebar{transform:translateX(-220px)}
-  .sidebar.open{transform:translateX(0)}
-  .main{margin-left:0}
-  .topbar{padding:0.8rem 1rem}
-  .page{padding:1rem}
-}
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--purple);color:white;padding:10px 18px;border-radius:20px;font-family:'Jost',sans-serif;font-size:13px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.2);animation:fadeIn 0.3s ease}
 </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
+<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-card">
     <div class="login-brand">Pilates Sesh by K</div>
     <div class="login-sub">Virtual Studio Portal</div>
-    <div class="login-toggle" style="position:relative;z-index:20">
+    <div class="login-toggle">
       <button class="active" id="toggle-client">Client</button>
       <button id="toggle-admin">Admin</button>
     </div>
     <input class="login-input" type="text" placeholder="Your name (for sign up only)" id="signup-name"/>
     <input class="login-input" type="email" placeholder="Email address" id="login-email"/>
     <input class="login-input" type="password" placeholder="Password (min 6 characters)" id="login-password"/>
-    <div id="login-error" style="display:none;background:#FFEBEE;color:#C62828;font-size:11px;padding:8px 12px;border-radius:8px;margin-bottom:10px;text-align:left;line-height:1.5"></div>
+    <div id="login-error"></div>
     <div style="display:flex;gap:8px;margin-bottom:8px;position:relative;z-index:20">
       <button class="login-btn" style="flex:1" id="btn-signin">Sign in</button>
       <button class="login-btn" style="flex:1;background:var(--purple)" id="btn-signup">Sign up</button>
@@ -279,8 +282,6 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 
 <!-- APP -->
 <div id="app">
-
-  <!-- SIDEBAR -->
   <nav class="sidebar" id="sidebar">
     <div class="sidebar-brand">
       <div class="sidebar-brand-name">Pilates Sesh by K</div>
@@ -293,37 +294,39 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
         <div class="sidebar-user-role" id="sidebar-role">Member</div>
       </div>
     </div>
-
     <div id="client-nav">
       <div class="sidebar-section">My Studio</div>
-      <div class="nav-item active" onclick="showPage('dashboard')"><span class="nav-icon">🏠</span> Dashboard</div>
-      <div class="nav-item" onclick="showPage('schedule')"><span class="nav-icon">📅</span> Class Schedule</div>
-      <div class="nav-item" onclick="showPage('class-details')"><span class="nav-icon">📋</span> Class Details</div>
-      <div class="nav-item" onclick="showPage('library')"><span class="nav-icon">▶️</span> Video Library</div>
+      <div class="nav-item active" data-page="dashboard"><span class="nav-icon">🏠</span> Dashboard</div>
+      <div class="nav-item" data-page="schedule"><span class="nav-icon">📅</span> Class Schedule</div>
+      <div class="nav-item" data-page="my-classes"><span class="nav-icon">⭐</span> My Classes</div>
+      <div class="nav-item" data-page="class-details"><span class="nav-icon">📋</span> Class Details</div>
+      <div class="nav-item" data-page="library"><span class="nav-icon">▶</span> Video Library</div>
       <div class="sidebar-section">Community</div>
-      <div class="nav-item" onclick="showPage('events')"><span class="nav-icon">🌸</span> Community Events</div>
-      <div class="nav-item" onclick="showPage('ask-k')"><span class="nav-icon">💬</span> Ask K</div>
-      <div class="nav-item" onclick="showPage('chatbot')"><span class="nav-icon">🤖</span> Help & Onboarding</div>
-      <div class="nav-item" onclick="showPage('shop')"><span class="nav-icon">🛍️</span> Equipment Shop</div>
+      <div class="nav-item" data-page="events"><span class="nav-icon">🌸</span> Community Events</div>
+      <div class="nav-item" data-page="ask-k"><span class="nav-icon">💬</span> Ask K</div>
+      <div class="nav-item" data-page="chatbot"><span class="nav-icon">🤖</span> Help</div>
+      <div class="nav-item" data-page="shop"><span class="nav-icon">🛍</span> Equipment Shop</div>
     </div>
-
     <div id="admin-nav" style="display:none">
+      <div class="sidebar-section">Studio</div>
+      <div class="nav-item active" data-page="dashboard"><span class="nav-icon">🏠</span> Dashboard</div>
+      <div class="nav-item" data-page="schedule"><span class="nav-icon">📅</span> Schedule</div>
+      <div class="nav-item" data-page="class-details"><span class="nav-icon">📋</span> Class Details</div>
+      <div class="nav-item" data-page="library"><span class="nav-icon">▶</span> Video Library</div>
+      <div class="nav-item" data-page="events"><span class="nav-icon">🌸</span> Events</div>
+      <div class="nav-item" data-page="shop"><span class="nav-icon">🛍</span> Shop</div>
       <div class="sidebar-section">Admin</div>
-      <div class="nav-item active" onclick="showPage('dashboard')"><span class="nav-icon">🏠</span> Dashboard</div>
-      <div class="nav-item" onclick="showPage('schedule')"><span class="nav-icon">📅</span> Schedule</div>
-      <div class="nav-item" onclick="showPage('library')"><span class="nav-icon">▶️</span> Video Library</div>
-      <div class="sidebar-section">Management</div>
-      <div class="nav-item" onclick="showPage('content-planner')"><span class="nav-icon">🗓️</span> Content Planner</div>
-      <div class="nav-item" onclick="showPage('sponsorship')"><span class="nav-icon">🤝</span> Sponsorship Tracker</div>
-      <div class="nav-item" onclick="showPage('events')"><span class="nav-icon">🌸</span> Events</div>
+      <div class="nav-item" data-page="members"><span class="nav-icon">👥</span> Members</div>
+      <div class="nav-item" data-page="registrations"><span class="nav-icon">📝</span> Registrations</div>
+      <div class="nav-item" data-page="ask-k-admin"><span class="nav-icon">💬</span> Client Questions</div>
+      <div class="nav-item" data-page="content-planner"><span class="nav-icon">🗓</span> Content Planner</div>
+      <div class="nav-item" data-page="sponsorship"><span class="nav-icon">🤝</span> Sponsorships</div>
     </div>
-
     <div class="sidebar-footer">
       <button class="logout-btn" id="btn-logout">Sign out</button>
     </div>
   </nav>
 
-  <!-- MAIN -->
   <div class="main">
     <div class="topbar">
       <div class="topbar-title" id="page-title">Dashboard</div>
@@ -337,24 +340,24 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
     <div class="page active" id="page-dashboard">
       <div class="welcome-hero">
         <div class="welcome-eyebrow">Welcome back</div>
-        <div class="welcome-title" id="welcome-name">Hello, Beautiful 🌸</div>
+        <div class="welcome-title" id="welcome-name">Hello, Beautiful</div>
         <div class="welcome-sub">Your next class is coming up — let's move together.</div>
       </div>
       <div class="next-class-card">
         <span class="next-class-badge">Next Class</span>
         <div class="next-class-info">
           <div class="next-class-title">Virtual Group Mat Pilates</div>
-          <div class="next-class-time">Friday, July 3 · [Time] AM PST · 20–25 min</div>
+          <div class="next-class-time" id="dash-next-class">Loading next session...</div>
         </div>
-        <button class="join-btn" onclick="alert('Link to Google Meet / Zoom will be here!')">Join ▶</button>
+        <button class="join-btn" id="dash-join-btn">Join</button>
       </div>
       <div class="quick-grid">
-        <div class="quick-card" onclick="showPage('schedule')"><span class="quick-card-icon">📅</span><span class="quick-card-label">Schedule</span><div class="quick-card-sub">July 2026</div></div>
-        <div class="quick-card" onclick="showPage('library')"><span class="quick-card-icon">▶️</span><span class="quick-card-label">Video Library</span><div class="quick-card-sub">Watch anytime</div></div>
-        <div class="quick-card" onclick="showPage('events')"><span class="quick-card-icon">🌸</span><span class="quick-card-label">Events</span><div class="quick-card-sub">Join community</div></div>
-        <div class="quick-card" onclick="showPage('ask-k')"><span class="quick-card-icon">💬</span><span class="quick-card-label">Ask K</span><div class="quick-card-sub">Get answers</div></div>
-        <div class="quick-card" onclick="showPage('chatbot')"><span class="quick-card-icon">🤖</span><span class="quick-card-label">Help</span><div class="quick-card-sub">Onboarding guide</div></div>
-        <div class="quick-card" onclick="showPage('shop')"><span class="quick-card-icon">🛍️</span><span class="quick-card-label">Shop</span><div class="quick-card-sub">Equipment</div></div>
+        <div class="quick-card" data-page="schedule"><span class="quick-card-icon">📅</span><span class="quick-card-label">Schedule</span><div class="quick-card-sub">July 2026</div></div>
+        <div class="quick-card" data-page="my-classes" id="qc-myclasses"><span class="quick-card-icon">⭐</span><span class="quick-card-label">My Classes</span><div class="quick-card-sub">Your registrations</div></div>
+        <div class="quick-card" data-page="library"><span class="quick-card-icon">▶</span><span class="quick-card-label">Video Library</span><div class="quick-card-sub">Watch anytime</div></div>
+        <div class="quick-card" data-page="events"><span class="quick-card-icon">🌸</span><span class="quick-card-label">Events</span><div class="quick-card-sub">Join community</div></div>
+        <div class="quick-card" data-page="ask-k" id="qc-askk"><span class="quick-card-icon">💬</span><span class="quick-card-label">Ask K</span><div class="quick-card-sub">Get answers</div></div>
+        <div class="quick-card" data-page="shop"><span class="quick-card-icon">🛍</span><span class="quick-card-label">Shop</span><div class="quick-card-sub">Equipment</div></div>
       </div>
     </div>
 
@@ -362,145 +365,70 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
     <div class="page" id="page-schedule">
       <div class="cal-header">
         <div class="cal-title" id="cal-month-title">July 2026 — Class Schedule</div>
-        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
           <div class="cal-legend">
-            <span><span class="cal-legend-dot" style="background:var(--pink)"></span>Live session</span>
-            <span><span class="cal-legend-dot" style="background:#F57F17"></span>Holiday / No class</span>
+            <span><span class="cal-legend-dot" style="background:var(--pink)"></span>Live</span>
+            <span><span class="cal-legend-dot" style="background:#2e7d32"></span>Recorded</span>
+            <span><span class="cal-legend-dot" style="background:var(--teal)"></span>Community</span>
+            <span><span class="cal-legend-dot" style="background:#F57F17"></span>Holiday</span>
           </div>
-          <div id="admin-cal-controls" style="display:none">
-            <button onclick="showMonthPicker()" style="background:var(--purple);color:var(--white);border:none;border-radius:20px;padding:6px 14px;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;cursor:pointer;letter-spacing:0.06em">⬅ Change Month</button>
+          <div id="admin-cal-tools" style="display:none;gap:6px;display:none">
+            <button class="btn-purple" id="btn-change-month" style="font-size:11px;padding:6px 12px">Change Month</button>
           </div>
         </div>
       </div>
-
-      <!-- ADMIN EDITOR PANEL -->
-      <div id="admin-session-editor" style="display:none;background:var(--white);border:2px solid var(--pink);border-radius:14px;padding:1.1rem;margin-bottom:1rem">
-        <div style="font-size:12px;font-weight:500;color:var(--purple);margin-bottom:10px;display:flex;align-items:center;gap:6px">
-          ✏️ Admin — Click any day on the calendar to add, edit, or remove a session
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;font-size:11px;color:var(--text-muted)">
-          <div style="background:var(--blush);border-radius:8px;padding:8px 10px"><strong style="color:var(--pink)">Click a day</strong><br>Opens session editor for that date</div>
-          <div style="background:var(--blush);border-radius:8px;padding:8px 10px"><strong style="color:var(--pink)">Set time</strong><br>Enter the class start time (e.g. 9:30 AM)</div>
-          <div style="background:var(--blush);border-radius:8px;padding:8px 10px"><strong style="color:var(--pink)">Mark holiday</strong><br>Flag a day as no-class holiday</div>
-          <div style="background:var(--blush);border-radius:8px;padding:8px 10px"><strong style="color:var(--pink)">Remove session</strong><br>Clear a session from any day</div>
-        </div>
+      <div id="admin-cal-info" style="display:none;background:var(--white);border:2px solid var(--pink);border-radius:12px;padding:1rem;margin-bottom:1rem;font-size:12px;color:var(--purple)">
+        <strong>Admin:</strong> Click any day to add/edit/remove a session
       </div>
-
       <div class="cal-grid-wrap">
         <div class="cal-day-headers" id="cal-day-headers">
-          <div class="cal-day-hdr">Sun</div>
-          <div class="cal-day-hdr">Mon</div>
-          <div class="cal-day-hdr">Tue</div>
-          <div class="cal-day-hdr">Wed</div>
-          <div class="cal-day-hdr">Thu</div>
-          <div class="cal-day-hdr">Fri</div>
-          <div class="cal-day-hdr">Sat</div>
+          <div class="cal-day-hdr">Sun</div><div class="cal-day-hdr">Mon</div><div class="cal-day-hdr">Tue</div>
+          <div class="cal-day-hdr">Wed</div><div class="cal-day-hdr">Thu</div><div class="cal-day-hdr">Fri</div><div class="cal-day-hdr">Sat</div>
         </div>
         <div class="cal-cells" id="cal-cells"></div>
       </div>
-
       <div style="margin-top:10px;padding:10px 14px;background:var(--white);border-radius:10px;border:1px solid var(--border);font-size:11px;color:var(--text-muted);line-height:1.6">
-        ⚠️ <strong>Scheduling Notice:</strong> Pilates Sesh by K reserves the right to reschedule or cancel sessions at any time. Classes may not be held on federal holidays. Members will be notified via email of any changes.
+        Pilates Sesh by K reserves the right to reschedule or cancel sessions at any time. Members will be notified via email.
       </div>
     </div>
 
-    <!-- SESSION EDIT MODAL -->
-    <div id="session-modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(74,25,66,0.5);z-index:999;align-items:center;justify-content:center">
-      <div style="background:var(--white);border-radius:18px;padding:1.5rem;width:90%;max-width:380px;box-shadow:0 20px 60px rgba(74,25,66,0.3)">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
-          <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:500;color:var(--purple)" id="modal-date-title">Edit Session</div>
-          <button onclick="closeModal()" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--text-muted)">✕</button>
-        </div>
-
-        <div style="margin-bottom:12px">
-          <label style="font-size:11px;font-weight:500;color:var(--purple);letter-spacing:0.08em;text-transform:uppercase;display:block;margin-bottom:5px">Session Type</label>
-          <div style="display:flex;gap:6px">
-            <button id="type-live" onclick="setType('live')" style="flex:1;padding:8px;border-radius:20px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;cursor:pointer;border:1.5px solid var(--pink);background:var(--pink);color:var(--white)">▶ Live Session</button>
-            <button id="type-holiday" onclick="setType('holiday')" style="flex:1;padding:8px;border-radius:20px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;cursor:pointer;border:1.5px solid #F57F17;background:var(--white);color:#F57F17">🎆 Holiday</button>
-            <button id="type-none" onclick="setType('none')" style="flex:1;padding:8px;border-radius:20px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;cursor:pointer;border:1.5px solid var(--border);background:var(--white);color:var(--text-muted)">✕ None</button>
-          </div>
-        </div>
-
-        <div id="live-fields" style="margin-bottom:12px">
-          <label style="font-size:11px;font-weight:500;color:var(--purple);letter-spacing:0.08em;text-transform:uppercase;display:block;margin-bottom:5px">Class Start Time</label>
-          <input id="modal-time" type="time" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-family:'Jost',sans-serif;font-size:14px;outline:none" value="09:30"/>
-          <div style="font-size:10px;color:var(--text-muted);margin-top:4px">Time will display in PST on the calendar</div>
-
-          <label style="font-size:11px;font-weight:500;color:var(--purple);letter-spacing:0.08em;text-transform:uppercase;display:block;margin-top:10px;margin-bottom:5px">Class Duration</label>
-          <select id="modal-duration" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-family:'Jost',sans-serif;font-size:13px;outline:none">
-            <option value="20 min">20 minutes</option>
-            <option value="25 min" selected>25 minutes</option>
-            <option value="30 min">30 minutes</option>
-            <option value="45 min">45 minutes</option>
-            <option value="60 min">60 minutes</option>
-          </select>
-
-          <label style="font-size:11px;font-weight:500;color:var(--purple);letter-spacing:0.08em;text-transform:uppercase;display:block;margin-top:10px;margin-bottom:5px">Max Spots Available</label>
-          <input id="modal-spots" type="number" min="1" max="50" value="10" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-family:'Jost',sans-serif;font-size:13px;outline:none;margin-bottom:12px"/>
-          <label style="font-size:11px;font-weight:500;color:var(--purple);letter-spacing:0.08em;text-transform:uppercase;display:block;margin-bottom:5px">Join Link (optional)</label>
-          <input id="modal-link" type="url" placeholder="https://meet.google.com/..." style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-family:'Jost',sans-serif;font-size:13px;outline:none"/>
-        </div>
-
-        <div id="holiday-fields" style="display:none;margin-bottom:12px">
-          <label style="font-size:11px;font-weight:500;color:var(--purple);letter-spacing:0.08em;text-transform:uppercase;display:block;margin-bottom:5px">Holiday Name</label>
-          <input id="modal-holiday-name" type="text" placeholder="e.g. 4th of July" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-family:'Jost',sans-serif;font-size:13px;outline:none"/>
-        </div>
-
-        <div style="display:flex;gap:8px;margin-top:4px">
-          <button onclick="closeModal()" style="flex:1;padding:10px;border:1px solid var(--border);border-radius:20px;background:var(--white);font-family:'Jost',sans-serif;font-size:13px;cursor:pointer;color:var(--text-muted)">Cancel</button>
-          <button onclick="saveSession()" style="flex:2;padding:10px;background:var(--pink);color:var(--white);border:none;border-radius:20px;font-family:'Jost',sans-serif;font-size:13px;font-weight:500;cursor:pointer;letter-spacing:0.06em">Save Changes ✓</button>
-        </div>
+    <!-- MY CLASSES (client) -->
+    <div class="page" id="page-my-classes">
+      <div class="section-header">
+        <div class="section-title">My Registered Classes</div>
       </div>
-    </div>
-
-    <!-- MONTH PICKER MODAL -->
-    <div id="month-modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(74,25,66,0.5);z-index:999;align-items:center;justify-content:center">
-      <div style="background:var(--white);border-radius:18px;padding:1.5rem;width:90%;max-width:340px">
-        <div style="font-family:'Playfair Display',serif;font-size:17px;color:var(--purple);margin-bottom:1rem">Select Month & Year</div>
-        <div style="display:flex;gap:8px;margin-bottom:12px">
-          <select id="month-picker-month" style="flex:1;padding:10px;border:1px solid var(--border);border-radius:10px;font-family:'Jost',sans-serif;font-size:13px;outline:none">
-            <option value="0">January</option><option value="1">February</option><option value="2">March</option>
-            <option value="3">April</option><option value="4">May</option><option value="5">June</option>
-            <option value="6" selected>July</option><option value="7">August</option><option value="8">September</option>
-            <option value="9">October</option><option value="10">November</option><option value="11">December</option>
-          </select>
-          <select id="month-picker-year" style="width:90px;padding:10px;border:1px solid var(--border);border-radius:10px;font-family:'Jost',sans-serif;font-size:13px;outline:none">
-            <option value="2026" selected>2026</option><option value="2027">2027</option>
-          </select>
-        </div>
-        <div style="display:flex;gap:8px">
-          <button onclick="document.getElementById('month-modal-overlay').style.display='none'" style="flex:1;padding:10px;border:1px solid var(--border);border-radius:20px;background:var(--white);font-family:'Jost',sans-serif;font-size:13px;cursor:pointer;color:var(--text-muted)">Cancel</button>
-          <button onclick="applyMonthChange()" style="flex:2;padding:10px;background:var(--purple);color:var(--white);border:none;border-radius:20px;font-family:'Jost',sans-serif;font-size:13px;font-weight:500;cursor:pointer">Apply</button>
-        </div>
-      </div>
+      <div id="my-classes-list"><div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading your classes...</div></div>
     </div>
 
     <!-- CLASS DETAILS -->
     <div class="page" id="page-class-details">
       <div class="section-header">
         <div class="section-title">Class Details</div>
-        <button class="join-btn" onclick="alert('Google Meet / Zoom link goes here!')">Join Class ▶</button>
+        <button class="btn-purple" id="btn-edit-class-details" style="display:none">Edit Details</button>
       </div>
-      <div class="class-detail-card">
-        <div class="class-detail-title">Virtual Group Mat Pilates — July 2026</div>
-        <div class="detail-row"><div class="detail-icon">⏱️</div><div><div class="detail-label">Duration</div><div class="detail-val">20–25 minutes</div></div></div>
-        <div class="detail-row"><div class="detail-icon">📅</div><div><div class="detail-label">Schedule</div><div class="detail-val">Fridays & Saturdays · [Time] AM PST</div></div></div>
-        <div class="detail-row"><div class="detail-icon">🎯</div><div><div class="detail-label">Level</div><div class="detail-val">All levels welcome — modifications always offered</div></div></div>
-        <div class="detail-row"><div class="detail-icon">👩‍🏫</div><div><div class="detail-label">Instructor</div><div class="detail-val">Karen — STOTT Pilates Certified</div></div></div>
-        <div class="detail-row"><div class="detail-icon">📹</div><div><div class="detail-label">Recording</div><div class="detail-val">Added to library within 24 hrs if you miss it</div></div></div>
-      </div>
-      <div class="class-detail-card">
-        <div class="class-detail-title">What You'll Need</div>
-        <div class="detail-row"><div class="detail-icon">⚽</div><div><div class="detail-label">Equipment</div><div class="detail-val">Inflatable Pilates Ball (9")</div></div></div>
-        <div class="detail-row"><div class="detail-icon">⭕</div><div><div class="detail-label">Equipment</div><div class="detail-val">Resistance Ring / Magic Circle</div></div></div>
-        <div class="detail-row"><div class="detail-icon">💪</div><div><div class="detail-label">Equipment</div><div class="detail-val">Light Weights (1–3 lbs)</div></div></div>
-        <div class="detail-row"><div class="detail-icon">🎽</div><div><div class="detail-label">Equipment</div><div class="detail-val">Resistance Bands (light & medium)</div></div></div>
-        <div class="detail-row"><div class="detail-icon">🧘</div><div><div class="detail-label">Equipment</div><div class="detail-val">Yoga / Pilates Mat</div></div></div>
-        <div class="detail-row"><div class="detail-icon">🧦</div><div><div class="detail-label">Equipment</div><div class="detail-val">Grip Socks + Water Bottle</div></div></div>
-      </div>
-      <div class="class-detail-card">
-        <div class="class-detail-title">Health & Safety</div>
-        <div style="font-size:12px;color:var(--text-muted);line-height:1.7">These sessions are intended for general fitness and wellness purposes only and are not a substitute for professional medical advice. Always consult your physician before beginning any new exercise program, especially if you have a pre-existing condition, injury, or are pregnant or postpartum. Modifications are always available — please listen to your body and work at your own pace.</div>
+      <div id="class-details-content">
+        <div class="card">
+          <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:500;color:var(--purple);margin-bottom:10px" id="cd-title">Virtual Group Mat Pilates</div>
+          <div class="detail-row"><div class="detail-icon">⏱</div><div><div class="detail-label">Duration</div><div class="detail-val" id="cd-duration">20-25 minutes</div></div></div>
+          <div class="detail-row"><div class="detail-icon">📅</div><div><div class="detail-label">Schedule</div><div class="detail-val" id="cd-schedule">Fridays and Saturdays</div></div></div>
+          <div class="detail-row"><div class="detail-icon">🎯</div><div><div class="detail-label">Level</div><div class="detail-val" id="cd-level">All levels welcome — modifications always offered</div></div></div>
+          <div class="detail-row"><div class="detail-icon">👩‍🏫</div><div><div class="detail-label">Instructor</div><div class="detail-val" id="cd-instructor">Karen — STOTT Pilates Certified</div></div></div>
+          <div class="detail-row"><div class="detail-icon">📹</div><div><div class="detail-label">Recording</div><div class="detail-val" id="cd-recording">Added to library within 24 hours if you miss it</div></div></div>
+        </div>
+        <div class="card">
+          <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:500;color:var(--purple);margin-bottom:10px">What You'll Need</div>
+          <div id="cd-equipment-list">
+            <div class="detail-row"><div class="detail-icon">⚽</div><div><div class="detail-label">Equipment</div><div class="detail-val">Inflatable Pilates Ball (9")</div></div></div>
+            <div class="detail-row"><div class="detail-icon">⭕</div><div><div class="detail-label">Equipment</div><div class="detail-val">Resistance Ring / Magic Circle</div></div></div>
+            <div class="detail-row"><div class="detail-icon">💪</div><div><div class="detail-label">Equipment</div><div class="detail-val">Light Weights (1-3 lbs)</div></div></div>
+            <div class="detail-row"><div class="detail-icon">🎽</div><div><div class="detail-label">Equipment</div><div class="detail-val">Resistance Bands (light and medium)</div></div></div>
+            <div class="detail-row"><div class="detail-icon">🧘</div><div><div class="detail-label">Equipment</div><div class="detail-val">Yoga / Pilates Mat</div></div></div>
+            <div class="detail-row"><div class="detail-icon">🧦</div><div><div class="detail-label">Equipment</div><div class="detail-val">Grip Socks + Water Bottle</div></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div style="font-size:12px;color:var(--text-muted);line-height:1.7">These sessions are for general fitness and wellness only. Always consult your physician before beginning any new exercise program. Modifications are always available.</div>
+        </div>
       </div>
     </div>
 
@@ -509,25 +437,18 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
       <div class="section-header">
         <div class="section-title">Video Library</div>
         <div id="admin-add-video-btn" style="display:none">
-          <button onclick="showAddVideoModal()" style="background:var(--pink);color:var(--white);border:none;border-radius:20px;padding:8px 18px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:0.06em">+ Add Video</button>
+          <button class="btn-pink" id="btn-add-video">+ Add Video</button>
         </div>
       </div>
       <div class="lib-filter">
-        <div class="filter-pill active" onclick="filterLib(this,'all')">All</div>
-        <div class="filter-pill" onclick="filterLib(this,'core')">Core</div>
-        <div class="filter-pill" onclick="filterLib(this,'full-body')">Full Body</div>
-        <div class="filter-pill" onclick="filterLib(this,'beginner')">Beginner</div>
-        <div class="filter-pill" onclick="filterLib(this,'stretch')">Stretch</div>
-        <div class="filter-pill" onclick="filterLib(this,'postpartum')">Postpartum</div>
+        <div class="filter-pill active" data-cat="all">All</div>
+        <div class="filter-pill" data-cat="core">Core</div>
+        <div class="filter-pill" data-cat="full-body">Full Body</div>
+        <div class="filter-pill" data-cat="beginner">Beginner</div>
+        <div class="filter-pill" data-cat="stretch">Stretch</div>
+        <div class="filter-pill" data-cat="postpartum">Postpartum</div>
       </div>
-      <div id="video-grid" class="video-grid">
-        <div class="video-card" data-cat="core"><div class="video-thumb">🎥<div class="video-duration">22 min</div></div><div class="video-info"><div class="video-title">Core Burn — Pilates Ring Focus</div><div class="video-meta">July 18 · K</div><span class="video-tag">core</span></div></div>
-        <div class="video-card" data-cat="full-body"><div class="video-thumb">🎥<div class="video-duration">24 min</div></div><div class="video-info"><div class="video-title">Full Body Flow with Resistance Bands</div><div class="video-meta">July 11 · K</div><span class="video-tag">full-body</span></div></div>
-        <div class="video-card" data-cat="beginner"><div class="video-thumb">🎥<div class="video-duration">20 min</div></div><div class="video-info"><div class="video-title">Beginner Mat Pilates — Start Here</div><div class="video-meta">July 10 · K</div><span class="video-tag">beginner</span></div></div>
-        <div class="video-card" data-cat="stretch"><div class="video-thumb">🎥<div class="video-duration">18 min</div></div><div class="video-info"><div class="video-title">Morning Stretch & Breathwork</div><div class="video-meta">July 3 · K</div><span class="video-tag">stretch</span></div></div>
-        <div class="video-card" data-cat="postpartum"><div class="video-thumb">🎥<div class="video-duration">22 min</div></div><div class="video-info"><div class="video-title">Gentle Postpartum Core Restore</div><div class="video-meta">June 27 · K</div><span class="video-tag">postpartum</span></div></div>
-        <div class="video-card" data-cat="full-body"><div class="video-thumb">🎥<div class="video-duration">25 min</div></div><div class="video-info"><div class="video-title">Pilates Ball Sculpt — Full Body</div><div class="video-meta">June 20 · K</div><span class="video-tag">full-body</span></div></div>
-      </div>
+      <div class="video-grid" id="video-grid"><div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading library...</div></div>
     </div>
 
     <!-- EVENTS -->
@@ -535,76 +456,54 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
       <div class="section-header">
         <div class="section-title">Community Events</div>
         <div id="admin-add-event-btn" style="display:none">
-          <button id="btn-add-event" style="background:var(--pink);color:var(--white);border:none;border-radius:20px;padding:8px 18px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;cursor:pointer">+ Add Event</button>
+          <button class="btn-pink" id="btn-add-event">+ Add Event</button>
         </div>
       </div>
-      <div id="events-list" class="event-list">
-        <div style="text-align:center;padding:2rem;color:var(--text-muted);font-size:13px">Loading events...</div>
-      </div>
+      <div id="events-list" class="event-list"><div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading events...</div></div>
     </div>
-    <!-- ASK K -->
+
+    <!-- ASK K (client) -->
     <div class="page" id="page-ask-k">
-      <div class="ask-intro">
-        <div class="k-avatar">K</div>
-        <div>
-          <div style="font-size:14px;font-weight:500;color:var(--purple);margin-bottom:4px">Ask K a Question</div>
-          <div style="font-size:12px;color:var(--text-muted);line-height:1.6">Have a question about Pilates, your membership, upcoming classes, or anything else? Send it directly to Karen and she'll respond within 48 hours.</div>
-        </div>
+      <div class="section-header"><div class="section-title">Ask K</div></div>
+      <div class="card" style="display:flex;gap:12px;align-items:flex-start;margin-bottom:1rem">
+        <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--pink));display:flex;align-items:center;justify-content:center;font-family:'Dancing Script',cursive;font-size:1.4rem;color:white;flex-shrink:0">K</div>
+        <div><div style="font-size:14px;font-weight:500;color:var(--purple);margin-bottom:4px">Ask Karen a Question</div><div style="font-size:12px;color:var(--text-muted);line-height:1.6">Have a question about Pilates, your membership, or anything else? Karen will respond within 48 hours.</div></div>
       </div>
-      <div class="ask-form">
-        <label class="form-label">Your question</label>
-        <select class="form-select">
-          <option>Class & Schedule</option>
-          <option>Membership & Billing</option>
+      <div class="card">
+        <label class="form-label">Category</label>
+        <select class="form-select" id="ask-category">
+          <option>Class and Schedule</option>
+          <option>Membership and Billing</option>
           <option>Equipment</option>
-          <option>Health & Modifications</option>
+          <option>Health and Modifications</option>
           <option>General</option>
         </select>
-        <label class="form-label">Details</label>
-        <textarea class="form-textarea" placeholder="Type your question here..."></textarea>
-        <button class="submit-btn" onclick="submitQuestion()">Send to K ✉️</button>
+        <label class="form-label">Your Question</label>
+        <textarea class="form-textarea" id="ask-question" placeholder="Type your question here..."></textarea>
+        <button class="btn-pink" id="btn-ask-submit" style="margin-top:12px">Send to K</button>
       </div>
-      <div class="past-questions" style="margin-top:1.2rem">
-        <div style="font-size:12px;font-weight:500;color:var(--purple);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em">Recent Q&A</div>
-        <div class="q-item">
-          <div class="q-question">Can I still access the recording if I miss the live class?</div>
-          <div class="q-answer">Yes! Every session is recorded and added to your Video Library within 24 hours. You can watch it anytime, as many times as you like. 🌸 — K</div>
-          <div class="q-meta">Asked June 20 · Answered within 12 hours</div>
-        </div>
-        <div class="q-item">
-          <div class="q-question">Do I need all the equipment for every class?</div>
-          <div class="q-answer">Not always! K will let you know in advance via email when specific equipment is needed. For most sessions, just a mat and resistance bands will get you through. — K</div>
-          <div class="q-meta">Asked June 18 · Answered within 6 hours</div>
-        </div>
-      </div>
+    </div>
+
+    <!-- CLIENT QUESTIONS (admin) -->
+    <div class="page" id="page-ask-k-admin">
+      <div class="section-header"><div class="section-title">Client Questions</div></div>
+      <div id="questions-list"><div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading questions...</div></div>
     </div>
 
     <!-- CHATBOT -->
     <div class="page" id="page-chatbot">
-      <div class="section-header">
-        <div class="section-title">Help & Onboarding</div>
-      </div>
+      <div class="section-header"><div class="section-title">Help and Onboarding</div></div>
       <div class="chat-wrap">
         <div class="chat-header">
-          <div class="chat-header-av">K</div>
-          <div class="chat-header-info">
-            <p>Pilates Sesh by K Assistant</p>
-            <span>Ask me anything about the studio</span>
-          </div>
+          <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-family:'Dancing Script',cursive;font-size:1.2rem;color:white">K</div>
+          <div style="margin-left:10px"><p style="font-size:13px;font-weight:500;color:white;margin:0">Pilates Sesh by K Assistant</p><span style="font-size:10px;color:rgba(255,255,255,0.65)">Ask me anything</span></div>
         </div>
         <div class="chat-messages" id="chat-messages">
-          <div class="chat-msg bot">
-            <div class="chat-bubble">Hi! Welcome to Pilates Sesh by K's Virtual Studio 🌸 I'm here to help you get started. You can ask me about classes, equipment, membership, scheduling — anything at all!</div>
-            <div class="chat-time">Just now</div>
-          </div>
-          <div class="chat-msg bot">
-            <div class="chat-bubble">Here are some things I can help with:<br><br>• How do I join a live class?<br>• What equipment do I need?<br>• Can I cancel my membership?<br>• What happens if I miss a session?<br>• How do I access the video library?</div>
-            <div class="chat-time">Just now</div>
-          </div>
+          <div class="chat-msg bot"><div class="chat-bubble">Hi! Welcome to Pilates Sesh by K Virtual Studio. I can help with questions about classes, equipment, membership, scheduling, and more!</div></div>
         </div>
         <div class="chat-input-row">
-          <input class="chat-input" id="chat-input" placeholder="Ask a question..." onkeydown="if(event.key==='Enter')sendChat()"/>
-          <button class="chat-send" onclick="sendChat()">➤</button>
+          <input class="chat-input" id="chat-input" placeholder="Ask a question..." />
+          <button class="chat-send" id="btn-chat-send">&#9654;</button>
         </div>
       </div>
     </div>
@@ -613,120 +512,357 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
     <div class="page" id="page-shop">
       <div class="section-header">
         <div class="section-title">Equipment Shop</div>
+        <div id="admin-add-shop-btn" style="display:none">
+          <button class="btn-pink" id="btn-add-shop">+ Add Item</button>
+        </div>
       </div>
-      <div style="background:linear-gradient(120deg,var(--purple),var(--pink-dark));border-radius:14px;padding:1.1rem 1.4rem;margin-bottom:1rem;color:var(--white);font-size:13px">
-        🛍️ Everything Karen recommends for your practice — curated and linked for easy ordering. Ships directly to your door.
+      <div style="background:linear-gradient(120deg,var(--purple),var(--pink-dark));border-radius:14px;padding:1.1rem 1.4rem;margin-bottom:1rem;color:white;font-size:13px">
+        Everything Karen recommends for your practice — curated and linked for easy ordering.
       </div>
-      <div class="shop-grid">
-        <div class="shop-card"><div class="shop-img">🧘</div><div class="shop-info"><div class="shop-name">Pilates Mat</div><div class="shop-desc">Non-slip, 6mm cushioning, perfect for home sessions</div><div class="shop-price">$45–65</div><button class="shop-btn" onclick="alert('Link to shop coming soon!')">Shop Now</button></div></div>
-        <div class="shop-card"><div class="shop-img">⭕</div><div class="shop-info"><div class="shop-name">Resistance Ring</div><div class="shop-desc">Magic circle for targeted toning — K's #1 pick</div><div class="shop-price">$22–30</div><button class="shop-btn" onclick="alert('Link to shop coming soon!')">Shop Now</button></div></div>
-        <div class="shop-card"><div class="shop-img">🎽</div><div class="shop-info"><div class="shop-name">Resistance Bands Set</div><div class="shop-desc">Light & medium — essential for every session</div><div class="shop-price">$20–28</div><button class="shop-btn" onclick="alert('Link to shop coming soon!')">Shop Now</button></div></div>
-        <div class="shop-card"><div class="shop-img">⚽</div><div class="shop-info"><div class="shop-name">Pilates Ball (9")</div><div class="shop-desc">Inflatable mini ball for core and balance work</div><div class="shop-price">$18–25</div><button class="shop-btn" onclick="alert('Link to shop coming soon!')">Shop Now</button></div></div>
-        <div class="shop-card"><div class="shop-img">💪</div><div class="shop-info"><div class="shop-name">Light Weights Set</div><div class="shop-desc">1–3 lb dumbbells — compact and perfect for Pilates</div><div class="shop-price">$25–35</div><button class="shop-btn" onclick="alert('Link to shop coming soon!')">Shop Now</button></div></div>
-        <div class="shop-card"><div class="shop-img">🧦</div><div class="shop-info"><div class="shop-name">Grip Socks</div><div class="shop-desc">Non-slip studio socks — a must for reformer classes</div><div class="shop-price">$15–22</div><button class="shop-btn" onclick="alert('Link to shop coming soon!')">Shop Now</button></div></div>
-      </div>
+      <div class="shop-grid" id="shop-grid"><div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading shop...</div></div>
     </div>
 
-    <!-- ADMIN: CONTENT PLANNER -->
+    <!-- MEMBERS (admin) -->
+    <div class="page" id="page-members">
+      <div class="section-header"><div class="section-title">Members</div></div>
+      <div class="stats-row" style="margin-bottom:1rem">
+        <div class="stat-card"><div class="stat-num" id="m-total">-</div><div class="stat-label">Total Members</div></div>
+        <div class="stat-card"><div class="stat-num" id="m-founding">-</div><div class="stat-label">Founding Members</div></div>
+        <div class="stat-card"><div class="stat-num" id="m-regular">-</div><div class="stat-label">Regular Members</div></div>
+      </div>
+      <div id="members-list"><div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading members...</div></div>
+    </div>
+
+    <!-- REGISTRATIONS (admin) -->
+    <div class="page" id="page-registrations">
+      <div class="section-header"><div class="section-title">Class Registrations</div></div>
+      <div id="reg-session-list"><div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading registrations...</div></div>
+    </div>
+
+    <!-- CONTENT PLANNER (admin) -->
     <div class="page" id="page-content-planner">
       <div class="section-header">
-        <div class="section-title">Content Planner — July 2026</div>
-        <button class="add-content-btn" onclick="alert('Add content item — coming soon!')">+ Add Content</button>
+        <div class="section-title">Content Planner</div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <div class="planner-toggle">
+            <button class="btn-purple" id="btn-cal-view" style="font-size:11px;padding:6px 12px">Calendar</button>
+            <button class="btn-purple" style="font-size:11px;padding:6px 12px;background:var(--blush);color:var(--purple)" id="btn-list-view">List</button>
+          </div>
+          <button class="btn-pink" id="btn-add-content">+ Add Content</button>
+        </div>
       </div>
-      <div class="stats-row" style="margin-bottom:1rem">
-        <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Posts planned</div></div>
-        <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Emails</div></div>
-        <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Reels</div></div>
-        <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Events</div></div>
+      <div id="content-calendar-view">
+        <div class="planner-grid" id="content-cal-grid"></div>
       </div>
-      <div class="planner-grid">
-        <div class="planner-day-hdr">Mon</div><div class="planner-day-hdr">Tue</div><div class="planner-day-hdr">Wed</div><div class="planner-day-hdr">Thu</div><div class="planner-day-hdr">Fri</div><div class="planner-day-hdr">Sat</div><div class="planner-day-hdr">Sun</div>
-        <div class="planner-cell"><div class="planner-cell-date">Jun 29</div></div>
-        <div class="planner-cell"><div class="planner-cell-date">Jun 30</div><div class="planner-item email">📧 July calendar email</div></div>
-        <div class="planner-cell"><div class="planner-cell-date">Jul 1</div><div class="planner-item">📸 100 yrs Pilates post</div></div>
-        <div class="planner-cell"><div class="planner-cell-date">Jul 2</div></div>
-        <div class="planner-cell"><div class="planner-cell-date">Jul 3</div><div class="planner-item reel">🎬 Class preview reel</div></div>
-        <div class="planner-cell"><div class="planner-cell-date">Jul 4</div><div class="planner-item">📸 4th of July post</div></div>
-        <div class="planner-cell"><div class="planner-cell-date">Jul 5</div></div>
-        <div class="planner-cell"><div class="planner-cell-date">Jul 6</div></div>
-        <div class="planner-cell"><div class="planner-cell-date">Jul 7</div><div class="planner-item">📸 Self love quote</div></div>
-        <div class="planner-cell"><div class="planner-cell-date">Jul 8</div><div class="planner-item email">📧 Membership spotlight</div></div>
-        <div class="planner-cell"><div class="planner-cell-date">Jul 9</div></div>
-        <div class="planner-cell"><div class="planner-cell-date">Jul 10</div><div class="planner-item reel">🎬 Class highlight clip</div></div>
-        <div class="planner-cell"><div class="planner-cell-date">Jul 11</div><div class="planner-item">📸 Equipment tip post</div></div>
-        <div class="planner-cell"><div class="planner-cell-date">Jul 12</div></div>
-        <div class="planner-cell"><div class="planner-cell-date">Jul 13</div></div>
-        <div class="planner-cell"><div class="planner-cell-date">Jul 14</div><div class="planner-item">📸 Testimonial post</div></div>
-        <div class="planner-cell"><div class="planner-cell-date">Jul 15</div></div>
-        <div class="planner-cell"><div class="planner-cell-date">Jul 16</div></div>
-        <div class="planner-cell"><div class="planner-cell-date">Jul 17</div><div class="planner-item reel">🎬 Behind the scenes</div></div>
-        <div class="planner-cell"><div class="planner-cell-date">Jul 18</div><div class="planner-item event">🌸 Live QA session</div></div>
-        <div class="planner-cell"><div class="planner-cell-date">Jul 19</div></div>
+      <div id="content-list-view" style="display:none">
+        <div id="content-list"></div>
       </div>
     </div>
 
-    <!-- ADMIN: SPONSORSHIP TRACKER -->
+    <!-- SPONSORSHIP (admin) -->
     <div class="page" id="page-sponsorship">
       <div class="section-header">
         <div class="section-title">Sponsorship Tracker</div>
-        <button id="btn-add-sponsor" style="background:var(--purple);color:var(--white);border:none;border-radius:20px;padding:8px 18px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;cursor:pointer">+ Add Brand</button>
+        <button class="btn-purple" id="btn-add-sponsor">+ Add Brand</button>
       </div>
       <div class="stats-row" style="margin-bottom:1rem">
-        <div class="stat-card"><div class="stat-num" id="stat-total">-</div><div class="stat-label">Brands tracked</div></div>
-        <div class="stat-card"><div class="stat-num" id="stat-confirmed">-</div><div class="stat-label">Confirmed</div></div>
-        <div class="stat-card"><div class="stat-num" id="stat-interested">-</div><div class="stat-label">Interested</div></div>
-        <div class="stat-card"><div class="stat-num" id="stat-pending">-</div><div class="stat-label">Pending</div></div>
+        <div class="stat-card"><div class="stat-num" id="sp-total">-</div><div class="stat-label">Brands tracked</div></div>
+        <div class="stat-card"><div class="stat-num" id="sp-confirmed">-</div><div class="stat-label">Confirmed</div></div>
+        <div class="stat-card"><div class="stat-num" id="sp-interested">-</div><div class="stat-label">Interested</div></div>
+        <div class="stat-card"><div class="stat-num" id="sp-pending">-</div><div class="stat-label">Pending</div></div>
       </div>
-      <div id="sponsor-list">
-        <div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading...</div>
-      </div>
+      <div id="sponsor-list"><div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading...</div></div>
     </div>
 
-  
-    <!-- ADD VIDEO MODAL -->
-    <div id="add-video-modal" style="display:none;position:fixed;inset:0;background:rgba(74,25,66,0.5);z-index:999;align-items:center;justify-content:center">
-      <div style="background:var(--white);border-radius:18px;padding:1.5rem;width:90%;max-width:400px">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
-          <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:500;color:var(--purple)">Add Video to Library</div>
-          <button onclick="closeAddVideoModal()" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--text-muted)">✕</button>
-        </div>
-        <label style="font-size:11px;font-weight:500;color:var(--purple);letter-spacing:0.08em;text-transform:uppercase;display:block;margin-bottom:5px">YouTube URL (unlisted link)</label>
-        <input id="vid-url" type="url" placeholder="https://youtu.be/..." style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-family:'Jost',sans-serif;font-size:13px;outline:none;margin-bottom:10px"/>
-        <label style="font-size:11px;font-weight:500;color:var(--purple);letter-spacing:0.08em;text-transform:uppercase;display:block;margin-bottom:5px">Video Title</label>
-        <input id="vid-title" type="text" placeholder="e.g. Core Burn — Pilates Ring Focus" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-family:'Jost',sans-serif;font-size:13px;outline:none;margin-bottom:10px"/>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
-          <div>
-            <label style="font-size:11px;font-weight:500;color:var(--purple);letter-spacing:0.08em;text-transform:uppercase;display:block;margin-bottom:5px">Category</label>
-            <select id="vid-cat" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;font-family:'Jost',sans-serif;font-size:12px;outline:none">
-              <option value="full-body">Full Body</option>
-              <option value="core">Core</option>
-              <option value="beginner">Beginner</option>
-              <option value="stretch">Stretch</option>
-              <option value="postpartum">Postpartum</option>
-            </select>
-          </div>
-          <div>
-            <label style="font-size:11px;font-weight:500;color:var(--purple);letter-spacing:0.08em;text-transform:uppercase;display:block;margin-bottom:5px">Duration</label>
-            <input id="vid-dur" type="text" placeholder="e.g. 25 min" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;font-family:'Jost',sans-serif;font-size:12px;outline:none"/>
-          </div>
-        </div>
-        <label style="font-size:11px;font-weight:500;color:var(--purple);letter-spacing:0.08em;text-transform:uppercase;display:block;margin-bottom:5px">Class Date</label>
-        <input id="vid-date" type="date" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-family:'Jost',sans-serif;font-size:13px;outline:none;margin-bottom:12px"/>
-        <div style="display:flex;gap:8px">
-          <button onclick="closeAddVideoModal()" style="flex:1;padding:10px;border:1px solid var(--border);border-radius:20px;background:var(--white);font-family:'Jost',sans-serif;font-size:13px;cursor:pointer;color:var(--text-muted)">Cancel</button>
-          <button onclick="saveVideo()" style="flex:2;padding:10px;background:var(--pink);color:var(--white);border:none;border-radius:20px;font-family:'Jost',sans-serif;font-size:13px;font-weight:500;cursor:pointer">Add to Library ✓</button>
-        </div>
-      </div>
-    </div>
-</div><!-- /main -->
+  </div><!-- /main -->
 </div><!-- /app -->
 
-<!-- Firebase SDKs - Compat version (works without modules) -->
+<!-- ═══ MODALS ═══ -->
+
+<!-- SESSION MODAL (admin calendar) -->
+<div class="modal-overlay" id="session-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="session-modal-date">Edit Session</div>
+      <button class="modal-close" id="btn-close-session-modal">x</button>
+    </div>
+    <label class="form-label">Session Type</label>
+    <select class="form-select" id="sm-type">
+      <option value="none">No class / Clear day</option>
+      <option value="live">Live Session</option>
+      <option value="recorded">Pre-Recorded</option>
+      <option value="community">Community Event</option>
+      <option value="holiday">Holiday / No Class</option>
+    </select>
+    <div id="sm-live-fields">
+      <label class="form-label">Session Name</label>
+      <input class="form-input" id="sm-name" placeholder="e.g. Core Burn with K"/>
+      <div class="form-row">
+        <div>
+          <label class="form-label">Start Time</label>
+          <input class="form-input" type="time" id="sm-time" value="09:30"/>
+        </div>
+        <div>
+          <label class="form-label">Duration</label>
+          <select class="form-select" id="sm-duration">
+            <option value="20 min">20 minutes</option>
+            <option value="25 min" selected>25 minutes</option>
+            <option value="30 min">30 minutes</option>
+            <option value="45 min">45 minutes</option>
+            <option value="60 min">60 minutes</option>
+          </select>
+        </div>
+      </div>
+      <label class="form-label">Max Spots</label>
+      <input class="form-input" type="number" id="sm-spots" value="10" min="1" max="50"/>
+      <label class="form-label">Join Link (Google Meet / Zoom)</label>
+      <input class="form-input" type="url" id="sm-link" placeholder="https://meet.google.com/..."/>
+    </div>
+    <div id="sm-holiday-fields" style="display:none">
+      <label class="form-label">Holiday Name</label>
+      <input class="form-input" id="sm-holiday-name" placeholder="e.g. 4th of July"/>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-footer btn-cancel" id="btn-cancel-session">Cancel</button>
+      <button class="btn-pink" style="flex:2;padding:10px;border-radius:20px" id="btn-save-session">Save Session</button>
+    </div>
+  </div>
+</div>
+
+<!-- EVENT MODAL -->
+<div class="modal-overlay" id="event-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="event-modal-title">Add Event</div>
+      <button class="modal-close" id="btn-close-event-modal">x</button>
+    </div>
+    <label class="form-label">Event Title</label>
+    <input class="form-input" id="em-title" placeholder="e.g. Pilates at the Park"/>
+    <div class="form-row">
+      <div>
+        <label class="form-label">Month</label>
+        <select class="form-select" id="em-month">
+          <option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option>
+          <option>May</option><option>Jun</option><option>Jul</option><option selected>Aug</option>
+          <option>Sep</option><option>Oct</option><option>Nov</option><option>Dec</option>
+        </select>
+      </div>
+      <div>
+        <label class="form-label">Day</label>
+        <input class="form-input" type="number" id="em-day" placeholder="9" min="1" max="31"/>
+      </div>
+    </div>
+    <label class="form-label">Location</label>
+    <input class="form-input" id="em-location" placeholder="Marina Beach Park, Edmonds WA"/>
+    <label class="form-label">Time</label>
+    <input class="form-input" id="em-time" placeholder="8:30 AM"/>
+    <label class="form-label">Tags (comma separated)</label>
+    <input class="form-input" id="em-tags" placeholder="Outdoor, All levels, $50"/>
+    <label class="form-label">RSVP Link (optional)</label>
+    <input class="form-input" type="url" id="em-link" placeholder="https://..."/>
+    <div class="modal-footer">
+      <button class="modal-footer btn-cancel" id="btn-cancel-event">Cancel</button>
+      <button class="btn-pink" style="flex:2;padding:10px;border-radius:20px" id="btn-save-event">Save Event</button>
+    </div>
+  </div>
+</div>
+
+<!-- SPONSOR MODAL -->
+<div class="modal-overlay" id="sponsor-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="sponsor-modal-title">Add Brand</div>
+      <button class="modal-close" id="btn-close-sponsor-modal">x</button>
+    </div>
+    <label class="form-label">Brand Name</label>
+    <input class="form-input" id="spm-brand" placeholder="e.g. LMNT Electrolytes"/>
+    <label class="form-label">Category</label>
+    <input class="form-input" id="spm-category" placeholder="e.g. Nutrition, Activewear"/>
+    <label class="form-label">Contact</label>
+    <input class="form-input" id="spm-contact" placeholder="email or phone"/>
+    <label class="form-label">Status</label>
+    <select class="form-select" id="spm-status">
+      <option value="contacted">Contacted</option>
+      <option value="interested">Interested</option>
+      <option value="pending">Pending</option>
+      <option value="confirmed">Confirmed</option>
+      <option value="declined">Declined</option>
+    </select>
+    <label class="form-label">Last Contact Date</label>
+    <input class="form-input" id="spm-lastcontact" placeholder="e.g. Jun 15"/>
+    <label class="form-label">Notes</label>
+    <textarea class="form-textarea" id="spm-notes" placeholder="Notes about this brand..."></textarea>
+    <div class="modal-footer">
+      <button class="modal-footer btn-cancel" id="btn-cancel-sponsor">Cancel</button>
+      <button class="btn-purple" style="flex:2;padding:10px;border-radius:20px" id="btn-save-sponsor">Save Brand</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT MODAL -->
+<div class="modal-overlay" id="content-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="content-modal-title">Add Content</div>
+      <button class="modal-close" id="btn-close-content-modal">x</button>
+    </div>
+    <label class="form-label">Content Type</label>
+    <select class="form-select" id="cm-type">
+      <option value="instagram">Instagram Post</option>
+      <option value="email">Email Campaign</option>
+      <option value="reel">Reel / Video</option>
+      <option value="event">Event Promo</option>
+    </select>
+    <label class="form-label">Title / Description</label>
+    <input class="form-input" id="cm-title" placeholder="e.g. Behind the scenes reel"/>
+    <label class="form-label">Scheduled Date</label>
+    <input class="form-input" type="date" id="cm-date"/>
+    <label class="form-label">Notes</label>
+    <textarea class="form-textarea" id="cm-notes" placeholder="Any additional notes..."></textarea>
+    <div class="modal-footer">
+      <button class="modal-footer btn-cancel" id="btn-cancel-content">Cancel</button>
+      <button class="btn-pink" style="flex:2;padding:10px;border-radius:20px" id="btn-save-content">Save Content</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIDEO MODAL -->
+<div class="modal-overlay" id="video-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Add Video to Library</div>
+      <button class="modal-close" id="btn-close-video-modal">x</button>
+    </div>
+    <label class="form-label">YouTube URL (unlisted)</label>
+    <input class="form-input" id="vm-url" type="url" placeholder="https://youtu.be/..."/>
+    <label class="form-label">Video Title</label>
+    <input class="form-input" id="vm-title" placeholder="e.g. Core Burn — Pilates Ring Focus"/>
+    <div class="form-row">
+      <div>
+        <label class="form-label">Category</label>
+        <select class="form-select" id="vm-cat">
+          <option value="full-body">Full Body</option>
+          <option value="core">Core</option>
+          <option value="beginner">Beginner</option>
+          <option value="stretch">Stretch</option>
+          <option value="postpartum">Postpartum</option>
+        </select>
+      </div>
+      <div>
+        <label class="form-label">Duration</label>
+        <input class="form-input" id="vm-duration" placeholder="e.g. 25 min"/>
+      </div>
+    </div>
+    <label class="form-label">Class Date</label>
+    <input class="form-input" type="date" id="vm-date"/>
+    <div class="modal-footer">
+      <button class="modal-footer btn-cancel" id="btn-cancel-video">Cancel</button>
+      <button class="btn-pink" style="flex:2;padding:10px;border-radius:20px" id="btn-save-video">Add to Library</button>
+    </div>
+  </div>
+</div>
+
+<!-- SHOP ITEM MODAL -->
+<div class="modal-overlay" id="shop-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="shop-modal-title">Add Shop Item</div>
+      <button class="modal-close" id="btn-close-shop-modal">x</button>
+    </div>
+    <label class="form-label">Item Name</label>
+    <input class="form-input" id="shm-name" placeholder="e.g. Pilates Mat"/>
+    <label class="form-label">Description</label>
+    <textarea class="form-textarea" id="shm-desc" placeholder="Brief description..."></textarea>
+    <label class="form-label">Price</label>
+    <input class="form-input" id="shm-price" placeholder="e.g. $45-65"/>
+    <label class="form-label">Emoji Icon</label>
+    <input class="form-input" id="shm-icon" placeholder="e.g. 🧘" maxlength="2"/>
+    <label class="form-label">Shop Link (URL)</label>
+    <input class="form-input" type="url" id="shm-link" placeholder="https://..."/>
+    <div class="modal-footer">
+      <button class="modal-footer btn-cancel" id="btn-cancel-shop">Cancel</button>
+      <button class="btn-pink" style="flex:2;padding:10px;border-radius:20px" id="btn-save-shop">Save Item</button>
+    </div>
+  </div>
+</div>
+
+<!-- CLASS DETAILS EDIT MODAL -->
+<div class="modal-overlay" id="class-details-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Edit Class Details</div>
+      <button class="modal-close" id="btn-close-class-modal">x</button>
+    </div>
+    <label class="form-label">Class Title</label>
+    <input class="form-input" id="cdm-title"/>
+    <label class="form-label">Duration</label>
+    <input class="form-input" id="cdm-duration"/>
+    <label class="form-label">Schedule</label>
+    <input class="form-input" id="cdm-schedule"/>
+    <label class="form-label">Level</label>
+    <input class="form-input" id="cdm-level"/>
+    <label class="form-label">Instructor</label>
+    <input class="form-input" id="cdm-instructor"/>
+    <label class="form-label">Recording Policy</label>
+    <input class="form-input" id="cdm-recording"/>
+    <div class="modal-footer">
+      <button class="modal-footer btn-cancel" id="btn-cancel-class">Cancel</button>
+      <button class="btn-pink" style="flex:2;padding:10px;border-radius:20px" id="btn-save-class">Save Details</button>
+    </div>
+  </div>
+</div>
+
+<!-- MONTH PICKER MODAL -->
+<div class="modal-overlay" id="month-modal">
+  <div class="modal" style="max-width:320px">
+    <div class="modal-header">
+      <div class="modal-title">Select Month</div>
+      <button class="modal-close" id="btn-close-month-modal">x</button>
+    </div>
+    <div class="form-row">
+      <div>
+        <label class="form-label">Month</label>
+        <select class="form-select" id="mm-month">
+          <option value="0">January</option><option value="1">February</option><option value="2">March</option>
+          <option value="3">April</option><option value="4">May</option><option value="5">June</option>
+          <option value="6" selected>July</option><option value="7">August</option><option value="8">September</option>
+          <option value="9">October</option><option value="10">November</option><option value="11">December</option>
+        </select>
+      </div>
+      <div>
+        <label class="form-label">Year</label>
+        <select class="form-select" id="mm-year">
+          <option value="2026" selected>2026</option>
+          <option value="2027">2027</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-footer btn-cancel" id="btn-cancel-month">Cancel</button>
+      <button class="btn-purple" style="flex:2;padding:10px;border-radius:20px" id="btn-apply-month">Apply</button>
+    </div>
+  </div>
+</div>
+
+<!-- ROSTER MODAL -->
+<div class="modal-overlay" id="roster-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="roster-modal-title">Class Roster</div>
+      <button class="modal-close" id="btn-close-roster-modal">x</button>
+    </div>
+    <div id="roster-content"><div style="text-align:center;padding:1rem;color:var(--text-muted)">Loading roster...</div></div>
+    <div class="modal-footer">
+      <button class="btn-pink" style="flex:1;padding:10px;border-radius:20px" id="btn-close-roster">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script>
-
 const firebaseConfig = {
   apiKey: "AIzaSyCOqOCXz4Zh793pHfCSuNQhOjtbdI2aN78",
   authDomain: "pilates-sesh-by-k.firebaseapp.com",
@@ -736,601 +872,1200 @@ const firebaseConfig = {
   appId: "1:903889921404:web:26655b6240a99ca32bb0f9",
   measurementId: "G-E0Q9BKL9S4"
 };
-
 firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
+var auth = firebase.auth();
+var db = firebase.firestore();
 
-// ── ADMIN WHITELIST ──
-var ADMIN_EMAILS = ['jealfaro1260@gmail.com','pilatesseshbyk@gmail.com'];
-
-// ── GLOBALS ──
+// ── CONSTANTS ──
+var ADMIN_EMAILS = ["jealfaro1260@gmail.com","pilatesseshbyk@gmail.com"];
 var isAdmin = false;
 var currentUser = null;
-var loginMode = 'client';
+var loginMode = "client";
 var calYear = 2026;
 var calMonth = 6;
 var sessionData = {};
 var editingKey = null;
-var currentType = 'live';
-var monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-var MAX_SPOTS = 10;
+var editingEventId = null;
+var editingSponsorId = null;
+var editingContentId = null;
+var editingShopId = null;
+var calView = "calendar";
+var MONTH_NAMES = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+var SHORT_MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
 // ── AUTH STATE ──
-auth.onAuthStateChanged( async (user) => {
-  if(user){
+auth.onAuthStateChanged(function(user) {
+  if (user) {
     currentUser = user;
-    isAdmin = ADMIN_EMAILS.includes(user.email.toLowerCase());
+    isAdmin = ADMIN_EMAILS.indexOf(user.email.toLowerCase()) > -1;
     showApp(user);
     loadCalendarFromDB();
-    if(isAdmin) loadAdminData();
   } else {
     currentUser = null;
     isAdmin = false;
-    document.getElementById('login-screen').style.display='flex';
-    document.getElementById('app').classList.remove('visible');
+    document.getElementById("login-screen").style.display = "flex";
+    document.getElementById("app").classList.remove("visible");
   }
 });
 
-// ── LOGIN / SIGNUP ──
-function setLoginMode(m){
-  var email = document.getElementById('login-email').value.trim().toLowerCase();
-  if(m==='admin' && !ADMIN_EMAILS.includes(email)){
-    showLoginError('Admin access is restricted to authorized accounts only.');
+// ── LOGIN ──
+function setLoginMode(mode) {
+  var email = document.getElementById("login-email").value.trim().toLowerCase();
+  if (mode === "admin" && email && ADMIN_EMAILS.indexOf(email) === -1) {
+    showLoginError("Admin access is restricted to authorized accounts only.");
     return;
   }
-  loginMode = m;
-  document.getElementById('login-error').style.display='none';
-  document.getElementById('toggle-client').classList.toggle('active',m==='client');
-  document.getElementById('toggle-admin').classList.toggle('active',m==='admin');
-  document.getElementById('login-hint').textContent = m==='admin' ? 'Admin login — Karen & Jose only' : 'New clients: enter name, email and password then Sign Up';
+  loginMode = mode;
+  document.getElementById("login-error").style.display = "none";
+  document.getElementById("toggle-client").classList.toggle("active", mode === "client");
+  document.getElementById("toggle-admin").classList.toggle("active", mode === "admin");
+  document.getElementById("login-hint").textContent = mode === "admin" ? "Admin login - Karen and Jose only" : "New clients: enter name, email and password then Sign Up";
 }
-window.setLoginMode = setLoginMode;
 
-async function doLogin(){
-  var email = document.getElementById('login-email').value.trim().toLowerCase();
-  var pass = document.getElementById('login-password').value;
-  if(!email||!pass){ showLoginError('Please enter your email and password'); return; }
-  if(loginMode==='admin' && !ADMIN_EMAILS.includes(email)){
-    showLoginError('Admin access is restricted. Please sign in as a client.');
-    document.getElementById('toggle-client').click();
+function doLogin() {
+  var email = document.getElementById("login-email").value.trim().toLowerCase();
+  var pass = document.getElementById("login-password").value;
+  if (!email || !pass) { showLoginError("Please enter your email and password"); return; }
+  if (loginMode === "admin" && ADMIN_EMAILS.indexOf(email) === -1) {
+    showLoginError("Admin access is restricted. Please sign in as a client.");
     return;
   }
-  try {
-    await auth.signInWithEmailAndPassword(email, pass);
-  } catch(e){
-    showLoginError(e.code==='auth/invalid-credential'?'Incorrect email or password. Try again or Sign Up.':e.message);
-  }
+  auth.signInWithEmailAndPassword(email, pass).catch(function(e) {
+    showLoginError(e.code === "auth/invalid-credential" ? "Incorrect email or password." : e.message);
+  });
 }
-window.doLogin = doLogin;
 
-async function doSignup(){
-  var email = document.getElementById('login-email').value.trim().toLowerCase();
-  var pass = document.getElementById('login-password').value;
-  var name = document.getElementById('signup-name') ? document.getElementById('signup-name').value.trim() : '';
-  if(!email||!pass){ showLoginError('Please enter your email and password'); return; }
-  if(pass.length < 6){ showLoginError('Password must be at least 6 characters'); return; }
-  if(ADMIN_EMAILS.includes(email)){
-    showLoginError('This email is reserved. Please sign in instead of signing up.');
-    return;
-  }
-  try {
-    var cred = await auth.createUserWithEmailAndPassword(email, pass);
-    if(name) await cred.user.updateProfile({displayName: name});
-    await db.collection('users').doc(cred.user.uid).set( {
+function doSignup() {
+  var email = document.getElementById("login-email").value.trim().toLowerCase();
+  var pass = document.getElementById("login-password").value;
+  var name = document.getElementById("signup-name").value.trim();
+  if (!email || !pass) { showLoginError("Please enter your email and password"); return; }
+  if (pass.length < 6) { showLoginError("Password must be at least 6 characters"); return; }
+  if (ADMIN_EMAILS.indexOf(email) > -1) { showLoginError("This email is reserved. Please sign in."); return; }
+  auth.createUserWithEmailAndPassword(email, pass).then(function(cred) {
+    if (name) cred.user.updateProfile({displayName: name});
+    return db.collection("users").doc(cred.user.uid).set({
       email: email,
-      name: name || email.split('@')[0],
-      role: 'client',
+      name: name || email.split("@")[0],
+      role: "client",
+      isFoundingMember: false,
       createdAt: new Date().toISOString()
     });
-    showToast('Welcome! Your account has been created.');
-  } catch(e){
-    showLoginError(e.code==='auth/email-already-in-use'?'An account with this email already exists. Please sign in.':e.message);
-  }
+  }).catch(function(e) {
+    showLoginError(e.code === "auth/email-already-in-use" ? "Account already exists. Please sign in." : e.message);
+  });
 }
-window.doSignup = doSignup;
 
-function showLoginError(msg){
-  var el = document.getElementById('login-error');
+function doLogout() { auth.signOut(); }
+
+function showLoginError(msg) {
+  var el = document.getElementById("login-error");
   el.textContent = msg;
-  el.style.display = 'block';
+  el.style.display = "block";
+  el.style.background = "#FFEBEE";
+  el.style.color = "#C62828";
+  el.style.fontSize = "11px";
+  el.style.padding = "8px 12px";
+  el.style.borderRadius = "8px";
+  el.style.marginBottom = "10px";
 }
 
-async function doLogout(){
-  await auth.signOut();
-}
-window.doLogout = doLogout;
-
-function showApp(user){
-  document.getElementById('login-screen').style.display='none';
-  document.getElementById('app').classList.add('visible');
-  var name = user.displayName || user.email.split('@')[0];
-  name = name.charAt(0).toUpperCase()+name.slice(1);
-  document.getElementById('sidebar-av').textContent = name.charAt(0).toUpperCase();
-  document.getElementById('sidebar-name').textContent = name;
-  document.getElementById('sidebar-role').textContent = isAdmin ? 'Admin' : 'Member';
-  document.getElementById('topbar-badge').textContent = isAdmin ? 'Admin' : 'Member';
-  document.getElementById('welcome-name').textContent = 'Hello, '+name+' \uD83C\uDF38';
-  document.getElementById('client-nav').style.display = isAdmin ? 'none' : 'block';
-  document.getElementById('admin-nav').style.display = isAdmin ? 'block' : 'none';
-  document.getElementById('admin-session-editor').style.display = isAdmin ? 'block' : 'none';
-  var avb = document.getElementById('admin-add-video-btn');
-  if(avb) avb.style.display = isAdmin ? 'block' : 'none';
-  var aeb = document.getElementById('admin-add-event-btn');
-  if(aeb) aeb.style.display = isAdmin ? 'block' : 'none';
-  document.getElementById('admin-cal-controls').style.display = isAdmin ? 'block' : 'none';
+function showApp(user) {
+  document.getElementById("login-screen").style.display = "none";
+  document.getElementById("app").classList.add("visible");
+  var name = user.displayName || user.email.split("@")[0];
+  name = name.charAt(0).toUpperCase() + name.slice(1);
+  document.getElementById("sidebar-av").textContent = name.charAt(0).toUpperCase();
+  document.getElementById("sidebar-name").textContent = name;
+  document.getElementById("sidebar-role").textContent = isAdmin ? "Admin" : "Member";
+  document.getElementById("topbar-badge").textContent = isAdmin ? "Admin" : "Member";
+  document.getElementById("welcome-name").textContent = "Hello, " + name;
+  document.getElementById("client-nav").style.display = isAdmin ? "none" : "block";
+  document.getElementById("admin-nav").style.display = isAdmin ? "block" : "none";
+  document.getElementById("qc-myclasses").style.display = isAdmin ? "none" : "block";
+  document.getElementById("qc-askk").style.display = isAdmin ? "none" : "block";
+  var adminBtns = ["admin-add-video-btn","admin-add-event-btn","admin-add-shop-btn","admin-cal-tools","admin-cal-info","btn-edit-class-details"];
+  adminBtns.forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.style.display = isAdmin ? (el.tagName === "DIV" ? "flex" : "inline-block") : "none";
+  });
   setDate();
-  showPage('dashboard');
-  buildCalendar();
+  showPage("dashboard");
+}
+
+// ── NAVIGATION ──
+var PAGE_TITLES = {
+  dashboard:"Dashboard",schedule:"Class Schedule","my-classes":"My Classes",
+  "class-details":"Class Details",library:"Video Library",events:"Community Events",
+  "ask-k":"Ask K","ask-k-admin":"Client Questions",chatbot:"Help and Onboarding",
+  shop:"Equipment Shop",members:"Members",registrations:"Class Registrations",
+  "content-planner":"Content Planner",sponsorship:"Sponsorship Tracker"
+};
+
+function showPage(id) {
+  document.querySelectorAll(".page").forEach(function(p) { p.classList.remove("active"); });
+  document.querySelectorAll(".nav-item").forEach(function(n) { n.classList.remove("active"); });
+  var el = document.getElementById("page-" + id);
+  if (el) el.classList.add("active");
+  document.querySelectorAll(".nav-item[data-page='" + id + "']").forEach(function(n) { n.classList.add("active"); });
+  document.getElementById("page-title").textContent = PAGE_TITLES[id] || id;
+  if (id === "schedule") buildCalendar();
+  if (id === "library") loadVideos();
+  if (id === "events") loadEvents();
+  if (id === "shop") loadShop();
+  if (id === "members") loadMembers();
+  if (id === "registrations") loadRegistrations();
+  if (id === "ask-k-admin") loadQuestions();
+  if (id === "content-planner") loadContent();
+  if (id === "sponsorship") loadSponsors();
+  if (id === "my-classes") loadMyClasses();
+  if (id === "class-details") loadClassDetails();
+  if (id === "dashboard") loadDashboardNext();
 }
 
 // ── CALENDAR ──
-async function loadCalendarFromDB(){
-  const snap = await getDoc(db.collection('calendar').doc('sessions'));
-  if(snap.exists()) sessionData = snap.data();
-  else sessionData = getDefaultSessions();
-  buildCalendar();
+function loadCalendarFromDB() {
+  db.collection("calendar").doc("sessions").get().then(function(snap) {
+    sessionData = snap.exists ? snap.data() : getDefaultSessions();
+    buildCalendar();
+    loadDashboardNext();
+  }).catch(function() {
+    sessionData = getDefaultSessions();
+    buildCalendar();
+  });
 }
 
-function getDefaultSessions(){
-  return {
-    '2026-6-3':  {type:'live',time:'09:30',duration:'25 min',link:'',spots:MAX_SPOTS,registered:[]},
-    '2026-6-10': {type:'live',time:'09:30',duration:'25 min',link:'',spots:MAX_SPOTS,registered:[]},
-    '2026-6-11': {type:'live',time:'09:30',duration:'25 min',link:'',spots:MAX_SPOTS,registered:[]},
-    '2026-6-17': {type:'live',time:'09:30',duration:'25 min',link:'',spots:MAX_SPOTS,registered:[]},
-    '2026-6-18': {type:'live',time:'11:00',duration:'30 min',link:'',spots:MAX_SPOTS,registered:[]},
-    '2026-6-24': {type:'live',time:'09:30',duration:'25 min',link:'',spots:MAX_SPOTS,registered:[]},
-    '2026-6-25': {type:'live',time:'09:30',duration:'25 min',link:'',spots:MAX_SPOTS,registered:[]},
-    '2026-6-31': {type:'live',time:'09:30',duration:'25 min',link:'',spots:MAX_SPOTS,registered:[]},
-    '2026-6-4':  {type:'holiday',name:'4th of July'}
-  };
+function getDefaultSessions() {
+  var data = {};
+  var defaults = [
+    {key:"2026-6-3",type:"live",name:"Morning Mat Pilates",time:"09:30",duration:"25 min",link:"",spots:10,registered:[]},
+    {key:"2026-6-10",type:"live",name:"Core and Cardio",time:"09:30",duration:"25 min",link:"",spots:10,registered:[]},
+    {key:"2026-6-11",type:"live",name:"Full Body Flow",time:"09:30",duration:"25 min",link:"",spots:10,registered:[]},
+    {key:"2026-6-17",type:"live",name:"Pilates Sculpt",time:"09:30",duration:"25 min",link:"",spots:10,registered:[]},
+    {key:"2026-6-18",type:"live",name:"Live Q&A Session",time:"11:00",duration:"30 min",link:"",spots:10,registered:[]},
+    {key:"2026-6-24",type:"live",name:"Stretch and Flow",time:"09:30",duration:"25 min",link:"",spots:10,registered:[]},
+    {key:"2026-6-25",type:"live",name:"Power Pilates",time:"09:30",duration:"25 min",link:"",spots:10,registered:[]},
+    {key:"2026-6-31",type:"live",name:"End of Month Flow",time:"09:30",duration:"25 min",link:"",spots:10,registered:[]},
+    {key:"2026-6-4",type:"holiday",name:"4th of July"}
+  ];
+  defaults.forEach(function(d) {
+    var k = d.key;
+    delete d.key;
+    data[k] = d;
+  });
+  return data;
 }
 
-async function saveCalendarToDB(){
-  await setDoc(db.collection('calendar').doc('sessions'), sessionData);
+function saveCalendarToDB() {
+  return db.collection("calendar").doc("sessions").set(sessionData);
 }
 
-function sessionKey(y,m,d){ return y+'-'+m+'-'+d; }
+function sKey(y,m,d) { return y+"-"+m+"-"+d; }
 
-function fmt12(t){
-  if(!t) return '[Time TBD]';
-  var p=t.split(':'),h=parseInt(p[0]),m=p[1],ampm=h>=12?'PM':'AM';
-  h=h%12||12;
-  return h+':'+m+' '+ampm+' PST';
+function fmt12(t) {
+  if (!t) return "TBD";
+  var p = t.split(":"), h = parseInt(p[0]), m = p[1], ap = h >= 12 ? "PM" : "AM";
+  h = h % 12 || 12;
+  return h + ":" + m + " " + ap + " PST";
 }
 
-function buildCalendar(){
-  var title = monthNames[calMonth]+' '+calYear+' — Class Schedule';
-  document.getElementById('cal-month-title').textContent = title;
-  var firstDay = new Date(calYear,calMonth,1).getDay();
-  var daysInMonth = new Date(calYear,calMonth+1,0).getDate();
-  var cells = document.getElementById('cal-cells');
-  if(!cells) return;
-  cells.innerHTML='';
-  for(var i=0;i<firstDay;i++) cells.innerHTML+='<div class="cal-cell empty"></div>';
-  for(var d=1;d<=daysInMonth;d++){
-    var key=sessionKey(calYear,calMonth,d);
-    var data=sessionData[key];
-    var cls='cal-cell';
-    var inner='<div class="cal-num'+(data&&data.type==='live'?' session-num':'')+'" >'+d+'</div>';
-    if(data&&data.type==='live'){
-      cls+=' session';
-      var reg = data.registered||[];
-      var taken = reg.length;
-      var total = data.spots||MAX_SPOTS;
-      var remaining = total-taken;
-      var userReg = currentUser && reg.includes(currentUser.uid);
-      var spotsColor = remaining<=2?'color:#E53935':'color:#2E7D32';
-      var joinLink = data.link?'<a href="'+data.link+'" target="_blank" style="display:block;background:var(--teal);color:white;font-size:7px;border-radius:3px;padding:2px 5px;margin-top:2px;text-decoration:none;text-align:center">🔗 Join</a>':'';
-      var regBtn = !isAdmin ? (userReg
-        ? '<button data-key="'+key+'" onclick="unregisterClass(this.dataset.key)" style="width:100%;margin-top:3px;background:#E53935;color:white;border:none;border-radius:3px;font-size:7px;padding:2px 4px;cursor:pointer;font-family:Jost,sans-serif">✓ Registered</button>'
-        : (remaining>0
-          ? '<button data-key="'+key+'" onclick="registerClass(this.dataset.key)" style="width:100%;margin-top:3px;background:var(--pink);color:white;border:none;border-radius:3px;font-size:7px;padding:2px 4px;cursor:pointer;font-family:Jost,sans-serif">+ Register</button>'
-          : '<div style="font-size:7px;color:#E53935;margin-top:2px;text-align:center">Class full</div>')) : '';
-      var rosterBtn = isAdmin ? '<button data-key="'+key+'" data-day="'+d+'" onclick="showRoster(this.dataset.key,this.dataset.day)" style="width:100%;margin-top:3px;background:var(--purple);color:white;border:none;border-radius:3px;font-size:7px;padding:2px 4px;cursor:pointer;font-family:Jost,sans-serif">👥 '+taken+'/'+total+' roster</button>' : '';
-      inner+='<div class="session-pill" style="cursor:pointer" onclick="showClassDetail()">▶ Live</div>';
-      inner+='<div class="session-time">⏰ '+fmt12(data.time)+'</div>';
-      inner+='<div style="font-size:7px;'+spotsColor+';font-weight:500">'+remaining+' spots left</div>';
-      inner+=joinLink+regBtn+rosterBtn;
-    } else if(data&&data.type==='holiday'){
-      cls+=' holiday';
-      inner+='<div class="holiday-label">🎆 '+(data.name||'Holiday')+'<br><span style="font-size:7px">No class</span></div>';
-    }
-    var clickAttr = isAdmin?'data-key="'+key+'" data-day="'+d+'" onclick="openDayEditor(this.dataset.key,this.dataset.day)"':'';
-    var adminStyle = isAdmin?'style="cursor:pointer;position:relative" title="Click to edit this day"':'';
-    var adminDot = isAdmin?'<div style="position:absolute;top:3px;right:3px;width:6px;height:6px;border-radius:50%;background:var(--green);opacity:0.8"></div>':'';
-    cells.innerHTML+='<div class="'+cls+'" '+clickAttr+' '+adminStyle+'>'+adminDot+inner+'</div>';
+function buildCalendar() {
+  var title = MONTH_NAMES[calMonth] + " " + calYear + " - Class Schedule";
+  document.getElementById("cal-month-title").textContent = title;
+  var firstDay = new Date(calYear, calMonth, 1).getDay();
+  var daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+  var cells = document.getElementById("cal-cells");
+  if (!cells) return;
+  cells.innerHTML = "";
+  for (var i = 0; i < firstDay; i++) {
+    var empty = document.createElement("div");
+    empty.className = "cal-cell empty";
+    cells.appendChild(empty);
   }
-  var rem=(firstDay+daysInMonth)%7;
-  if(rem>0) for(var e=rem;e<7;e++) cells.innerHTML+='<div class="cal-cell empty"></div>';
+  for (var d = 1; d <= daysInMonth; d++) {
+    var key = sKey(calYear, calMonth, d);
+    var data = sessionData[key];
+    var cell = document.createElement("div");
+    cell.style.position = "relative";
+    var cls = "cal-cell";
+    var inner = '<div class="cal-num' + (data && data.type !== "holiday" ? " active-num" : "") + '">' + d + "</div>";
+    if (data) {
+      if (data.type === "live") {
+        cls += " session-live";
+        var reg = data.registered || [];
+        var taken = reg.length, total = data.spots || 10, rem = total - taken;
+        var spotsColor = rem <= 2 ? "color:#c62828" : "color:#2e7d32";
+        var userReg = currentUser && reg.indexOf(currentUser.uid) > -1;
+        var joinBtn = data.link ? '<a href="'+data.link+'" target="_blank" style="display:block;background:var(--teal);color:white;font-size:7px;border-radius:3px;padding:2px 4px;margin-top:2px;text-decoration:none;text-align:center">Join</a>' : "";
+        var regBtn = "";
+        if (!isAdmin) {
+          if (userReg) {
+            regBtn = '<button data-key="'+key+'" onclick="unregClass(this.dataset.key)" style="width:100%;margin-top:2px;background:#2e7d32;color:white;border:none;border-radius:3px;font-size:7px;padding:2px 4px;cursor:pointer">Registered</button>';
+          } else if (rem > 0) {
+            regBtn = '<button data-key="'+key+'" onclick="regClass(this.dataset.key)" style="width:100%;margin-top:2px;background:var(--pink);color:white;border:none;border-radius:3px;font-size:7px;padding:2px 4px;cursor:pointer">+ Register</button>';
+          } else {
+            regBtn = '<div style="font-size:7px;color:#c62828;margin-top:2px;text-align:center">Full</div>';
+          }
+        }
+        var rosterBtn = isAdmin ? '<button data-key="'+key+'" data-day="'+d+'" onclick="showRoster(this.dataset.key,this.dataset.day)" style="width:100%;margin-top:2px;background:var(--purple);color:white;border:none;border-radius:3px;font-size:7px;padding:2px 4px;cursor:pointer">Roster ('+taken+"/"+total+")</button>" : "";
+        inner += '<div class="session-pill live">' + (data.name || "Live Session") + "</div>";
+        inner += '<div class="session-time">' + fmt12(data.time) + " - " + data.duration + "</div>";
+        inner += '<div class="spots-text" style="'+spotsColor+'">' + rem + " spots left</div>";
+        inner += joinBtn + regBtn + rosterBtn;
+      } else if (data.type === "recorded") {
+        cls += " session-recorded";
+        inner += '<div class="session-pill recorded">' + (data.name || "Pre-Recorded") + "</div>";
+        inner += '<div class="session-time">' + fmt12(data.time) + "</div>";
+      } else if (data.type === "community") {
+        cls += " session-community";
+        inner += '<div class="session-pill community">' + (data.name || "Community Event") + "</div>";
+        inner += '<div class="session-time">' + fmt12(data.time) + "</div>";
+      } else if (data.type === "holiday") {
+        cls += " holiday";
+        inner += '<div class="session-pill holiday">' + (data.name || "Holiday") + "</div>";
+        inner += '<div class="session-time">No class</div>';
+      }
+    }
+    if (isAdmin) {
+      inner += '<div class="admin-dot"></div>';
+      cell.setAttribute("data-key", key);
+      cell.setAttribute("data-day", d);
+      cell.style.cursor = "pointer";
+      cell.onclick = function() { openSessionEditor(this.getAttribute("data-key"), this.getAttribute("data-day")); };
+    }
+    cell.className = cls;
+    cell.innerHTML = inner;
+    cells.appendChild(cell);
+  }
+  var rem2 = (firstDay + daysInMonth) % 7;
+  if (rem2 > 0) {
+    for (var e = rem2; e < 7; e++) {
+      var emp = document.createElement("div");
+      emp.className = "cal-cell empty";
+      cells.appendChild(emp);
+    }
+  }
+}
+
+function loadDashboardNext() {
+  var nextInfo = document.getElementById("dash-next-class");
+  var joinBtn = document.getElementById("dash-join-btn");
+  if (!nextInfo) return;
+  var today = new Date();
+  var found = null;
+  for (var d = 1; d <= 31; d++) {
+    var key = sKey(calYear, calMonth, d);
+    var s = sessionData[key];
+    if (s && (s.type === "live" || s.type === "community") && d >= today.getDate()) {
+      found = {day: d, data: s};
+      break;
+    }
+  }
+  if (found) {
+    nextInfo.textContent = SHORT_MONTHS[calMonth] + " " + found.day + " - " + (found.data.name || "Live Session") + " at " + fmt12(found.data.time);
+    if (found.data.link && joinBtn) {
+      joinBtn.onclick = function() { window.open(found.data.link, "_blank"); };
+    }
+  } else {
+    nextInfo.textContent = "No upcoming sessions scheduled";
+  }
+}
+
+// ── SESSION EDITOR (admin) ──
+function openSessionEditor(key, day) {
+  if (!isAdmin) return;
+  editingKey = key;
+  var data = sessionData[key] || {};
+  var dateObj = new Date(calYear, calMonth, parseInt(day));
+  document.getElementById("session-modal-date").textContent = dateObj.toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"});
+  document.getElementById("sm-type").value = data.type || "none";
+  document.getElementById("sm-name").value = data.name || "";
+  document.getElementById("sm-time").value = data.time || "09:30";
+  document.getElementById("sm-duration").value = data.duration || "25 min";
+  document.getElementById("sm-spots").value = data.spots || 10;
+  document.getElementById("sm-link").value = data.link || "";
+  document.getElementById("sm-holiday-name").value = data.name || "";
+  updateSessionTypeUI();
+  openModal("session-modal");
+}
+
+function updateSessionTypeUI() {
+  var type = document.getElementById("sm-type").value;
+  document.getElementById("sm-live-fields").style.display = (type === "live" || type === "recorded" || type === "community") ? "block" : "none";
+  document.getElementById("sm-holiday-fields").style.display = type === "holiday" ? "block" : "none";
+}
+
+function saveSession() {
+  var type = document.getElementById("sm-type").value;
+  var existing = sessionData[editingKey] || {};
+  if (type === "none") {
+    delete sessionData[editingKey];
+  } else if (type === "holiday") {
+    sessionData[editingKey] = {type:"holiday", name: document.getElementById("sm-holiday-name").value || "Holiday"};
+  } else {
+    sessionData[editingKey] = {
+      type: type,
+      name: document.getElementById("sm-name").value || "Pilates Session",
+      time: document.getElementById("sm-time").value,
+      duration: document.getElementById("sm-duration").value,
+      spots: parseInt(document.getElementById("sm-spots").value) || 10,
+      link: document.getElementById("sm-link").value,
+      registered: existing.registered || []
+    };
+  }
+  saveCalendarToDB().then(function() {
+    closeModal("session-modal");
+    buildCalendar();
+    showToast("Session saved!");
+  }).catch(function(e) { showToast("Error: " + e.message); });
 }
 
 // ── CLASS REGISTRATION ──
-async function registerClass(key){
-  if(!currentUser){alert('Please log in to register');return;}
+function regClass(key) {
+  if (!currentUser) { showToast("Please log in to register"); return; }
   var data = sessionData[key];
-  if(!data||data.type!=='live') return;
-  var reg = data.registered||[];
-  if(reg.includes(currentUser.uid)){alert('You are already registered for this class!');return;}
-  if(reg.length>=(data.spots||MAX_SPOTS)){alert('Sorry, this class is full!');return;}
+  if (!data || data.type !== "live") return;
+  var reg = data.registered || [];
+  if (reg.indexOf(currentUser.uid) > -1) { showToast("Already registered!"); return; }
+  if (reg.length >= (data.spots || 10)) { showToast("Sorry, this class is full!"); return; }
   reg.push(currentUser.uid);
   sessionData[key].registered = reg;
-  await saveCalendarToDB();
-  await setDoc(db.collection('registrations').doc(currentUser.uid+'-'+key),{
-    userId: currentUser.uid,
-    userName: currentUser.displayName||currentUser.email,
-    userEmail: currentUser.email,
-    sessionKey: key,
-    registeredAt: new Date().toISOString()
+  saveCalendarToDB().then(function() {
+    db.collection("registrations").doc(currentUser.uid+"-"+key).set({
+      userId: currentUser.uid,
+      userName: currentUser.displayName || currentUser.email,
+      userEmail: currentUser.email,
+      sessionKey: key,
+      sessionName: data.name || "Live Session",
+      sessionTime: data.time,
+      sessionMonth: calMonth,
+      sessionDay: parseInt(key.split("-")[2]),
+      registeredAt: new Date().toISOString()
+    });
+    buildCalendar();
+    showToast("Registered! See you on the mat!");
   });
-  buildCalendar();
-    showToast('Registered! See you on the mat!');
-
 }
-window.registerClass = registerClass;
 
-async function unregisterClass(key){
-  if(!currentUser) return;
-  var data = sessionData[key];
-  if(!data) return;
-  var reg = data.registered||[];
-  reg = reg.filter(function(id){return id!==currentUser.uid;});
+function unregClass(key) {
+  if (!currentUser) return;
+  var reg = (sessionData[key].registered || []).filter(function(id) { return id !== currentUser.uid; });
   sessionData[key].registered = reg;
-  await saveCalendarToDB();
-  await deleteDoc(db.collection('registrations').doc(currentUser.uid+'-'+key));
-  buildCalendar();
-    showToast('Registered! See you on the mat!');
-
-}
-window.unregisterClass = unregisterClass;
-
-// ── ADMIN: ROSTER ──
-async function showRoster(key, day){
-  var data = sessionData[key];
-  if(!data) return;
-  var reg = data.registered||[];
-  if(reg.length===0){alert('No registrations yet for this class.');return;}
-  var names = [];
-  for(var i=0;i<reg.length;i++){
-    var snap = await getDoc(db.collection('users').doc(reg[i]));
-    if(snap.exists()) names.push((snap.data().name||snap.data().email)+' ('+snap.data().email+')');
-    else names.push('Unknown user');
-  }
-  alert('Registered for July '+day+':\n\n'+names.join('\n')+'\n\n'+reg.length+'/'+(data.spots||MAX_SPOTS)+' spots filled');
-}
-window.showRoster = showRoster;
-
-// ── ADMIN: DAY EDITOR ──
-function openDayEditor(key,day){
-  day = parseInt(day);
-  if(!isAdmin) return;
-  editingKey=key;
-  var d=new Date(calYear,calMonth,day);
-  document.getElementById('modal-date-title').textContent=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
-  var data=sessionData[key]||{};
-  currentType=data.type||'none';
-  document.getElementById('modal-time').value=data.time||'09:30';
-  document.getElementById('modal-duration').value=data.duration||'25 min';
-  document.getElementById('modal-link').value=data.link||'';
-  document.getElementById('modal-holiday-name').value=data.name||'';
-  document.getElementById('modal-spots').value=data.spots||MAX_SPOTS;
-  updateTypeUI();
-  document.getElementById('session-modal-overlay').style.display='flex';
-}
-window.openDayEditor = openDayEditor;
-
-function setType(t){currentType=t;updateTypeUI();}
-window.setType = setType;
-
-function updateTypeUI(){
-  var isL=currentType==='live',isH=currentType==='holiday';
-  document.getElementById('live-fields').style.display=isL?'block':'none';
-  document.getElementById('holiday-fields').style.display=isH?'block':'none';
-  document.getElementById('type-live').style.background=isL?'var(--pink)':'var(--white)';
-  document.getElementById('type-live').style.color=isL?'var(--white)':'var(--pink)';
-  document.getElementById('type-holiday').style.background=isH?'#F57F17':'var(--white)';
-  document.getElementById('type-holiday').style.color=isH?'var(--white)':'#F57F17';
-  document.getElementById('type-none').style.background=currentType==='none'?'#888':'var(--white)';
-  document.getElementById('type-none').style.color=currentType==='none'?'var(--white)':'var(--text-muted)';
-}
-
-async function saveSession(){
-  if(!ADMIN_EMAILS.includes(currentUser.email.toLowerCase())){ showToast('Access denied'); return; }
-  var existing = sessionData[editingKey]||{};
-  if(currentType==='none'){
-    delete sessionData[editingKey];
-  } else if(currentType==='live'){
-    sessionData[editingKey]={
-      type:'live',
-      time:document.getElementById('modal-time').value,
-      duration:document.getElementById('modal-duration').value,
-      link:document.getElementById('modal-link').value,
-      spots:parseInt(document.getElementById('modal-spots').value)||MAX_SPOTS,
-      registered:existing.registered||[]
-    };
-  } else {
-    sessionData[editingKey]={type:'holiday',name:document.getElementById('modal-holiday-name').value||'Holiday'};
-  }
-  await saveCalendarToDB();
-  closeModal();
-  buildCalendar();
-  showToast('✓ Calendar saved to Firebase!');
-}
-window.saveSession = saveSession;
-
-function closeModal(){
-  document.getElementById('session-modal-overlay').style.display='none';
-  editingKey=null;
-}
-window.closeModal = closeModal;
-
-function showMonthPicker(){
-  document.getElementById('month-picker-month').value=calMonth;
-  document.getElementById('month-picker-year').value=calYear;
-  document.getElementById('month-modal-overlay').style.display='flex';
-}
-window.showMonthPicker = showMonthPicker;
-
-function applyMonthChange(){
-  calMonth=parseInt(document.getElementById('month-picker-month').value);
-  calYear=parseInt(document.getElementById('month-picker-year').value);
-  document.getElementById('month-modal-overlay').style.display='none';
-  buildCalendar();
-}
-window.applyMonthChange = applyMonthChange;
-
-// ── ASK K ──
-async function submitQuestion(){
-  var select = document.querySelector('.form-select');
-  var textarea = document.querySelector('.form-textarea');
-  if(!textarea.value.trim()){alert('Please type your question first');return;}
-  await db.collection('questions').add({
-    userId: currentUser.uid,
-    userName: currentUser.displayName||currentUser.email,
-    userEmail: currentUser.email,
-    category: select.value,
-    question: textarea.value.trim(),
-    askedAt: new Date().toISOString(),
-    answered: false
+  saveCalendarToDB().then(function() {
+    db.collection("registrations").doc(currentUser.uid+"-"+key).delete();
+    buildCalendar();
+    showToast("Unregistered from class");
   });
-  textarea.value='';
-  showToast('Question sent to K! She will respond within 48 hours.');
-}
-window.submitQuestion = submitQuestion;
-
-// ── VIDEO LIBRARY ADMIN ──
-async function loadVideoLibrary(){
-  var snap = await db.collection('videos').get();
-  var videos = [];
-  snap.forEach(function(d){videos.push(Object.assign({id:d.id},d.data()));});
-  renderVideoLibrary(videos);
 }
 
-function renderVideoLibrary(videos){
-  var grid = document.getElementById('video-grid');
-  if(!grid) return;
-  if(videos.length===0){
-    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--text-muted);font-size:13px">'+(isAdmin?'No videos yet. Click "+ Add Video" to add your first class recording.':'No recordings available yet. Check back after your first live session!')+' \uD83C\uDF38</div>';
+// ── MY CLASSES (client) ──
+function loadMyClasses() {
+  if (!currentUser) return;
+  var list = document.getElementById("my-classes-list");
+  if (!list) return;
+  db.collection("registrations").get().then(function(snap) {
+    var mine = [];
+    snap.forEach(function(d) {
+      var r = d.data();
+      if (r.userId === currentUser.uid) mine.push(r);
+    });
+    if (mine.length === 0) {
+      list.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-muted)">You have no registered classes yet. Go to the Schedule to register!</div>';
+      return;
+    }
+    list.innerHTML = mine.map(function(r) {
+      var sess = sessionData[r.sessionKey];
+      var link = sess && sess.link ? '<a href="'+sess.link+'" target="_blank" class="join-btn" style="text-decoration:none;margin-left:auto">Join</a>' : "";
+      return '<div class="my-class-card"><div class="my-class-date"><div style="font-size:9px;text-transform:uppercase">'+SHORT_MONTHS[r.sessionMonth||calMonth]+'</div><div style="font-size:20px;font-weight:500">'+r.sessionDay+'</div></div><div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--purple)">'+(r.sessionName||"Live Session")+'</div><div style="font-size:11px;color:var(--text-muted)">'+fmt12(r.sessionTime)+'</div></div>'+link+'</div>';
+    }).join("");
+  }).catch(function() {
+    list.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-muted)">Could not load your classes.</div>';
+  });
+}
+
+// ── ROSTER (admin) ──
+function showRoster(key, day) {
+  if (!isAdmin) return;
+  var data = sessionData[key];
+  var reg = data ? (data.registered || []) : [];
+  var title = SHORT_MONTHS[calMonth] + " " + day + " - " + (data ? data.name : "Session");
+  document.getElementById("roster-modal-title").textContent = title + " Roster";
+  var content = document.getElementById("roster-content");
+  content.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--text-muted)">Loading...</div>';
+  openModal("roster-modal");
+  if (reg.length === 0) {
+    content.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--text-muted)">No registrations yet for this class.</div>';
     return;
   }
-  grid.innerHTML = videos.map(function(v){
-    var ytId = extractYouTubeId(v.url);
-    var thumb = ytId?'https://img.youtube.com/vi/'+ytId+'/mqdefault.jpg':'';
-    var thumbHtml = thumb?'<img src="'+thumb+'" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML="\uD83C\uDFA5"">'  :'<span style="font-size:2rem">\uD83C\uDFA5</span>';
-    var deleteBtn = isAdmin?'<button data-vid="'+v.id+'" onclick="deleteVideo(this.dataset.vid)" style="position:absolute;top:6px;right:6px;background:rgba(0,0,0,0.6);color:white;border:none;border-radius:50%;width:22px;height:22px;font-size:10px;cursor:pointer">✕</button>':'';
-    return '<div class="video-card" data-cat="'+v.category+'" data-url="'+v.url+'" onclick="openVideo(this.dataset.url)">'+
-      '<div class="video-thumb" style="position:relative">'+thumbHtml+'<div class="video-duration">'+v.duration+'</div>'+deleteBtn+'</div>'+
-      '<div class="video-info"><div class="video-title">'+v.title+'</div>'+
-      '<div class="video-meta">'+v.date+' · K</div>'+
-      '<span class="video-tag">'+v.category+'</span></div></div>';
-  }).join('');
+  var promises = reg.map(function(uid) {
+    return db.collection("users").doc(uid).get();
+  });
+  Promise.all(promises).then(function(snaps) {
+    var rows = snaps.map(function(snap, i) {
+      var u = snap.exists ? snap.data() : {name:"Unknown",email:"unknown"};
+      var badge = u.isFoundingMember ? '<span class="founding-badge">Founding</span>' : '<span class="regular-badge">Regular</span>';
+      return '<tr><td>'+(i+1)+'</td><td><strong>'+(u.name||"Unknown")+'</strong></td><td>'+(u.email||"")+'</td><td>'+badge+'</td></tr>';
+    }).join("");
+    content.innerHTML = '<div style="margin-bottom:8px;font-size:12px;color:var(--text-muted)">'+reg.length+' / '+(data.spots||10)+' spots filled</div><table class="data-table"><thead><tr><th>#</th><th>Name</th><th>Email</th><th>Status</th></tr></thead><tbody>'+rows+"</tbody></table>";
+  });
 }
 
-function extractYouTubeId(url){
-  if(!url) return null;
+// ── REGISTRATIONS PAGE (admin) ──
+function loadRegistrations() {
+  var list = document.getElementById("reg-session-list");
+  if (!list) return;
+  var sessions = [];
+  Object.keys(sessionData).forEach(function(key) {
+    var s = sessionData[key];
+    if (s && s.type === "live" && (s.registered || []).length > 0) {
+      var parts = key.split("-");
+      sessions.push({key:key, day:parseInt(parts[2]), data:s});
+    }
+  });
+  sessions.sort(function(a,b) { return a.day - b.day; });
+  if (sessions.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-muted)">No class registrations yet.</div>';
+    return;
+  }
+  list.innerHTML = sessions.map(function(s) {
+    var reg = s.data.registered || [];
+    return '<div class="card" style="margin-bottom:10px"><div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px"><div><div style="font-size:14px;font-weight:500;color:var(--purple)">'+(s.data.name||"Live Session")+'</div><div style="font-size:11px;color:var(--text-muted)">'+SHORT_MONTHS[calMonth]+' '+s.day+' - '+fmt12(s.data.time)+'</div></div><div style="display:flex;align-items:center;gap:8px"><span style="background:var(--pink);color:white;font-size:11px;padding:3px 10px;border-radius:10px">'+reg.length+' / '+(s.data.spots||10)+'</span><button data-key="'+s.key+'" data-day="'+s.day+'" onclick="showRoster(this.dataset.key,this.dataset.day)" class="btn-purple" style="font-size:11px;padding:5px 12px">View Roster</button></div></div></div>';
+  }).join("");
+}
+
+// ── VIDEO LIBRARY ──
+function loadVideos() {
+  var grid = document.getElementById("video-grid");
+  if (!grid) return;
+  db.collection("videos").get().then(function(snap) {
+    var videos = [];
+    snap.forEach(function(d) { videos.push(Object.assign({id:d.id}, d.data())); });
+    if (videos.length === 0) {
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--text-muted)">' + (isAdmin ? 'No videos yet. Click "+ Add Video" to add your first recording.' : 'No recordings available yet. Check back after your first live session!') + '</div>';
+      return;
+    }
+    grid.innerHTML = videos.map(function(v) {
+      var ytId = extractYTId(v.url);
+      var thumb = ytId ? 'https://img.youtube.com/vi/'+ytId+'/mqdefault.jpg' : '';
+      var thumbHtml = thumb ? '<img src="'+thumb+'" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display=\'none\'">' : '<span style="font-size:2rem">&#127909;</span>';
+      var delBtn = isAdmin ? '<button data-vid="'+v.id+'" onclick="deleteVideo(this.dataset.vid)" style="position:absolute;top:6px;right:6px;background:rgba(0,0,0,0.7);color:white;border:none;border-radius:50%;width:22px;height:22px;font-size:10px;cursor:pointer">x</button>' : '';
+      return '<div class="video-card" data-cat="'+v.category+'" onclick="openVideo(\''+v.url+'\')"><div class="video-thumb" style="position:relative">'+thumbHtml+'<div class="video-duration">'+v.duration+'</div>'+delBtn+'</div><div class="video-info"><div class="video-title">'+v.title+'</div><div class="video-meta">'+v.date+' - K</div><span class="video-tag">'+v.category+'</span></div></div>';
+    }).join("");
+  });
+}
+
+function extractYTId(url) {
+  if (!url) return null;
   var m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))(\w+)/);
-  return m?m[1]:null;
+  return m ? m[1] : null;
 }
 
-function openVideo(url){
-  if(url) window.open(url,'_blank');
-}
-window.openVideo = openVideo;
+function openVideo(url) { if (url) window.open(url, "_blank"); }
 
-async function deleteVideo(id){
-  if(!confirm('Remove this video from the library?')) return;
-  await deleteDoc(db.collection('videos').doc(id));
-  loadVideoLibrary();
-  showToast('Video removed');
+function deleteVideo(id) {
+  if (!confirm("Remove this video?")) return;
+  db.collection("videos").doc(id).delete().then(function() { showToast("Video removed"); loadVideos(); });
 }
-window.deleteVideo = deleteVideo;
 
-function showAddVideoModal(){
-  document.getElementById('add-video-modal').style.display='flex';
-}
-window.showAddVideoModal = showAddVideoModal;
-
-function closeAddVideoModal(){
-  document.getElementById('add-video-modal').style.display='none';
-}
-window.closeAddVideoModal = closeAddVideoModal;
-
-async function saveVideo(){
-  if(!ADMIN_EMAILS.includes(currentUser.email.toLowerCase())){ showToast('Access denied'); return; }
-  var url = document.getElementById('vid-url').value.trim();
-  var title = document.getElementById('vid-title').value.trim();
-  var cat = document.getElementById('vid-cat').value;
-  var dur = document.getElementById('vid-dur').value.trim();
-  var date = document.getElementById('vid-date').value;
-  if(!url||!title){alert('Please enter a YouTube URL and title');return;}
-  await db.collection('videos').add({
-    url:url, title:title, category:cat,
-    duration:dur||'20 min',
-    date:date?new Date(date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})
-  });
-  closeAddVideoModal();
-  document.getElementById('vid-url').value='';
-  document.getElementById('vid-title').value='';
-  document.getElementById('vid-dur').value='';
-  loadVideoLibrary();
-  showToast('✓ Video added to library!');
-}
-window.saveVideo = saveVideo;
-
-function filterLib(el,cat){
-  document.querySelectorAll('.filter-pill').forEach(function(p){p.classList.remove('active');});
-  el.classList.add('active');
-  document.querySelectorAll('.video-card').forEach(function(c){
-    c.style.display=(cat==='all'||c.dataset.cat===cat)?'block':'none';
+function saveVideo() {
+  var url = document.getElementById("vm-url").value.trim();
+  var title = document.getElementById("vm-title").value.trim();
+  if (!url || !title) { showToast("Please enter a URL and title"); return; }
+  var cat = document.getElementById("vm-cat").value;
+  var dur = document.getElementById("vm-duration").value.trim() || "25 min";
+  var dateVal = document.getElementById("vm-date").value;
+  var dateStr = dateVal ? new Date(dateVal).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}) : new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});
+  db.collection("videos").add({url:url,title:title,category:cat,duration:dur,date:dateStr}).then(function() {
+    closeModal("video-modal");
+    document.getElementById("vm-url").value = "";
+    document.getElementById("vm-title").value = "";
+    showToast("Video added to library!");
+    loadVideos();
   });
 }
-window.filterLib = filterLib;
 
-// ── ADMIN DATA ──
-async function loadAdminData(){
-  loadVideoLibrary();
+// ── EVENTS ──
+var DEF_EVENTS = [
+  {id:"e1",month:"Aug",day:9,title:"Pilates Sesh by K x Seattle Sorority Vol. 2",location:"Marina Beach Park, 470 Admiral Way, Edmonds WA",time:"8:30 AM",tags:["Outdoor","All levels","$50","Goodie bags"],link:"",sortKey:809},
+  {id:"e2",month:"Sep",day:13,title:"100 Years of Pilates Community Celebration",location:"Lynnwood WA",time:"10:00 AM",tags:["Special event","Centennial","All welcome"],link:"",sortKey:913},
+  {id:"e3",month:"Oct",day:4,title:"Fall Wellness Morning",location:"Edmonds WA",time:"TBD",tags:["Wellness","Vendors","Sponsors"],link:"",sortKey:1004}
+];
+
+function loadEvents() {
+  var list = document.getElementById("events-list");
+  if (!list) return;
+  list.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading events...</div>';
+  db.collection("events").orderBy("sortKey").get().then(function(snap) {
+    var evts = [];
+    snap.forEach(function(d) { evts.push(Object.assign({id:d.id}, d.data())); });
+    renderEvents(evts.length > 0 ? evts : DEF_EVENTS);
+  }).catch(function() { renderEvents(DEF_EVENTS); });
 }
 
-// ── SHARED HELPERS ──
-function showClassDetail(){ showPage('class-details'); }
-window.showClassDetail = showClassDetail;
+function renderEvents(evts) {
+  var list = document.getElementById("events-list");
+  if (!list) return;
+  list.innerHTML = evts.map(function(ev) {
+    var tags = (ev.tags||[]).map(function(t) { return '<span class="event-tag">'+t+'</span>'; }).join("");
+    var adminBtns = isAdmin ? '<div style="margin-top:6px;display:flex;gap:6px"><button data-eid="'+ev.id+'" onclick="openEditEvent(this.dataset.eid)" class="btn-sm btn-sm-purple">Edit</button><button data-eid="'+ev.id+'" onclick="deleteEvent(this.dataset.eid)" class="btn-sm btn-sm-red">Delete</button></div>' : "";
+    var rsvp = ev.link ? '<a href="'+ev.link+'" target="_blank" class="rsvp-btn">RSVP</a>' : '<button class="rsvp-btn" onclick="this.textContent=\'RSVPd\';this.className=\'rsvp-btn rsvpd\'">RSVP</button>';
+    return '<div class="event-card"><div class="event-date-box"><div class="event-date-month">'+ev.month+'</div><div class="event-date-day">'+ev.day+'</div></div><div class="event-info"><div class="event-title">'+ev.title+'</div><div class="event-location">'+(ev.location||"")+(ev.time?" - "+ev.time:"")+'</div><div class="event-tags">'+tags+'</div>'+adminBtns+'</div>'+rsvp+'</div>';
+  }).join("");
+}
 
-function showPage(id){
-  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
-  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active');});
-  var el=document.getElementById('page-'+id);
-  if(el) el.classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(function(n){
-    if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+id+"'")) n.classList.add('active');
+function openAddEvent() {
+  editingEventId = null;
+  document.getElementById("event-modal-title").textContent = "Add Event";
+  document.getElementById("em-title").value = "";
+  document.getElementById("em-month").value = "Aug";
+  document.getElementById("em-day").value = "";
+  document.getElementById("em-location").value = "";
+  document.getElementById("em-time").value = "";
+  document.getElementById("em-tags").value = "";
+  document.getElementById("em-link").value = "";
+  openModal("event-modal");
+}
+
+function openEditEvent(id) {
+  db.collection("events").doc(id).get().then(function(snap) {
+    if (!snap.exists) return;
+    var ev = snap.data();
+    editingEventId = id;
+    document.getElementById("event-modal-title").textContent = "Edit Event";
+    document.getElementById("em-title").value = ev.title||"";
+    document.getElementById("em-month").value = ev.month||"Aug";
+    document.getElementById("em-day").value = ev.day||"";
+    document.getElementById("em-location").value = ev.location||"";
+    document.getElementById("em-time").value = ev.time||"";
+    document.getElementById("em-tags").value = (ev.tags||[]).join(", ");
+    document.getElementById("em-link").value = ev.link||"";
+    openModal("event-modal");
   });
-  var titles={'dashboard':'Dashboard','schedule':'Class Schedule','class-details':'Class Details',
-    'library':'Video Library','events':'Community Events','ask-k':'Ask K',
-    'chatbot':'Help & Onboarding','shop':'Equipment Shop',
-    'content-planner':'Content Planner','sponsorship':'Sponsorship Tracker'};
-  document.getElementById('page-title').textContent=titles[id]||id;
-  if(id==='library'){loadVideoLibrary();initCalendar();}
-  if(id==='schedule'){initCalendar();}
-  if(id==='events'){loadEvents();}
-  if(id==='sponsorship'){loadSponsors();}
-}
-window.showPage = showPage;
-
-function initCalendar(){
-  buildCalendar();
 }
 
-function setDate(){
-  document.getElementById('topbar-date').textContent=new Date().toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+function saveEvent() {
+  var title = document.getElementById("em-title").value.trim();
+  if (!title) { showToast("Please enter an event title"); return; }
+  var month = document.getElementById("em-month").value;
+  var day = parseInt(document.getElementById("em-day").value) || 1;
+  var location = document.getElementById("em-location").value.trim();
+  var time = document.getElementById("em-time").value.trim();
+  var tagsRaw = document.getElementById("em-tags").value.trim();
+  var link = document.getElementById("em-link").value.trim();
+  var tags = tagsRaw ? tagsRaw.split(",").map(function(t) { return t.trim(); }) : [];
+  var sortKey = SHORT_MONTHS.indexOf(month)*100 + day;
+  var data = {title:title,month:month,day:day,location:location,time:time,tags:tags,link:link,sortKey:sortKey};
+  var promise = editingEventId ? db.collection("events").doc(editingEventId).update(data) : db.collection("events").add(data);
+  promise.then(function() {
+    closeModal("event-modal");
+    showToast(editingEventId ? "Event updated!" : "Event added!");
+    loadEvents();
+  }).catch(function(e) { showToast("Error: " + e.message); });
 }
 
-function showToast(msg){
-  var t=document.createElement('div');
-  t.textContent=msg;
-  t.style.cssText='position:fixed;bottom:24px;right:24px;background:var(--purple);color:white;padding:10px 18px;border-radius:20px;font-family:Jost,sans-serif;font-size:13px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.2)';
-  document.body.appendChild(t);
-  setTimeout(function(){t.remove();},3000);
+function deleteEvent(id) {
+  if (!confirm("Delete this event?")) return;
+  db.collection("events").doc(id).delete().then(function() { showToast("Event deleted"); loadEvents(); });
+}
+
+// ── SHOP ──
+var DEF_SHOP = [
+  {id:"sh1",name:"Pilates Mat",desc:"Non-slip, 6mm cushioning, perfect for home sessions",price:"$45-65",icon:"mat",link:""},
+  {id:"sh2",name:"Resistance Ring",desc:"Magic circle for targeted toning",price:"$22-30",icon:"ring",link:""},
+  {id:"sh3",name:"Resistance Bands Set",desc:"Light and medium - essential for every session",price:"$20-28",icon:"bands",link:""},
+  {id:"sh4",name:"Pilates Ball 9in",desc:"Inflatable mini ball for core and balance work",price:"$18-25",icon:"ball",link:""},
+  {id:"sh5",name:"Light Weights Set",desc:"1-3 lb dumbbells - compact and perfect for Pilates",price:"$25-35",icon:"weights",link:""},
+  {id:"sh6",name:"Grip Socks",desc:"Non-slip studio socks",price:"$15-22",icon:"socks",link:""}
+];
+
+function loadShop() {
+  var grid = document.getElementById("shop-grid");
+  if (!grid) return;
+  db.collection("shop").get().then(function(snap) {
+    var items = [];
+    snap.forEach(function(d) { items.push(Object.assign({id:d.id},d.data())); });
+    renderShop(items.length > 0 ? items : DEF_SHOP);
+  }).catch(function() { renderShop(DEF_SHOP); });
+}
+
+function renderShop(items) {
+  var grid = document.getElementById("shop-grid");
+  if (!grid) return;
+  grid.innerHTML = items.map(function(item) {
+    var adminBtns = isAdmin ? '<div style="display:flex;gap:4px;margin-top:6px"><button data-sid="'+item.id+'" onclick="openEditShop(this.dataset.sid)" class="btn-sm btn-sm-purple" style="flex:1">Edit</button><button data-sid="'+item.id+'" onclick="deleteShopItem(this.dataset.sid)" class="btn-sm btn-sm-red" style="flex:1">Del</button></div>' : "";
+    var shopBtn = item.link ? '<a href="'+item.link+'" target="_blank" style="display:block;width:100%;text-align:center;background:var(--purple);color:white;border-radius:20px;padding:8px;font-family:Jost,sans-serif;font-size:11px;font-weight:500;cursor:pointer;text-decoration:none;margin-top:8px">Shop Now</a>' : '<button style="width:100%;background:var(--purple);color:white;border:none;border-radius:20px;padding:8px;font-family:Jost,sans-serif;font-size:11px;font-weight:500;cursor:pointer;margin-top:8px">Shop Now</button>';
+    var iconMap={mat:'&#129336;',ring:'&#11093;',bands:'&#127965;',ball:'&#9917;',weights:'&#128170;',socks:'&#129510;',shop:'&#128717;'};
+    var dispIcon = iconMap[item.icon] || item.icon || '&#128717;';
+    return '<div class="shop-card"><div class="shop-img">'+dispIcon+'</div><div class="shop-info"><div class="shop-name">'+item.name+'</div><div class="shop-desc">'+item.desc+'</div><div class="shop-price">'+item.price+'</div>'+shopBtn+adminBtns+'</div></div>';
+  }).join("");
+}
+
+function openAddShop() {
+  editingShopId = null;
+  document.getElementById("shop-modal-title").textContent = "Add Shop Item";
+  ["shm-name","shm-desc","shm-price","shm-icon","shm-link"].forEach(function(id) { document.getElementById(id).value = ""; });
+  openModal("shop-modal");
+}
+
+function openEditShop(id) {
+  db.collection("shop").doc(id).get().then(function(snap) {
+    if (!snap.exists) return;
+    var item = snap.data();
+    editingShopId = id;
+    document.getElementById("shop-modal-title").textContent = "Edit Shop Item";
+    document.getElementById("shm-name").value = item.name||"";
+    document.getElementById("shm-desc").value = item.desc||"";
+    document.getElementById("shm-price").value = item.price||"";
+    document.getElementById("shm-icon").value = item.icon||"";
+    document.getElementById("shm-link").value = item.link||"";
+    openModal("shop-modal");
+  });
+}
+
+function saveShopItem() {
+  var name = document.getElementById("shm-name").value.trim();
+  if (!name) { showToast("Please enter an item name"); return; }
+  var data = {
+    name:name,
+    desc:document.getElementById("shm-desc").value.trim(),
+    price:document.getElementById("shm-price").value.trim(),
+    icon:document.getElementById("shm-icon").value.trim()||"shop",
+    link:document.getElementById("shm-link").value.trim()
+  };
+  var promise = editingShopId ? db.collection("shop").doc(editingShopId).update(data) : db.collection("shop").add(data);
+  promise.then(function() {
+    closeModal("shop-modal");
+    showToast(editingShopId ? "Item updated!" : "Item added!");
+    loadShop();
+  });
+}
+
+function deleteShopItem(id) {
+  if (!confirm("Delete this item?")) return;
+  db.collection("shop").doc(id).delete().then(function() { showToast("Item deleted"); loadShop(); });
+}
+
+// ── MEMBERS (admin) ──
+function loadMembers() {
+  var list = document.getElementById("members-list");
+  if (!list) return;
+  db.collection("users").get().then(function(snap) {
+    var members = [];
+    snap.forEach(function(d) { members.push(Object.assign({id:d.id},d.data())); });
+    var founding = members.filter(function(m) { return m.isFoundingMember; }).length;
+    var regular = members.length - founding;
+    document.getElementById("m-total").textContent = members.length;
+    document.getElementById("m-founding").textContent = founding;
+    document.getElementById("m-regular").textContent = regular;
+    if (members.length === 0) {
+      list.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-muted)">No members yet.</div>';
+      return;
+    }
+    var rows = members.map(function(m) {
+      var badge = m.isFoundingMember ? '<span class="founding-badge">Founding Member</span>' : '<span class="regular-badge">Regular</span>';
+      var toggleBtn = '<button data-uid="'+m.id+'" data-founding="'+m.isFoundingMember+'" onclick="toggleFounder(this.dataset.uid,this.dataset.founding===\'true\')" class="btn-sm btn-sm-teal" style="margin-right:3px">'+(m.isFoundingMember?'Remove Founding':'Make Founding')+'</button>';
+      var delBtn = '<button data-uid="'+m.id+'" onclick="deleteMember(this.dataset.uid)" class="btn-sm btn-sm-red">Remove</button>';
+      var joined = m.createdAt ? new Date(m.createdAt).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}) : "Unknown";
+      return '<tr><td><strong>'+(m.name||"Unknown")+'</strong></td><td>'+(m.email||"")+'</td><td>'+badge+'</td><td>'+joined+'</td><td>'+toggleBtn+delBtn+'</td></tr>';
+    }).join("");
+    list.innerHTML = '<table class="data-table"><thead><tr><th>Name</th><th>Email</th><th>Status</th><th>Joined</th><th>Actions</th></tr></thead><tbody>'+rows+"</tbody></table>";
+  });
+}
+
+function toggleFounder(uid, isCurrentlyFounder) {
+  db.collection("users").doc(uid).update({isFoundingMember: !isCurrentlyFounder}).then(function() {
+    showToast("Member status updated!");
+    loadMembers();
+  });
+}
+
+function deleteMember(uid) {
+  if (!confirm("Remove this member from the database?")) return;
+  db.collection("users").doc(uid).delete().then(function() { showToast("Member removed"); loadMembers(); });
+}
+
+// ── ASK K ──
+function submitQuestion() {
+  if (!currentUser) { showToast("Please log in first"); return; }
+  var category = document.getElementById("ask-category").value;
+  var question = document.getElementById("ask-question").value.trim();
+  if (!question) { showToast("Please type your question"); return; }
+  db.collection("questions").add({
+    userId: currentUser.uid,
+    userName: currentUser.displayName || currentUser.email,
+    userEmail: currentUser.email,
+    category: category,
+    question: question,
+    askedAt: new Date().toISOString(),
+    answered: false
+  }).then(function() {
+    document.getElementById("ask-question").value = "";
+    showToast("Question sent to K! She will respond within 48 hours.");
+    // EmailJS will be added here
+  });
+}
+
+function loadQuestions() {
+  var list = document.getElementById("questions-list");
+  if (!list) return;
+  db.collection("questions").orderBy("askedAt","desc").get().then(function(snap) {
+    var qs = [];
+    snap.forEach(function(d) { qs.push(Object.assign({id:d.id},d.data())); });
+    if (qs.length === 0) {
+      list.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-muted)">No questions yet.</div>';
+      return;
+    }
+    list.innerHTML = qs.map(function(q) {
+      var date = q.askedAt ? new Date(q.askedAt).toLocaleDateString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}) : "";
+      var badge = q.answered ? '<span style="background:#E8F5E9;color:#2e7d32;font-size:10px;padding:2px 8px;border-radius:10px">Answered</span>' : '<span style="background:#FFF8E1;color:#F57F17;font-size:10px;padding:2px 8px;border-radius:10px">Pending</span>';
+      var markBtn = '<button data-qid="'+q.id+'" data-ans="'+q.answered+'" onclick="markAnswered(this.dataset.qid,this.dataset.ans===\'true\')" class="btn-sm btn-sm-green" style="margin-left:6px">'+(q.answered?'Mark Unread':'Mark Answered')+'</button>';
+      var delBtn = '<button data-qid="'+q.id+'" onclick="deleteQuestion(this.dataset.qid)" class="btn-sm btn-sm-red" style="margin-left:4px">Delete</button>';
+      return '<div class="card" style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px"><div><div style="font-size:11px;color:var(--text-muted)">'+(q.userName||"Client")+' - '+q.category+' - '+date+'</div><div style="font-size:13px;color:var(--purple);margin-top:4px;font-weight:500">'+q.question+'</div></div><div style="display:flex;align-items:center">'+badge+markBtn+delBtn+'</div></div></div>';
+    }).join("");
+  });
+}
+
+function markAnswered(id, isAnswered) {
+  db.collection("questions").doc(id).update({answered: !isAnswered}).then(function() { loadQuestions(); });
+}
+
+function deleteQuestion(id) {
+  if (!confirm("Delete this question?")) return;
+  db.collection("questions").doc(id).delete().then(function() { showToast("Deleted"); loadQuestions(); });
+}
+
+// ── CLASS DETAILS ──
+function loadClassDetails() {
+  db.collection("classDetails").doc("main").get().then(function(snap) {
+    if (!snap.exists) return;
+    var d = snap.data();
+    if (d.title) document.getElementById("cd-title").textContent = d.title;
+    if (d.duration) document.getElementById("cd-duration").textContent = d.duration;
+    if (d.schedule) document.getElementById("cd-schedule").textContent = d.schedule;
+    if (d.level) document.getElementById("cd-level").textContent = d.level;
+    if (d.instructor) document.getElementById("cd-instructor").textContent = d.instructor;
+    if (d.recording) document.getElementById("cd-recording").textContent = d.recording;
+  });
+}
+
+function openEditClassDetails() {
+  document.getElementById("cdm-title").value = document.getElementById("cd-title").textContent;
+  document.getElementById("cdm-duration").value = document.getElementById("cd-duration").textContent;
+  document.getElementById("cdm-schedule").value = document.getElementById("cd-schedule").textContent;
+  document.getElementById("cdm-level").value = document.getElementById("cd-level").textContent;
+  document.getElementById("cdm-instructor").value = document.getElementById("cd-instructor").textContent;
+  document.getElementById("cdm-recording").value = document.getElementById("cd-recording").textContent;
+  openModal("class-details-modal");
+}
+
+function saveClassDetails() {
+  var data = {
+    title: document.getElementById("cdm-title").value,
+    duration: document.getElementById("cdm-duration").value,
+    schedule: document.getElementById("cdm-schedule").value,
+    level: document.getElementById("cdm-level").value,
+    instructor: document.getElementById("cdm-instructor").value,
+    recording: document.getElementById("cdm-recording").value
+  };
+  db.collection("classDetails").doc("main").set(data).then(function() {
+    closeModal("class-details-modal");
+    loadClassDetails();
+    showToast("Class details updated!");
+  });
+}
+
+// ── CONTENT PLANNER ──
+function loadContent() {
+  db.collection("content").orderBy("date").get().then(function(snap) {
+    var items = [];
+    snap.forEach(function(d) { items.push(Object.assign({id:d.id},d.data())); });
+    if (calView === "calendar") renderContentCalendar(items);
+    else renderContentList(items);
+  }).catch(function() {
+    if (calView === "calendar") renderContentCalendar([]);
+    else renderContentList([]);
+  });
+}
+
+function renderContentCalendar(items) {
+  var grid = document.getElementById("content-cal-grid");
+  if (!grid) return;
+  var headers = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  var headerHtml = headers.map(function(d) { return '<div class="planner-day-hdr">'+d+'</div>'; }).join("");
+  var typeColors = {instagram:"pi-instagram",email:"pi-email",reel:"pi-reel",event:"pi-event"};
+  var typeLabels = {instagram:"Instagram","email":"Email",reel:"Reel",event:"Event"};
+  var weeks = [];
+  var firstDay = new Date(calYear, calMonth, 1).getDay();
+  var daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+  var firstMonday = 1 - ((firstDay + 6) % 7);
+  var week = [];
+  var dayCounter = firstMonday;
+  while (dayCounter <= daysInMonth) {
+    week = [];
+    for (var i = 0; i < 7; i++) {
+      week.push(dayCounter);
+      dayCounter++;
+    }
+    weeks.push(week);
+  }
+  var cells = weeks.map(function(week) {
+    return week.map(function(day) {
+      if (day < 1 || day > daysInMonth) return '<div class="planner-cell" style="background:#F5E8EE"></div>';
+      var dateStr = calYear+"-"+(calMonth+1)+"-"+day;
+      var dayItems = items.filter(function(item) {
+        if (!item.date) return false;
+        var d = new Date(item.date);
+        return d.getDate() === day && d.getMonth() === calMonth && d.getFullYear() === calYear;
+      });
+      var itemsHtml = dayItems.map(function(item) {
+        var cls = typeColors[item.type] || "pi-instagram";
+        var del = isAdmin ? ' <button data-cid="'+item.id+'" onclick="deleteContent(this.dataset.cid)" style="background:none;border:none;color:white;cursor:pointer;font-size:8px">x</button>' : '';
+        return '<div class="planner-item '+cls+'">'+item.title.substring(0,20)+del+'</div>';
+      }).join("");
+      return '<div class="planner-cell"><div class="planner-cell-date">'+SHORT_MONTHS[calMonth]+' '+day+'</div>'+itemsHtml+'</div>';
+    }).join("");
+  }).join("");
+  grid.innerHTML = headerHtml + cells;
+}
+
+function renderContentList(items) {
+  var list = document.getElementById("content-list");
+  if (!list) return;
+  var typeColors = {instagram:getComputedStyle(document.documentElement).getPropertyValue("--pink"),email:getComputedStyle(document.documentElement).getPropertyValue("--teal"),reel:"#9E9D24",event:getComputedStyle(document.documentElement).getPropertyValue("--purple")};
+  if (items.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-muted)">No content planned yet.</div>';
+    return;
+  }
+  list.innerHTML = items.map(function(item) {
+    var color = typeColors[item.type] || "#E91E8C";
+    var date = item.date ? new Date(item.date).toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"}) : "No date";
+    var delBtn = isAdmin ? '<button data-cid="'+item.id+'" onclick="deleteContent(this.dataset.cid)" class="btn-sm btn-sm-red">Delete</button>' : "";
+    return '<div class="planner-list-item"><div class="content-type-dot" style="background:'+color+'"></div><div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--purple)">'+item.title+'</div><div style="font-size:11px;color:var(--text-muted)">'+item.type+' - '+date+(item.notes?' - '+item.notes:'')+'</div></div>'+delBtn+'</div>';
+  }).join("");
+}
+
+function saveContent() {
+  var title = document.getElementById("cm-title").value.trim();
+  if (!title) { showToast("Please enter a title"); return; }
+  var data = {
+    type: document.getElementById("cm-type").value,
+    title: title,
+    date: document.getElementById("cm-date").value,
+    notes: document.getElementById("cm-notes").value.trim()
+  };
+  var promise = editingContentId ? db.collection("content").doc(editingContentId).update(data) : db.collection("content").add(data);
+  promise.then(function() {
+    closeModal("content-modal");
+    showToast(editingContentId ? "Content updated!" : "Content added!");
+    loadContent();
+  });
+}
+
+function deleteContent(id) {
+  if (!confirm("Delete this content item?")) return;
+  db.collection("content").doc(id).delete().then(function() { showToast("Deleted"); loadContent(); });
+}
+
+// ── SPONSORSHIP ──
+var DEF_SPONSORS = [
+  {id:"sp1",brand:"LMNT Electrolytes",category:"Nutrition",contact:"partner@drinklmnt.com",status:"interested",lastContact:"Jun 15",notes:"Applied to wholesale program"},
+  {id:"sp2",brand:"Vuori",category:"Activewear",contact:"community@vuori.com",status:"contacted",lastContact:"Jun 20",notes:"V1 Community application sent"},
+  {id:"sp3",brand:"Alo Yoga",category:"Activewear",contact:"ambassador@aloyoga.com",status:"pending",lastContact:"Jun 18",notes:"Follow up due Jul 3"},
+  {id:"sp4",brand:"212 Med Spa",category:"Local/Wellness",contact:"Walk-in",status:"confirmed",lastContact:"Jun 7",notes:"Event sponsor June event"},
+  {id:"sp5",brand:"Narista Juice Bar",category:"Local/Food",contact:"DM Instagram",status:"confirmed",lastContact:"Jun 5",notes:"Refreshments June event"},
+  {id:"sp6",brand:"Head 2 Toe Therapy",category:"Local/Health",contact:"(425) 776-2936",status:"interested",lastContact:"Jun 22",notes:"Call scheduled July"},
+  {id:"sp7",brand:"MyProtein",category:"Supplements",contact:"ambassador@myprotein.com",status:"contacted",lastContact:"Jun 25",notes:"Application pending"},
+  {id:"sp8",brand:"Edmonds Vitamins",category:"Local/Nutrition",contact:"(425) 774-0747",status:"confirmed",lastContact:"Jun 10",notes:"Goodie bag items June event"},
+  {id:"sp9",brand:"Fabletics",category:"Activewear",contact:"fabletics.com/ambassador",status:"pending",lastContact:"Jun 28",notes:"Application submitted"},
+  {id:"sp10",brand:"Lululemon",category:"Activewear",contact:"Lynnwood store",status:"contacted",lastContact:"Jun 12",notes:"In-store intro, follow up needed"},
+  {id:"sp11",brand:"Lotus Wellness",category:"Local/Spa",contact:"(425) 223-8048",status:"interested",lastContact:"Jun 19",notes:"Cross-promotion discussion"},
+  {id:"sp12",brand:"Therabody",category:"Recovery",contact:"therabody.com/partners",status:"contacted",lastContact:"Jun 30",notes:"Partner application sent"},
+  {id:"sp13",brand:"Vital Proteins",category:"Nutrition",contact:"vitalproteins.com/ambassador",status:"declined",lastContact:"Jun 8",notes:"Reapply at 5K followers"}
+];
+
+var STATUS_COLORS = {
+  contacted:["#E3F2FD","#1565C0"],
+  interested:["#E8F5E9","#2E7D32"],
+  pending:["#FFF8E1","#F57F17"],
+  declined:["#FFEBEE","#C62828"],
+  confirmed:["#FCE4EC","#C2185B"]
+};
+
+function loadSponsors() {
+  var list = document.getElementById("sponsor-list");
+  if (!list) return;
+  db.collection("sponsors").orderBy("brand").get().then(function(snap) {
+    var items = [];
+    snap.forEach(function(d) { items.push(Object.assign({id:d.id},d.data())); });
+    renderSponsors(items.length > 0 ? items : DEF_SPONSORS);
+  }).catch(function() { renderSponsors(DEF_SPONSORS); });
+}
+
+function renderSponsors(items) {
+  var list = document.getElementById("sponsor-list");
+  if (!list) return;
+  var counts = {total:items.length,confirmed:0,interested:0,pending:0};
+  items.forEach(function(s) {
+    if (s.status === "confirmed") counts.confirmed++;
+    if (s.status === "interested") counts.interested++;
+    if (s.status === "pending") counts.pending++;
+  });
+  ["total","confirmed","interested","pending"].forEach(function(k) {
+    var el = document.getElementById("sp-"+k);
+    if (el) el.textContent = counts[k];
+  });
+  var rows = items.map(function(s) {
+    var col = STATUS_COLORS[s.status] || ["#f0f0f0","#333"];
+    var pill = '<span style="background:'+col[0]+';color:'+col[1]+';font-size:10px;font-weight:500;padding:3px 9px;border-radius:10px">'+(s.status||"")+'</span>';
+    var eb = '<button data-sid="'+s.id+'" onclick="openEditSponsor(this.dataset.sid)" class="btn-sm btn-sm-purple" style="margin-right:3px">Edit</button>';
+    var db2 = '<button data-sid="'+s.id+'" onclick="deleteSponsor(this.dataset.sid)" class="btn-sm btn-sm-red">Del</button>';
+    return '<tr><td><strong>'+(s.brand||"")+'</strong></td><td>'+(s.category||"")+'</td><td>'+(s.contact||"")+'</td><td>'+pill+'</td><td>'+(s.lastContact||"")+'</td><td>'+(s.notes||"")+'</td><td>'+eb+db2+'</td></tr>';
+  }).join("");
+  list.innerHTML = '<div style="overflow-x:auto"><table class="data-table"><thead><tr><th>Brand</th><th>Category</th><th>Contact</th><th>Status</th><th>Last Contact</th><th>Notes</th><th>Actions</th></tr></thead><tbody>'+rows+"</tbody></table></div>";
+}
+
+function openAddSponsor() {
+  editingSponsorId = null;
+  document.getElementById("sponsor-modal-title").textContent = "Add Brand";
+  ["spm-brand","spm-category","spm-contact","spm-lastcontact","spm-notes"].forEach(function(id) { document.getElementById(id).value = ""; });
+  document.getElementById("spm-status").value = "contacted";
+  openModal("sponsor-modal");
+}
+
+function openEditSponsor(id) {
+  db.collection("sponsors").doc(id).get().then(function(snap) {
+    if (!snap.exists) return;
+    var s = snap.data();
+    editingSponsorId = id;
+    document.getElementById("sponsor-modal-title").textContent = "Edit Brand";
+    document.getElementById("spm-brand").value = s.brand||"";
+    document.getElementById("spm-category").value = s.category||"";
+    document.getElementById("spm-contact").value = s.contact||"";
+    document.getElementById("spm-status").value = s.status||"contacted";
+    document.getElementById("spm-lastcontact").value = s.lastContact||"";
+    document.getElementById("spm-notes").value = s.notes||"";
+    openModal("sponsor-modal");
+  });
+}
+
+function saveSponsor() {
+  var brand = document.getElementById("spm-brand").value.trim();
+  if (!brand) { showToast("Please enter a brand name"); return; }
+  var data = {
+    brand:brand,
+    category:document.getElementById("spm-category").value.trim(),
+    contact:document.getElementById("spm-contact").value.trim(),
+    status:document.getElementById("spm-status").value,
+    lastContact:document.getElementById("spm-lastcontact").value.trim(),
+    notes:document.getElementById("spm-notes").value.trim()
+  };
+  var promise = editingSponsorId ? db.collection("sponsors").doc(editingSponsorId).update(data) : db.collection("sponsors").add(data);
+  promise.then(function() {
+    closeModal("sponsor-modal");
+    showToast(editingSponsorId ? "Brand updated!" : "Brand added!");
+    loadSponsors();
+  });
+}
+
+function deleteSponsor(id) {
+  if (!confirm("Delete this sponsor?")) return;
+  db.collection("sponsors").doc(id).delete().then(function() { showToast("Deleted"); loadSponsors(); });
 }
 
 // ── CHATBOT ──
-var chatResponses = {
-  'join':'To join a live class, click the ▶ Join button on the calendar or your dashboard. The Google Meet / Zoom link is also in your registration confirmation email!',
-  'equipment':'For most sessions you will need: a Pilates mat, resistance bands (light & medium), a 9" inflatable ball, a magic circle/ring, light weights (1-3 lbs), and grip socks. Check the Class Details page for the full list!',
-  'cancel':'You can cancel your membership at any time — no contracts! Cancellation takes effect at the end of your current billing cycle. Send Karen a message through the Ask K page.',
-  'miss':'No worries if you miss a session! Every class is recorded and added to your Video Library within 24 hours. You can watch it anytime, as many times as you like. \uD83C\uDF38',
-  'library':'Your Video Library is in the left sidebar! Click Video Library to access all recorded sessions organized by category.',
-  'price':'The founding member rate is $39.99/month, locked in forever for the first 10 members. After that, the regular rate is $49/month. No contracts and cancel anytime!',
-  'schedule':'Classes are on Fridays and Saturdays each week! Check the Class Schedule page for exact times. Sessions are 20-25 minutes of virtual group mat Pilates.',
-  'register':'To register for a class, go to the Class Schedule page and click the pink Register button on any upcoming session. You will see your spot confirmed right on the calendar!',
-  'default':'Great question! For the most accurate answer, send this directly to Karen via the Ask K page — she typically responds within 48 hours. \uD83C\uDF38'
+var CHAT_RESPONSES = {
+  join:"To join a live class, click the Join button on the calendar or your dashboard. The Google Meet or Zoom link is also in your confirmation email!",
+  register:"To register for a class, go to the Class Schedule page and click the Register button on any upcoming session. You will see your spot confirmed on the calendar!",
+  equipment:"For most sessions you will need: a Pilates mat, resistance bands (light and medium), a 9 inch inflatable ball, a magic circle, light weights (1-3 lbs), and grip socks. Check the Class Details page for the full list!",
+  cancel:"You can cancel your membership at any time - no contracts! Send Karen a message through the Ask K page.",
+  miss:"No worries if you miss a session! Every class is recorded and added to your Video Library within 24 hours. You can watch it anytime!",
+  library:"Your Video Library is in the left sidebar! Click Video Library to access all recorded sessions organized by category.",
+  price:"The founding member rate is $39.99 per month, locked in forever for the first 10 members. After that, the regular rate is $49 per month. No contracts and cancel anytime!",
+  schedule:"Classes are on Fridays and Saturdays each week! Check the Class Schedule page for exact times. Sessions are 20-25 minutes of virtual group mat Pilates.",
+  default:"Great question! For the most accurate answer, send this directly to Karen via the Ask K page - she typically responds within 48 hours."
 };
 
-function getResponse(msg){
-  msg=msg.toLowerCase();
-  if(msg.includes('join')||msg.includes('link')) return chatResponses.join;
-  if(msg.includes('register')||msg.includes('sign up')||msg.includes('spot')) return chatResponses.register;
-  if(msg.includes('equipment')||msg.includes('need')||msg.includes('bring')) return chatResponses.equipment;
-  if(msg.includes('cancel')||msg.includes('membership')) return chatResponses.cancel;
-  if(msg.includes('miss')||msg.includes('record')||msg.includes('replay')) return chatResponses.miss;
-  if(msg.includes('library')||msg.includes('video')||msg.includes('watch')) return chatResponses.library;
-  if(msg.includes('price')||msg.includes('cost')||msg.includes('39')||msg.includes('49')) return chatResponses.price;
-  if(msg.includes('schedule')||msg.includes('when')||msg.includes('time')) return chatResponses.schedule;
-  return chatResponses.default;
+function getChatResponse(msg) {
+  msg = msg.toLowerCase();
+  if (msg.indexOf("join") > -1 || msg.indexOf("link") > -1) return CHAT_RESPONSES.join;
+  if (msg.indexOf("register") > -1 || msg.indexOf("sign up") > -1 || msg.indexOf("spot") > -1) return CHAT_RESPONSES.register;
+  if (msg.indexOf("equipment") > -1 || msg.indexOf("need") > -1 || msg.indexOf("bring") > -1) return CHAT_RESPONSES.equipment;
+  if (msg.indexOf("cancel") > -1 || msg.indexOf("membership") > -1) return CHAT_RESPONSES.cancel;
+  if (msg.indexOf("miss") > -1 || msg.indexOf("record") > -1 || msg.indexOf("replay") > -1) return CHAT_RESPONSES.miss;
+  if (msg.indexOf("library") > -1 || msg.indexOf("video") > -1 || msg.indexOf("watch") > -1) return CHAT_RESPONSES.library;
+  if (msg.indexOf("price") > -1 || msg.indexOf("cost") > -1 || msg.indexOf("39") > -1 || msg.indexOf("49") > -1) return CHAT_RESPONSES.price;
+  if (msg.indexOf("schedule") > -1 || msg.indexOf("when") > -1 || msg.indexOf("time") > -1) return CHAT_RESPONSES.schedule;
+  return CHAT_RESPONSES.default;
 }
 
-function sendChat(){
-  var input=document.getElementById('chat-input');
-  var msg=input.value.trim();
-  if(!msg) return;
-  var msgs=document.getElementById('chat-messages');
-  var now=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
-  msgs.innerHTML+='<div class="chat-msg user"><div class="chat-bubble">'+msg+'</div><div class="chat-time">'+now+'</div></div>';
-  input.value='';
-  msgs.innerHTML+='<div class="chat-msg bot" id="typing-ind"><div class="chat-bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>';
-  msgs.scrollTop=msgs.scrollHeight;
-  var response=getResponse(msg);
-  setTimeout(function(){
-    var typing=document.getElementById('typing-ind');
-    if(typing) typing.remove();
-    msgs.innerHTML+='<div class="chat-msg bot"><div class="chat-bubble">'+response+'</div><div class="chat-time">'+now+'</div></div>';
-    msgs.scrollTop=msgs.scrollHeight;
-  },1200);
+function sendChat() {
+  var input = document.getElementById("chat-input");
+  var msg = input.value.trim();
+  if (!msg) return;
+  var msgs = document.getElementById("chat-messages");
+  var now = new Date().toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"});
+  msgs.innerHTML += '<div class="chat-msg user"><div class="chat-bubble">'+msg+'</div><div class="chat-time">'+now+'</div></div>';
+  input.value = "";
+  msgs.innerHTML += '<div class="chat-msg bot" id="typing-ind"><div class="chat-bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>';
+  msgs.scrollTop = msgs.scrollHeight;
+  var response = getChatResponse(msg);
+  setTimeout(function() {
+    var t = document.getElementById("typing-ind");
+    if (t) t.remove();
+    msgs.innerHTML += '<div class="chat-msg bot"><div class="chat-bubble">'+response+'</div><div class="chat-time">'+now+'</div></div>';
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 1200);
 }
-window.sendChat = sendChat;
 
-document.getElementById('topbar-date').textContent=new Date().toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+// ── MODAL HELPERS ──
+function openModal(id) {
+  var el = document.getElementById(id);
+  if (el) el.classList.add("open");
+}
+function closeModal(id) {
+  var el = document.getElementById(id);
+  if (el) el.classList.remove("open");
+}
 
-// ── EVENT LISTENERS (replaces onclick attrs for module compatibility) ──
-document.addEventListener('DOMContentLoaded', function() {
-  // Login toggle
-  var btnClient = document.getElementById('toggle-client');
-  var btnAdmin = document.getElementById('toggle-admin');
-  if(btnClient) btnClient.addEventListener('click', function(){ setLoginMode('client'); });
-  if(btnAdmin) btnAdmin.addEventListener('click', function(){ setLoginMode('admin'); });
+// ── TOAST ──
+function showToast(msg) {
+  var existing = document.querySelector(".toast");
+  if (existing) existing.remove();
+  var t = document.createElement("div");
+  t.className = "toast";
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(function() { if (t.parentNode) t.remove(); }, 3000);
+}
 
-  // Sign in / Sign up
-  var btnSignin = document.getElementById('btn-signin');
-  var btnSignup = document.getElementById('btn-signup');
-  if(btnSignin) btnSignin.addEventListener('click', doLogin);
-  if(btnSignup) btnSignup.addEventListener('click', doSignup);
+// ── UTILS ──
+function setDate() {
+  var el = document.getElementById("topbar-date");
+  if (el) el.textContent = new Date().toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
+}
 
-  // Logout
-  var btnLogout = document.getElementById('btn-logout');
-  if(btnLogout) btnLogout.addEventListener('click', doLogout);
-  var btnAE = document.getElementById('btn-add-event');
-  if(btnAE) btnAE.addEventListener('click', addEvt);
-  var btnAS = document.getElementById('btn-add-sponsor');
-  if(btnAS) btnAS.addEventListener('click', addSponsor);
+// ── EVENT LISTENERS ──
+document.addEventListener("DOMContentLoaded", function() {
+  // Login
+  document.getElementById("toggle-client").addEventListener("click", function() { setLoginMode("client"); });
+  document.getElementById("toggle-admin").addEventListener("click", function() { setLoginMode("admin"); });
+  document.getElementById("btn-signin").addEventListener("click", doLogin);
+  document.getElementById("btn-signup").addEventListener("click", doSignup);
+  document.getElementById("login-password").addEventListener("keydown", function(e) { if (e.key === "Enter") doLogin(); });
+  document.getElementById("btn-logout").addEventListener("click", doLogout);
 
-  // Enter key on password field
-  var pwField = document.getElementById('login-password');
-  if(pwField) pwField.addEventListener('keydown', function(e){
-    if(e.key === 'Enter') doLogin();
+  // Navigation - all nav items
+  document.querySelectorAll(".nav-item[data-page], .quick-card[data-page]").forEach(function(el) {
+    el.addEventListener("click", function() { showPage(this.getAttribute("data-page")); });
   });
+
+  // Session modal
+  document.getElementById("sm-type").addEventListener("change", updateSessionTypeUI);
+  document.getElementById("btn-save-session").addEventListener("click", saveSession);
+  document.getElementById("btn-cancel-session").addEventListener("click", function() { closeModal("session-modal"); });
+  document.getElementById("btn-close-session-modal").addEventListener("click", function() { closeModal("session-modal"); });
+
+  // Calendar controls
+  document.getElementById("btn-change-month").addEventListener("click", function() { openModal("month-modal"); });
+  document.getElementById("btn-apply-month").addEventListener("click", function() {
+    calMonth = parseInt(document.getElementById("mm-month").value);
+    calYear = parseInt(document.getElementById("mm-year").value);
+    closeModal("month-modal");
+    buildCalendar();
+  });
+  document.getElementById("btn-cancel-month").addEventListener("click", function() { closeModal("month-modal"); });
+  document.getElementById("btn-close-month-modal").addEventListener("click", function() { closeModal("month-modal"); });
+
+  // Event modal
+  document.getElementById("btn-add-event").addEventListener("click", openAddEvent);
+  document.getElementById("btn-save-event").addEventListener("click", saveEvent);
+  document.getElementById("btn-cancel-event").addEventListener("click", function() { closeModal("event-modal"); });
+  document.getElementById("btn-close-event-modal").addEventListener("click", function() { closeModal("event-modal"); });
+
+  // Sponsor modal
+  document.getElementById("btn-add-sponsor").addEventListener("click", openAddSponsor);
+  document.getElementById("btn-save-sponsor").addEventListener("click", saveSponsor);
+  document.getElementById("btn-cancel-sponsor").addEventListener("click", function() { closeModal("sponsor-modal"); });
+  document.getElementById("btn-close-sponsor-modal").addEventListener("click", function() { closeModal("sponsor-modal"); });
+
+  // Content modal
+  document.getElementById("btn-add-content").addEventListener("click", function() {
+    editingContentId = null;
+    document.getElementById("content-modal-title").textContent = "Add Content";
+    ["cm-title","cm-date","cm-notes"].forEach(function(id) { document.getElementById(id).value = ""; });
+    document.getElementById("cm-type").value = "instagram";
+    openModal("content-modal");
+  });
+  document.getElementById("btn-save-content").addEventListener("click", saveContent);
+  document.getElementById("btn-cancel-content").addEventListener("click", function() { closeModal("content-modal"); });
+  document.getElementById("btn-close-content-modal").addEventListener("click", function() { closeModal("content-modal"); });
+
+  // Content planner view toggle
+  document.getElementById("btn-cal-view").addEventListener("click", function() {
+    calView = "calendar";
+    document.getElementById("content-calendar-view").style.display = "block";
+    document.getElementById("content-list-view").style.display = "none";
+    this.style.background = "var(--purple)";
+    this.style.color = "white";
+    document.getElementById("btn-list-view").style.background = "var(--blush)";
+    document.getElementById("btn-list-view").style.color = "var(--purple)";
+    loadContent();
+  });
+  document.getElementById("btn-list-view").addEventListener("click", function() {
+    calView = "list";
+    document.getElementById("content-calendar-view").style.display = "none";
+    document.getElementById("content-list-view").style.display = "block";
+    this.style.background = "var(--purple)";
+    this.style.color = "white";
+    document.getElementById("btn-cal-view").style.background = "var(--blush)";
+    document.getElementById("btn-cal-view").style.color = "var(--purple)";
+    loadContent();
+  });
+
+  // Video modal
+  document.getElementById("btn-add-video").addEventListener("click", function() { openModal("video-modal"); });
+  document.getElementById("btn-save-video").addEventListener("click", saveVideo);
+  document.getElementById("btn-cancel-video").addEventListener("click", function() { closeModal("video-modal"); });
+  document.getElementById("btn-close-video-modal").addEventListener("click", function() { closeModal("video-modal"); });
+
+  // Filter pills for video library
+  document.querySelectorAll(".filter-pill").forEach(function(pill) {
+    pill.addEventListener("click", function() {
+      document.querySelectorAll(".filter-pill").forEach(function(p) { p.classList.remove("active"); });
+      this.classList.add("active");
+      var cat = this.getAttribute("data-cat");
+      document.querySelectorAll(".video-card").forEach(function(c) {
+        c.style.display = (cat === "all" || c.getAttribute("data-cat") === cat) ? "block" : "none";
+      });
+    });
+  });
+
+  // Shop modal
+  document.getElementById("btn-add-shop").addEventListener("click", openAddShop);
+  document.getElementById("btn-save-shop").addEventListener("click", saveShopItem);
+  document.getElementById("btn-cancel-shop").addEventListener("click", function() { closeModal("shop-modal"); });
+  document.getElementById("btn-close-shop-modal").addEventListener("click", function() { closeModal("shop-modal"); });
+
+  // Class details edit
+  document.getElementById("btn-edit-class-details").addEventListener("click", openEditClassDetails);
+  document.getElementById("btn-save-class").addEventListener("click", saveClassDetails);
+  document.getElementById("btn-cancel-class").addEventListener("click", function() { closeModal("class-details-modal"); });
+  document.getElementById("btn-close-class-modal").addEventListener("click", function() { closeModal("class-details-modal"); });
+
+  // Ask K
+  document.getElementById("btn-ask-submit").addEventListener("click", submitQuestion);
+
+  // Chatbot
+  document.getElementById("btn-chat-send").addEventListener("click", sendChat);
+  document.getElementById("chat-input").addEventListener("keydown", function(e) { if (e.key === "Enter") sendChat(); });
+
+  // Roster close
+  document.getElementById("btn-close-roster").addEventListener("click", function() { closeModal("roster-modal"); });
+  document.getElementById("btn-close-roster-modal").addEventListener("click", function() { closeModal("roster-modal"); });
+
+  // Date
+  setDate();
 });
-// EVENTS
-var DEF_EVTS=[{id:"e1",month:"Aug",day:9,title:"Pilates Sesh by K x Seattle Sorority Vol. 2",location:"Marina Beach Park, Edmonds WA",time:"8:30 AM",tags:["Outdoor","All levels","$50","Goodie bags"],link:""},{id:"e2",month:"Sep",day:13,title:"100 Years of Pilates Community Celebration",location:"Lynnwood WA",time:"10:00 AM",tags:["Special event","Centennial","All welcome"],link:""},{id:"e3",month:"Oct",day:4,title:"Fall Wellness Morning",location:"Edmonds WA",time:"TBD",tags:["Wellness","Vendors","Sponsors"],link:""}];
-function loadEvents(){var list=document.getElementById("events-list");if(!list)return;db.collection("events").orderBy("sortKey").get().then(function(s){var e=[];s.forEach(function(d){e.push(Object.assign({id:d.id},d.data()));});renderEvts(e.length>0?e:DEF_EVTS);}).catch(function(){renderEvts(DEF_EVTS);});}
-function rsvpEvt(btn){btn.textContent="RSVPd";btn.style.background="#2e7d32";}
-function renderEvts(evts){var list=document.getElementById("events-list");if(!list)return;list.innerHTML=evts.map(function(ev){var tags=(ev.tags||[]).map(function(t){return'<span class="event-tag">'+t+"</span>";}).join("");var del=isAdmin?'<div style="margin-top:6px"><button data-eid="'+ev.id+'" onclick="delEvt(this.dataset.eid)" style="background:#c62828;color:white;border:none;border-radius:10px;padding:3px 10px;font-size:10px;cursor:pointer;margin-right:5px">Delete</button><button data-eid="'+ev.id+'" onclick="editEvt(this.dataset.eid)" style="background:var(--purple);color:white;border:none;border-radius:10px;padding:3px 10px;font-size:10px;cursor:pointer">Edit</button></div>':"";return'<div class="event-card"><div class="event-date-box"><div class="event-date-month">'+ev.month+'</div><div class="event-date-day">'+ev.day+'</div></div><div class="event-info"><div class="event-title">'+ev.title+'</div><div class="event-location">'+(ev.location||"")+" "+(ev.time||"")+'</div><div class="event-tags">'+tags+"</div>"+del+'</div><button class="rsvp-btn" style="align-self:center;flex-shrink:0" onclick="rsvpEvt(this)">RSVP</button></div>';}).join("");}
-function delEvt(id){if(!confirm("Delete this event?"))return;db.collection("events").doc(id).delete().then(function(){showToast("Event deleted");loadEvents();});}
-window.delEvt=delEvt;
-function editEvt(id){db.collection("events").doc(id).get().then(function(snap){if(!snap.exists){return;}var ev=snap.data();var t=prompt("Title:",ev.title||"");if(t===null)return;var mo=prompt("Month:",ev.month||"Aug");if(mo===null)return;var d=prompt("Day:",String(ev.day||1));if(d===null)return;var loc=prompt("Location:",ev.location||"");if(loc===null)return;var ti=prompt("Time:",ev.time||"");if(ti===null)return;var tg=prompt("Tags:",(ev.tags||[]).join(", "));if(tg===null)return;var lk=prompt("RSVP Link:",ev.link||"");if(lk===null)return;var tags=tg?tg.split(",").map(function(x){return x.trim();}):[];var months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];db.collection("events").doc(id).update({title:t,month:mo,day:parseInt(d),location:loc,time:ti,tags:tags,link:lk,sortKey:months.indexOf(mo)*100+parseInt(d)}).then(function(){showToast("Event updated!");loadEvents();});});}
-window.editEvt=editEvt;
-function addEvt(){var t=prompt("Event title:");if(!t)return;var mo=prompt("Month (e.g. Aug):","Aug");if(!mo)return;var d=prompt("Day:","1");if(!d)return;var loc=prompt("Location:","");var ti=prompt("Time:","");var tg=prompt("Tags (comma separated)","");var lk=prompt("RSVP Link:","");var tags=tg?tg.split(",").map(function(x){return x.trim();}):[];var months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];db.collection("events").add({title:t,month:mo,day:parseInt(d),location:loc||"",time:ti||"",tags:tags,link:lk||"",sortKey:months.indexOf(mo)*100+parseInt(d)}).then(function(){showToast("Event added!");loadEvents();});}
-window.addEvt=addEvt;
-
-// SPONSORS
-var DEF_SPONSORS=[{id:"s1",brand:"LMNT Electrolytes",category:"Nutrition",contact:"partner@drinklmnt.com",status:"interested",lastContact:"Jun 15",notes:"Applied to wholesale program"},{id:"s2",brand:"Vuori",category:"Activewear",contact:"community@vuori.com",status:"contacted",lastContact:"Jun 20",notes:"V1 Community application sent"},{id:"s3",brand:"Alo Yoga",category:"Activewear",contact:"ambassador@aloyoga.com",status:"pending",lastContact:"Jun 18",notes:"Follow up due Jul 3"},{id:"s4",brand:"212 Med Spa",category:"Local/Wellness",contact:"Walk-in",status:"confirmed",lastContact:"Jun 7",notes:"Event sponsor June event"},{id:"s5",brand:"Narista Juice Bar",category:"Local/Food",contact:"DM Instagram",status:"confirmed",lastContact:"Jun 5",notes:"Refreshments June event"},{id:"s6",brand:"Head 2 Toe Therapy",category:"Local/Health",contact:"(425) 776-2936",status:"interested",lastContact:"Jun 22",notes:"Call scheduled July"},{id:"s7",brand:"MyProtein",category:"Supplements",contact:"ambassador@myprotein.com",status:"contacted",lastContact:"Jun 25",notes:"Application pending"},{id:"s8",brand:"Edmonds Vitamins",category:"Local/Nutrition",contact:"(425) 774-0747",status:"confirmed",lastContact:"Jun 10",notes:"Goodie bag items June event"},{id:"s9",brand:"Fabletics",category:"Activewear",contact:"fabletics.com/ambassador",status:"pending",lastContact:"Jun 28",notes:"Application submitted"},{id:"s10",brand:"Lululemon",category:"Activewear",contact:"Lynnwood store",status:"contacted",lastContact:"Jun 12",notes:"In-store intro follow up needed"},{id:"s11",brand:"Lotus Wellness",category:"Local/Spa",contact:"(425) 223-8048",status:"interested",lastContact:"Jun 19",notes:"Cross-promotion discussion"},{id:"s12",brand:"Therabody",category:"Recovery",contact:"therabody.com/partners",status:"contacted",lastContact:"Jun 30",notes:"Partner application sent"},{id:"s13",brand:"Vital Proteins",category:"Nutrition",contact:"vitalproteins.com/ambassador",status:"declined",lastContact:"Jun 8",notes:"Reapply at 5K followers"}];
-var SCOL={contacted:"#E3F2FD|#1565C0",interested:"#E8F5E9|#2E7D32",pending:"#FFF8E1|#F57F17",declined:"#FFEBEE|#C62828",confirmed:"#FCE4EC|#C2185B"};
-function loadSponsors(){var w=document.getElementById("sponsor-list");if(!w)return;db.collection("sponsors").orderBy("brand").get().then(function(s){var sp=[];s.forEach(function(d){sp.push(Object.assign({id:d.id},d.data()));});renderSponsors(sp.length>0?sp:DEF_SPONSORS);}).catch(function(){renderSponsors(DEF_SPONSORS);});}
-function renderSponsors(sp){var w=document.getElementById("sponsor-list");if(!w)return;var c={total:sp.length,confirmed:0,interested:0,pending:0};sp.forEach(function(s){if(s.status==="confirmed")c.confirmed++;if(s.status==="interested")c.interested++;if(s.status==="pending")c.pending++;});var st=document.getElementById("stat-total");if(st)st.textContent=c.total;var sc=document.getElementById("stat-confirmed");if(sc)sc.textContent=c.confirmed;var si=document.getElementById("stat-interested");if(si)si.textContent=c.interested;var sp2=document.getElementById("stat-pending");if(sp2)sp2.textContent=c.pending;var rows=sp.map(function(s){var col=(SCOL[s.status]||"#f0f0f0|#333").split("|");var pill='<span style="background:'+col[0]+";color:"+col[1]+';font-size:10px;font-weight:500;padding:3px 9px;border-radius:10px">'+(s.status||"")+"</span>";var eb='<button data-sid="'+s.id+'" onclick="editSp(this.dataset.sid)" style="background:var(--purple);color:white;border:none;border-radius:8px;padding:2px 8px;font-size:10px;cursor:pointer;margin-right:3px">Edit</button>';var db2='<button data-sid="'+s.id+'" onclick="delSp(this.dataset.sid)" style="background:#c62828;color:white;border:none;border-radius:8px;padding:2px 8px;font-size:10px;cursor:pointer">Del</button>';return"<tr><td><strong>"+(s.brand||"")+"</strong></td><td>"+(s.category||"")+"</td><td>"+(s.contact||"")+"</td><td>"+pill+"</td><td>"+(s.lastContact||"")+"</td><td>"+(s.notes||"")+"</td><td>"+eb+db2+"</td></tr>";}).join("");w.innerHTML='<table class="sponsor-table"><thead><tr><th>Brand</th><th>Category</th><th>Contact</th><th>Status</th><th>Last Contact</th><th>Notes</th><th>Actions</th></tr></thead><tbody>'+rows+"</tbody></table>";}
-function addSponsor(){var b=prompt("Brand name:");if(!b)return;var cat=prompt("Category:","");var con=prompt("Contact:","");var st=prompt("Status (contacted/interested/pending/confirmed/declined):","contacted");var lc=prompt("Last contact date:","");var n=prompt("Notes:","");db.collection("sponsors").add({brand:b,category:cat||"",contact:con||"",status:st||"contacted",lastContact:lc||"",notes:n||""}).then(function(){showToast("Sponsor added!");loadSponsors();});}
-window.addSponsor=addSponsor;
-function editSp(id){db.collection("sponsors").doc(id).get().then(function(snap){if(!snap.exists)return;var s=snap.data();var b=prompt("Brand:",s.brand||"");if(b===null)return;var cat=prompt("Category:",s.category||"");if(cat===null)return;var con=prompt("Contact:",s.contact||"");if(con===null)return;var st=prompt("Status:",s.status||"contacted");if(st===null)return;var lc=prompt("Last contact:",s.lastContact||"");if(lc===null)return;var n=prompt("Notes:",s.notes||"");if(n===null)return;db.collection("sponsors").doc(id).update({brand:b,category:cat,contact:con,status:st,lastContact:lc,notes:n}).then(function(){showToast("Updated!");loadSponsors();});});}
-window.editSp=editSp;
-function delSp(id){if(!confirm("Delete?"))return;db.collection("sponsors").doc(id).delete().then(function(){showToast("Deleted");loadSponsors();});}
-window.delSp=delSp;
-
 </script>
 </body>
 </html>
