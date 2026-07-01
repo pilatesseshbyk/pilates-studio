@@ -671,7 +671,39 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
+// EmailJS - will be configured when keys are added
+var EMAILJS_SERVICE_ID = "";
+var EMAILJS_TEMPLATE_ID = "";
+var EMAILJS_PUBLIC_KEY = "";
+var emailJSReady = false;
+
+function initEmailJS(){
+  if(EMAILJS_PUBLIC_KEY){
+    emailjs.init({publicKey: EMAILJS_PUBLIC_KEY});
+    emailJSReady = true;
+  }
+}
+
+function sendConfirmationEmail(userEmail, userName, sessionName, sessionDay, sessionTime, sessionEquipment, joinLink){
+  if(!emailJSReady || !EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID) return;
+  var monthName = MN[calMonth];
+  var params = {
+    to_email: userEmail,
+    to_name: userName || "there",
+    session_name: sessionName || "Pilates Class",
+    session_date: monthName + " " + sessionDay + ", " + calYear,
+    session_time: fmt12(sessionTime),
+    session_equipment: sessionEquipment || "Pilates mat, resistance bands",
+    join_link: joinLink || "Check your dashboard for the join link",
+    studio_name: "Pilates Sesh by K"
+  };
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params).catch(function(e){
+    console.log("Email send failed:", e);
+  });
+}
+
 firebase.initializeApp({
   apiKey:"AIzaSyCOqOCXz4Zh793pHfCSuNQhOjtbdI2aN78",
   authDomain:"pilates-sesh-by-k.firebaseapp.com",
@@ -692,6 +724,8 @@ var ICON_MAP={mat:"&#129336;",ring:"&#11093;",bands:"&#127965;",ball:"&#9917;",w
 var ICONS=Object.keys(ICON_MAP);
 
 // AUTH
+initEmailJS();
+
 auth.onAuthStateChanged(function(u){
   if(u){
     currentUser=u;
@@ -954,39 +988,49 @@ function regClass(key,idx){
   var sess=sessions[idx];
   if(sess.type!=="live") return;
   var reg=sess.registered?sess.registered.slice():[];
-  if(reg.indexOf(currentUser.uid)>-1){showToast("Already registered!");return;}
-  if(reg.length>=(sess.spots||10)){showToast("Class is full!");return;}
-  reg.push(currentUser.uid);
-  sessionData[key][idx].registered=reg;
+  if(reg.indexOf(currentUser.uid)>-1){showToast("You are already registered for this class!");buildCal();return;}
+  if(reg.length>=(sess.spots||10)){showToast("Sorry, this class is full!");return;}
   var regId=currentUser.uid+"-"+key+"-"+idx;
-  saveCal().then(function(){
-    return db.collection("registrations").doc(regId).set({
-      userId:currentUser.uid,
-      userName:currentUser.displayName||currentUser.email,
-      userEmail:currentUser.email,
-      sessionKey:key,
-      sessionIdx:idx,
-      sessionName:sess.name||"Live Session",
-      sessionTime:sess.time,
-      sessionMonth:calMonth,
-      sessionDay:parseInt(key.split("-")[2]),
-      registeredAt:new Date().toISOString()
-    });
-  }).then(function(){buildCal();showToast("Registered! See you on the mat!");})
-  .catch(function(e){showToast("Error: "+e.message);});
+  var regData={
+    userId:currentUser.uid,
+    userName:currentUser.displayName||currentUser.email,
+    userEmail:currentUser.email,
+    sessionKey:key,
+    sessionIdx:idx,
+    sessionName:sess.name||"Live Session",
+    sessionTime:sess.time,
+    sessionMonth:calMonth,
+    sessionDay:parseInt(key.split("-")[2]),
+    sessionEquipment:sess.equipment||"",
+    sessionLink:sess.link||"",
+    registeredAt:new Date().toISOString()
+  };
+  // Write to registrations collection (client has permission)
+  db.collection("registrations").doc(regId).set(regData).then(function(){
+    // Also update the registered array in sessionData locally and save (admin writes calendar)
+    // For clients, just update locally so the UI reflects the change
+    sessionData[key][idx].registered=reg.concat([currentUser.uid]);
+    buildCal();
+    showToast("Registered! See you on the mat!");
+    // Send confirmation email
+    sendConfirmationEmail(currentUser.email, currentUser.displayName||currentUser.email.split("@")[0], sess.name, parseInt(key.split("-")[2]), sess.time, sess.equipment, sess.link);
+    if(isAdmin) saveCal();
+  }).catch(function(e){showToast("Error registering: "+e.message);});
 }
 
 function unregClass(key,idx){
   if(!currentUser) return;
   var sessions=sessionData[key];
   if(!sessions||!sessions[idx]) return;
-  var reg=(sessions[idx].registered||[]).filter(function(id){return id!==currentUser.uid;});
-  sessionData[key][idx].registered=reg;
   var regId=currentUser.uid+"-"+key+"-"+idx;
-  saveCal().then(function(){
-    return db.collection("registrations").doc(regId).delete();
-  }).then(function(){buildCal();showToast("Unregistered from class");})
-  .catch(function(e){showToast("Error: "+e.message);});
+  db.collection("registrations").doc(regId).delete().then(function(){
+    // Update local state
+    var reg=(sessionData[key][idx].registered||[]).filter(function(id){return id!==currentUser.uid;});
+    sessionData[key][idx].registered=reg;
+    buildCal();
+    showToast("Unregistered from class");
+    if(isAdmin) saveCal();
+  }).catch(function(e){showToast("Error: "+e.message);});
 }
 
 // MY CLASSES
@@ -994,10 +1038,19 @@ function loadMyClasses(){
   if(!currentUser) return;
   var list=document.getElementById("my-classes-list");
   if(!list) return;
-  list.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading...</div>';
-  db.collection("registrations").get().then(function(snap){
+  list.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading your classes...</div>';
+  // Use where query to get only this user's registrations
+  db.collection("registrations").where("userId","==",currentUser.uid).get().then(function(snap){
     var mine=[];
-    snap.forEach(function(d){var r=d.data();if(r.userId===currentUser.uid) mine.push(r);});
+    snap.forEach(function(d){var r=d.data();mine.push(r);});
+    // Also sync local sessionData with registered arrays
+    mine.forEach(function(r){
+      if(sessionData[r.sessionKey]&&sessionData[r.sessionKey][r.sessionIdx]){
+        var reg=sessionData[r.sessionKey][r.sessionIdx].registered||[];
+        if(reg.indexOf(currentUser.uid)===-1) reg.push(currentUser.uid);
+        sessionData[r.sessionKey][r.sessionIdx].registered=reg;
+      }
+    });
     if(mine.length===0){list.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-muted)">No registered classes yet. Go to Schedule to register!</div>';return;}
     mine.sort(function(a,b){return (a.sessionDay||0)-(b.sessionDay||0);});
     list.innerHTML=mine.map(function(r){
@@ -1020,9 +1073,9 @@ function loadDashboard(){
   var joinBtn=document.getElementById("dash-join");
   if(!titleEl) return;
   if(!isAdmin&&currentUser){
-    db.collection("registrations").get().then(function(snap){
+    db.collection("registrations").where("userId","==",currentUser.uid).get().then(function(snap){
       var mine=[];
-      snap.forEach(function(d){var r=d.data();if(r.userId===currentUser.uid) mine.push(r);});
+      snap.forEach(function(d){mine.push(d.data());});
       var today=new Date().getDate();
       mine.sort(function(a,b){return (a.sessionDay||0)-(b.sessionDay||0);});
       var next=null;
@@ -1079,21 +1132,22 @@ function findNextSession(titleEl,timeEl,equipEl,joinBtn){
 function openRoster(key,idx,day){
   if(!isAdmin) return;
   var sessions=sessionData[key]||[];
-  var sess=sessions[idx]||{};
-  var reg=sess.registered||[];
-  document.getElementById("roster-title").textContent=(sess.name||"Session")+" - "+MS[calMonth]+" "+day+" ("+reg.length+"/"+(sess.spots||10)+")";
+  var sess=sessions[parseInt(idx)]||{};
+  document.getElementById("roster-title").textContent=(sess.name||"Session")+" - "+MS[calMonth]+" "+day;
   var body=document.getElementById("roster-body");
   body.innerHTML='<div style="text-align:center;padding:1rem;color:var(--text-muted)">Loading...</div>';
   openModal("m-roster");
-  if(reg.length===0){body.innerHTML='<div style="text-align:center;padding:1rem;color:var(--text-muted)">No registrations yet.</div>';return;}
-  Promise.all(reg.map(function(uid){return db.collection("users").doc(uid).get();})).then(function(snaps){
-    var rows=snaps.map(function(s,i){
-      var u=s.exists?s.data():{name:"Unknown",email:"unknown",isFoundingMember:false};
-      var badge=u.isFoundingMember?'<span class="founding-badge">Founding</span>':'<span class="regular-badge">Regular</span>';
-      return '<tr><td>'+(i+1)+'</td><td><strong>'+(u.name||"Unknown")+'</strong></td><td>'+(u.email||"")+'</td><td>'+badge+'</td></tr>';
+  db.collection("registrations").where("sessionKey","==",key).where("sessionIdx","==",parseInt(idx)).get().then(function(snap){
+    var regs=[];
+    snap.forEach(function(d){regs.push(d.data());});
+    document.getElementById("roster-title").textContent=(sess.name||"Session")+" - "+MS[calMonth]+" "+day+" ("+regs.length+"/"+(sess.spots||10)+")";
+    if(regs.length===0){body.innerHTML='<div style="text-align:center;padding:1rem;color:var(--text-muted)">No registrations yet for this class.</div>';return;}
+    var rows=regs.map(function(r,i){
+      var regDate=r.registeredAt?new Date(r.registeredAt).toLocaleDateString("en-US",{month:"short",day:"numeric"}):"";
+      return '<tr><td>'+(i+1)+'</td><td><strong>'+(r.userName||"Unknown")+'</strong></td><td>'+(r.userEmail||"")+'</td><td><span class="regular-badge">Member</span></td><td style="font-size:11px;color:var(--text-muted)">'+regDate+'</td></tr>';
     }).join("");
-    body.innerHTML='<table class="data-table"><thead><tr><th>#</th><th>Name</th><th>Email</th><th>Status</th></tr></thead><tbody>'+rows+'</tbody></table>';
-  });
+    body.innerHTML='<table class="data-table"><thead><tr><th>#</th><th>Name</th><th>Email</th><th>Status</th><th>Registered</th></tr></thead><tbody>'+rows+'</tbody></table>';
+  }).catch(function(e){body.innerHTML='<div style="text-align:center;padding:1rem;color:var(--text-muted)">Error loading roster: '+e.message+'</div>';});
 }
 
 // REGISTRATIONS PAGE
@@ -1682,6 +1736,7 @@ document.addEventListener("DOMContentLoaded",function(){
   document.getElementById("btn-edit-cd").addEventListener("click",openEditCD);
   document.getElementById("btn-save-cd").addEventListener("click",saveCD);
   document.getElementById("btn-ask").addEventListener("click",submitQuestion);
+  // Note: To enable confirmation emails, set EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, EMAILJS_PUBLIC_KEY at top of script
   document.getElementById("btn-chat").addEventListener("click",sendChat);
   document.getElementById("chat-in").addEventListener("keydown",function(e){if(e.key==="Enter") sendChat();});
   document.getElementById("btn-cal-view").addEventListener("click",function(){
