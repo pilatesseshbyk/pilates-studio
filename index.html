@@ -326,13 +326,18 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
         <div class="detail-row"><div class="detail-icon">&#128249;</div><div><div class="detail-label">Recording</div><div class="detail-val" id="cd-recording">Added to library within 24 hours if you miss it</div></div></div>
       </div>
       <div class="card">
-        <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:500;color:var(--purple);margin-bottom:10px">What You Will Need</div>
-        <div class="detail-row"><div class="detail-icon">&#9917;</div><div><div class="detail-label">Equipment</div><div class="detail-val">Inflatable Pilates Ball (9 inch)</div></div></div>
-        <div class="detail-row"><div class="detail-icon">&#11093;</div><div><div class="detail-label">Equipment</div><div class="detail-val">Resistance Ring / Magic Circle</div></div></div>
-        <div class="detail-row"><div class="detail-icon">&#128170;</div><div><div class="detail-label">Equipment</div><div class="detail-val">Light Weights (1-3 lbs)</div></div></div>
-        <div class="detail-row"><div class="detail-icon">&#127965;</div><div><div class="detail-label">Equipment</div><div class="detail-val">Resistance Bands (light and medium)</div></div></div>
-        <div class="detail-row"><div class="detail-icon">&#129336;</div><div><div class="detail-label">Equipment</div><div class="detail-val">Yoga / Pilates Mat</div></div></div>
-        <div class="detail-row"><div class="detail-icon">&#129510;</div><div><div class="detail-label">Equipment</div><div class="detail-val">Grip Socks + Water Bottle</div></div></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:500;color:var(--purple)">What You Will Need</div>
+          <button class="btn-purple" id="btn-edit-equip" style="display:none;font-size:11px;padding:5px 12px" onclick="openEditEquip()">Edit Equipment</button>
+        </div>
+        <div id="cd-equip-list">
+          <div class="detail-row"><div class="detail-icon">&#9917;</div><div><div class="detail-label">Equipment</div><div class="detail-val">Inflatable Pilates Ball (9 inch)</div></div></div>
+          <div class="detail-row"><div class="detail-icon">&#11093;</div><div><div class="detail-label">Equipment</div><div class="detail-val">Resistance Ring / Magic Circle</div></div></div>
+          <div class="detail-row"><div class="detail-icon">&#128170;</div><div><div class="detail-label">Equipment</div><div class="detail-val">Light Weights (1-3 lbs)</div></div></div>
+          <div class="detail-row"><div class="detail-icon">&#127965;</div><div><div class="detail-label">Equipment</div><div class="detail-val">Resistance Bands (light and medium)</div></div></div>
+          <div class="detail-row"><div class="detail-icon">&#129336;</div><div><div class="detail-label">Equipment</div><div class="detail-val">Yoga / Pilates Mat</div></div></div>
+          <div class="detail-row"><div class="detail-icon">&#129510;</div><div><div class="detail-label">Equipment</div><div class="detail-val">Grip Socks + Water Bottle</div></div></div>
+        </div>
       </div>
     </div>
 
@@ -745,7 +750,7 @@ function showApp(u){
   document.getElementById("admin-nav").style.display=isAdmin?"block":"none";
   if(document.getElementById("qc-mine")) document.getElementById("qc-mine").style.display=isAdmin?"none":"block";
   if(document.getElementById("qc-ask")) document.getElementById("qc-ask").style.display=isAdmin?"none":"block";
-  var adminOnly=["btn-add-video","btn-add-event","btn-add-shop","btn-chg-month","admin-cal-note","btn-edit-cd","btn-add-sponsor","btn-add-content"];
+  var adminOnly=["btn-add-video","btn-add-event","btn-add-shop","btn-chg-month","admin-cal-note","btn-edit-cd","btn-edit-equip","btn-add-sponsor","btn-add-content"];
   adminOnly.forEach(function(id){var el=document.getElementById(id);if(el) el.style.display=isAdmin?"block":"none";});
   document.getElementById("topbar-date").textContent=new Date().toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
   buildIconPicker();
@@ -1204,6 +1209,18 @@ function loadEvents(){
   db.collection("events").orderBy("sortKey").get().then(function(snap){
     var evts=[];
     snap.forEach(function(d){evts.push(Object.assign({id:d.id},d.data()));});
+    if(evts.length===0 && isAdmin){
+      // Save defaults to Firebase so deletes persist
+      var batch=db.batch();
+      DEF_EVENTS.forEach(function(ev){
+        var ref=db.collection("events").doc();
+        var data=Object.assign({},ev);
+        delete data.id;
+        batch.set(ref,data);
+      });
+      batch.commit().then(function(){loadEvents();});
+      return;
+    }
     renderEvents(evts.length>0?evts:DEF_EVENTS);
   }).catch(function(){renderEvents(DEF_EVENTS);});
 }
@@ -1270,6 +1287,17 @@ function loadShop(){
   db.collection("shop").get().then(function(snap){
     var items=[];
     snap.forEach(function(d){items.push(Object.assign({id:d.id},d.data()));});
+    if(items.length===0 && isAdmin){
+      var batch=db.batch();
+      DEF_SHOP.forEach(function(item){
+        var ref=db.collection("shop").doc();
+        var data=Object.assign({},item);
+        delete data.id;
+        batch.set(ref,data);
+      });
+      batch.commit().then(function(){loadShop();});
+      return;
+    }
     renderShop(items.length>0?items:DEF_SHOP);
   }).catch(function(){renderShop(DEF_SHOP);});
 }
@@ -1380,6 +1408,7 @@ function loadClassDetails(){
     if(d.level) document.getElementById("cd-level").textContent=d.level;
     if(d.instructor) document.getElementById("cd-instructor").textContent=d.instructor;
     if(d.recording) document.getElementById("cd-recording").textContent=d.recording;
+    if(d.equipment && d.equipment.length>0) renderEquipList(d.equipment);
   });
 }
 
@@ -1396,6 +1425,42 @@ function openEditCD(){
 function saveCD(){
   var data={title:document.getElementById("cdm-title").value,duration:document.getElementById("cdm-dur").value,schedule:document.getElementById("cdm-sched").value,level:document.getElementById("cdm-level").value,instructor:document.getElementById("cdm-inst").value,recording:document.getElementById("cdm-rec").value};
   db.collection("classDetails").doc("main").set(data).then(function(){closeModal("m-cd");loadClassDetails();showToast("Class details updated!");});
+}
+
+function openEditEquip(){
+  // Get current equipment from the page
+  var rows=document.querySelectorAll("#cd-equip-list .detail-row .detail-val");
+  var current=[];
+  rows.forEach(function(r){current.push(r.textContent.trim());});
+  // If no dynamic list, get from Firebase
+  db.collection("classDetails").doc("main").get().then(function(snap){
+    var equip=snap.exists&&snap.data().equipment?snap.data().equipment:["Inflatable Pilates Ball (9 inch)","Resistance Ring / Magic Circle","Light Weights (1-3 lbs)","Resistance Bands (light and medium)","Yoga / Pilates Mat","Grip Socks + Water Bottle"];
+    document.getElementById("equip-list").value=equip.join("\n");
+    openModal("m-equip");
+  }).catch(function(){
+    document.getElementById("equip-list").value=["Inflatable Pilates Ball (9 inch)","Resistance Ring / Magic Circle","Light Weights (1-3 lbs)","Resistance Bands (light and medium)","Yoga / Pilates Mat","Grip Socks + Water Bottle"].join("\n");
+    openModal("m-equip");
+  });
+}
+
+function saveEquip(){
+  var raw=document.getElementById("equip-list").value;
+  var items=raw.split("\n").map(function(s){return s.trim();}).filter(function(s){return s.length>0;});
+  if(items.length===0){showToast("Please enter at least one item");return;}
+  db.collection("classDetails").doc("main").set({equipment:items},{merge:true}).then(function(){
+    closeModal("m-equip");
+    renderEquipList(items);
+    showToast("Equipment list updated!");
+  });
+}
+
+function renderEquipList(items){
+  var container=document.getElementById("cd-equip-list");
+  if(!container) return;
+  var icons=["&#9917;","&#11093;","&#128170;","&#127965;","&#129336;","&#129510;","&#128167;","&#128717;"];
+  container.innerHTML=items.map(function(item,i){
+    return '<div class="detail-row"><div class="detail-icon">'+(icons[i]||"&#128204;")+'</div><div><div class="detail-label">Equipment</div><div class="detail-val">'+item+'</div></div></div>';
+  }).join("");
 }
 
 // CONTENT PLANNER
@@ -1493,6 +1558,17 @@ function loadSponsors(){
   db.collection("sponsors").orderBy("brand").get().then(function(snap){
     var items=[];
     snap.forEach(function(d){items.push(Object.assign({id:d.id},d.data()));});
+    if(items.length===0 && isAdmin){
+      var batch=db.batch();
+      DEF_SPONSORS.forEach(function(item){
+        var ref=db.collection("sponsors").doc();
+        var data=Object.assign({},item);
+        delete data.id;
+        batch.set(ref,data);
+      });
+      batch.commit().then(function(){loadSponsors();});
+      return;
+    }
     renderSponsors(items.length>0?items:DEF_SPONSORS);
   }).catch(function(){renderSponsors(DEF_SPONSORS);});
 }
@@ -1631,8 +1707,26 @@ document.addEventListener("DOMContentLoaded",function(){
     });
   });
   document.querySelectorAll("[data-close]").forEach(function(el){el.addEventListener("click",function(){closeModal(this.getAttribute("data-close"));});});
+  document.getElementById("btn-save-equip").addEventListener("click",saveEquip);
   document.getElementById("topbar-date").textContent=new Date().toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
 });
 </script>
+
+<!-- Equipment Edit Modal -->
+<div class="modal-overlay" id="m-equip">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Edit Equipment List</div>
+      <button class="modal-close" data-close="m-equip">x</button>
+    </div>
+    <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">One item per line. Each line becomes a row in the equipment list.</div>
+    <label class="form-label">Equipment Items (one per line)</label>
+    <textarea class="form-textarea" id="equip-list" style="min-height:200px" placeholder="Inflatable Pilates Ball (9 inch)&#10;Resistance Ring / Magic Circle&#10;Light Weights (1-3 lbs)&#10;Resistance Bands (light and medium)&#10;Yoga / Pilates Mat&#10;Grip Socks + Water Bottle"></textarea>
+    <div class="modal-footer">
+      <button class="btn-cancel" data-close="m-equip">Cancel</button>
+      <button class="btn-pink" style="flex:2;padding:10px;border-radius:20px" id="btn-save-equip">Save Equipment List</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
