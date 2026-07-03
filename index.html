@@ -182,6 +182,79 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 .detail-val{font-size:13px;color:var(--text)}
 .planner-item-row{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px}
 
+/* PROGRESS / STREAK */
+.streak-card{background:linear-gradient(135deg,var(--purple),var(--pink-dark));border-radius:14px;padding:1.2rem;color:white;margin-bottom:1rem}
+.streak-num{font-size:48px;font-weight:700;line-height:1;color:white}
+.streak-label{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.7)}
+.month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:10px}
+.month-day{height:20px;border-radius:3px;background:rgba(255,255,255,0.15)}
+.month-day.attended{background:var(--green)}
+.month-day.today{background:rgba(255,255,255,0.4);border:1px solid white}
+/* ANNOUNCEMENTS */
+.announce-card{background:var(--white);border-left:4px solid var(--pink);border-radius:0 12px 12px 0;padding:12px 14px;margin-bottom:8px;box-shadow:0 1px 6px rgba(233,30,140,0.08)}
+.announce-title{font-size:13px;font-weight:500;color:var(--purple);margin-bottom:3px}
+.announce-body{font-size:12px;color:var(--text-muted);line-height:1.5}
+.announce-date{font-size:10px;color:var(--text-muted);margin-top:4px}
+/* FAVORITES */
+.fav-btn{background:none;border:none;cursor:pointer;font-size:16px;padding:2px 4px;transition:transform 0.15s}
+.fav-btn:hover{transform:scale(1.2)}
+/* DIFFICULTY TAGS */
+.diff-beginner{background:#E8F5E9;color:#2E7D32;font-size:9px;padding:2px 7px;border-radius:10px;font-weight:500;display:inline-block}
+.diff-intermediate{background:#FFF8E1;color:#F57F17;font-size:9px;padding:2px 7px;border-radius:10px;font-weight:500;display:inline-block}
+.diff-advanced{background:#FFEBEE;color:#C62828;font-size:9px;padding:2px 7px;border-radius:10px;font-weight:500;display:inline-block}
+/* QUIZ MODAL */
+.quiz-step{display:none}
+.quiz-step.active{display:block}
+.quiz-option{width:100%;padding:10px 14px;margin-bottom:8px;border:1.5px solid var(--border);border-radius:10px;background:white;font-family:Jost,sans-serif;font-size:13px;cursor:pointer;text-align:left;transition:all 0.15s}
+.quiz-option:hover,.quiz-option.selected{border-color:var(--pink);background:var(--blush)}
+.quiz-option.selected{font-weight:500;color:var(--purple)}
+/* PROGRESS TRACKING */
+.streak-card{background:linear-gradient(135deg,var(--purple),var(--pink-dark));border-radius:14px;padding:1.2rem;color:white;margin-bottom:1rem}
+.streak-num{font-size:42px;font-weight:500;line-height:1}
+.streak-label{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.75);margin-top:2px}
+.month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:10px}
+.month-dot{width:100%;aspect-ratio:1;border-radius:4px;background:rgba(255,255,255,0.2)}
+.month-dot.attended{background:var(--green)}
+.month-dot.today{background:white;opacity:0.9}
+
+/* ANNOUNCEMENTS */
+.announce-card{background:var(--white);border-left:4px solid var(--pink);border-radius:0 12px 12px 0;padding:10px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;box-shadow:0 2px 8px rgba(233,30,140,0.08)}
+.announce-pinned{border-color:var(--purple)}
+.announce-title{font-size:13px;font-weight:500;color:var(--purple);margin-bottom:2px}
+.announce-body{font-size:12px;color:var(--text-muted);line-height:1.5}
+.announce-date{font-size:10px;color:var(--text-muted);white-space:nowrap;margin-top:2px}
+
+/* QUIZ */
+.quiz-overlay{display:none;position:fixed;inset:0;background:rgba(74,25,66,0.6);z-index:1000;align-items:center;justify-content:center}
+.quiz-overlay.open{display:flex}
+.quiz-card{background:var(--white);border-radius:20px;padding:2rem;width:90%;max-width:500px;max-height:90vh;overflow-y:auto}
+.quiz-step{display:none}
+.quiz-step.active{display:block}
+.quiz-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:500;color:var(--purple);margin-bottom:6px}
+.quiz-subtitle{font-size:13px;color:var(--text-muted);margin-bottom:1.2rem}
+.quiz-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem}
+.quiz-option{padding:10px 12px;border:2px solid var(--border);border-radius:12px;cursor:pointer;font-size:12px;font-weight:500;color:var(--text);text-align:center;transition:all 0.15s;background:white}
+.quiz-option.selected{border-color:var(--pink);background:var(--blush);color:var(--pink)}
+.quiz-option:hover{border-color:var(--pink-light)}
+.quiz-dots{display:flex;gap:6px;justify-content:center;margin-bottom:1.2rem}
+.quiz-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background 0.2s}
+.quiz-dot.active{background:var(--pink)}
+.star-row{display:flex;gap:8px;font-size:2rem;cursor:pointer;margin-bottom:1rem}
+.star-btn{cursor:pointer;transition:transform 0.1s;color:var(--border)}
+.star-btn.lit{color:#F57F17}
+.star-btn:hover{transform:scale(1.2)}
+
+/* FAVORITES */
+.fav-btn{position:absolute;top:6px;left:6px;background:rgba(255,255,255,0.9);border:none;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;transition:all 0.15s;z-index:2}
+.fav-btn:hover{background:white;transform:scale(1.1)}
+.fav-btn.active{color:var(--pink)}
+
+/* DIFFICULTY TAGS */
+.diff-tag{display:inline-block;font-size:9px;font-weight:600;padding:2px 8px;border-radius:10px;margin-left:4px;text-transform:uppercase;letter-spacing:0.06em}
+.diff-beginner{background:#E8F5E9;color:#2E7D32}
+.diff-intermediate{background:#FFF8E1;color:#F57F17}
+.diff-advanced{background:#FFEBEE;color:#C62828}
+
 /* MOBILE */
 @media(max-width:768px){
   :root{--sidebar:0px}
@@ -275,6 +348,7 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
       <div class="nav-item" data-page="questions">&#128172; Client Questions</div>
       <div class="nav-item" data-page="content">&#128197; Content Planner</div>
       <div class="nav-item" data-page="sponsorship">&#129309; Sponsorships</div>
+      <div class="nav-item" data-page="announcements">&#128226; Announcements</div>
     </div>
     <div class="sidebar-footer"><button class="logout-btn" id="btn-logout">Sign out</button></div>
   </nav>
@@ -305,11 +379,38 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
         <div class="welcome-title" id="welcome-name">Hello, Beautiful</div>
         <div class="welcome-sub">Your next class is coming up - let's move together.</div>
       </div>
+      <!-- ANNOUNCEMENTS FEED -->
+      <div id="announcements-section" style="margin-bottom:1rem">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div style="font-size:12px;font-weight:500;color:var(--purple);text-transform:uppercase;letter-spacing:0.1em">From K</div>
+          <button class="btn-pink" id="btn-post-announce" style="display:none;font-size:10px;padding:4px 12px">+ Post</button>
+        </div>
+        <div id="announcements-list"><div style="text-align:center;padding:1rem;color:var(--text-muted);font-size:12px">Loading...</div></div>
+      </div>
+
       <div class="next-class-card">
         <span style="background:var(--pink);color:white;font-size:10px;font-weight:500;padding:4px 10px;border-radius:20px;white-space:nowrap">Next Class</span>
         <div style="flex:1"><div style="font-size:14px;font-weight:500;color:var(--purple)" id="dash-title">Loading...</div><div style="font-size:12px;color:var(--text-muted)" id="dash-time"></div><div style="font-size:11px;color:var(--pink);margin-top:2px" id="dash-equip"></div></div>
         <button class="join-btn" id="dash-join">View Schedule</button>
       </div>
+      <!-- PROGRESS TRACKER -->
+      <div id="progress-section" style="margin-bottom:1rem;display:none">
+        <div class="streak-card">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <div class="streak-label">Classes This Month</div>
+              <div class="streak-num" id="streak-num">0</div>
+            </div>
+            <div style="text-align:right">
+              <div class="streak-label">All Time</div>
+              <div style="font-size:28px;font-weight:600;color:white" id="alltime-num">0</div>
+            </div>
+          </div>
+          <div id="month-grid" class="month-grid" style="margin-top:12px"></div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.6);margin-top:6px" id="goals-display"></div>
+        </div>
+      </div>
+
       <div class="quick-grid">
         <div class="quick-card" data-page="schedule"><div style="font-size:1.8rem;margin-bottom:8px">&#128197;</div><div style="font-size:12px;font-weight:500;color:var(--purple)">Schedule</div></div>
         <div class="quick-card" data-page="my-classes" id="qc-mine"><div style="font-size:1.8rem;margin-bottom:8px">&#11088;</div><div style="font-size:12px;font-weight:500;color:var(--purple)">My Classes</div></div>
@@ -351,7 +452,21 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 
     <!-- MY CLASSES -->
     <div class="page" id="page-my-classes">
-      <div class="section-header"><div class="section-title">My Registered Classes</div></div>
+      <div class="section-header">
+        <div class="section-title">My Classes</div>
+        <button class="btn-purple" id="btn-update-goals" style="font-size:11px;padding:6px 12px">Update Goals</button>
+      </div>
+      <!-- Progress stats -->
+      <div class="stats-row" style="margin-bottom:1rem">
+        <div class="stat-card"><div class="stat-num" id="mc-thismonth">-</div><div class="stat-label">This Month</div></div>
+        <div class="stat-card"><div class="stat-num" id="mc-alltime">-</div><div class="stat-label">All Time</div></div>
+        <div class="stat-card"><div class="stat-num" id="mc-upcoming">-</div><div class="stat-label">Upcoming</div></div>
+      </div>
+      <!-- Goals display -->
+      <div id="mc-goals-card" class="card" style="margin-bottom:1rem;display:none">
+        <div style="font-size:12px;font-weight:500;color:var(--purple);margin-bottom:6px">My Goals</div>
+        <div id="mc-goals-display" style="font-size:12px;color:var(--text-muted)"></div>
+      </div>
       <div id="my-classes-list"><div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading your classes...</div></div>
     </div>
 
@@ -398,7 +513,14 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
         <div class="filter-pill" data-cat="beginner">Beginner</div>
         <div class="filter-pill" data-cat="stretch">Stretch</div>
         <div class="filter-pill" data-cat="postpartum">Postpartum</div>
+        <div class="filter-pill" id="pill-favorites" style="display:none" data-cat="favorites">&#9825; Favorites</div>
       </div>
+      <div class="lib-filter" id="diff-filters" style="margin-top:-4px">
+        <div class="filter-pill active" data-diff="all" style="font-size:10px;padding:3px 10px">All Levels</div>
+        <div class="filter-pill" data-diff="beginner" style="font-size:10px;padding:3px 10px">Beginner</div>
+        <div class="filter-pill" data-diff="intermediate" style="font-size:10px;padding:3px 10px">Intermediate</div>
+        <div class="filter-pill" data-diff="advanced" style="font-size:10px;padding:3px 10px">Advanced</div>
+      </div></div>
       <div class="video-grid" id="video-grid"><div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading library...</div></div>
     </div>
 
@@ -493,6 +615,15 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
       </div>
       <div id="content-cal-view"></div>
       <div id="content-list-view" style="display:none"></div>
+    </div>
+
+    <!-- ANNOUNCEMENTS (admin) -->
+    <div class="page" id="page-announcements">
+      <div class="section-header">
+        <div class="section-title">Announcements</div>
+        <button class="btn-pink" id="btn-add-announce">+ Post Announcement</button>
+      </div>
+      <div id="admin-announce-list"><div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading...</div></div>
     </div>
 
     <!-- SPONSORSHIP (admin) -->
@@ -636,7 +767,20 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
       </div>
       <div><label class="form-label">Duration</label><input class="form-input" id="vm-dur" placeholder="25 min"/></div>
     </div>
+    <label class="form-label">Difficulty Level</label>
+    <select class="form-select" id="vm-diff">
+      <option value="beginner">Beginner</option>
+      <option value="intermediate" selected>Intermediate</option>
+      <option value="advanced">Advanced</option>
+    </select>
     <label class="form-label">Date</label><input class="form-input" type="date" id="vm-date"/>
+    <label class="form-label">Difficulty Level</label>
+    <select class="form-select" id="vm-diff">
+      <option value="">Not specified</option>
+      <option value="beginner">Beginner</option>
+      <option value="intermediate">Intermediate</option>
+      <option value="advanced">Advanced</option>
+    </select>
     <div class="modal-footer">
       <button class="btn-cancel" data-close="m-video">Cancel</button>
       <button class="btn-pink" style="flex:2;padding:10px;border-radius:20px" id="btn-save-video">Add to Library</button>
@@ -840,15 +984,25 @@ function showApp(u){
   document.getElementById("admin-nav").style.display=isAdmin?"block":"none";
   if(document.getElementById("qc-mine")) document.getElementById("qc-mine").style.display=isAdmin?"none":"block";
   if(document.getElementById("qc-ask")) document.getElementById("qc-ask").style.display=isAdmin?"none":"block";
-  var adminOnly=["btn-add-video","btn-add-event","btn-add-shop","btn-chg-month","admin-cal-note","btn-edit-cd","btn-edit-equip","btn-add-sponsor","btn-add-content"];
+  var adminOnly=["btn-add-video","btn-add-event","btn-add-shop","btn-chg-month","admin-cal-note","btn-edit-cd","btn-edit-equip","btn-add-sponsor","btn-add-content","btn-add-announce"];
   adminOnly.forEach(function(id){var el=document.getElementById(id);if(el) el.style.display=isAdmin?"block":"none";});
+  // Favorites pill for clients only
+  var favPill=document.getElementById("pill-favorites");
+  if(favPill) favPill.style.display=isAdmin?"none":"inline-block";
   document.getElementById("topbar-date").textContent=new Date().toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
   buildIconPicker();
   showPage("dashboard");
+  if(!isAdmin){
+    setTimeout(showQuizIfNeeded, 1500);
+    loadProgress();
+    loadAnnouncements();
+  } else {
+    loadAnnouncements();
+  }
 }
 
 // NAVIGATION
-var TITLES={dashboard:"Dashboard",schedule:"Class Schedule","my-classes":"My Classes","class-details":"Class Details",library:"Video Library",events:"Community Events","ask-k":"Ask K",questions:"Client Questions",chatbot:"Help",shop:"Equipment Shop",members:"Members",registrations:"Registrations",content:"Content Planner",sponsorship:"Sponsorship Tracker"};
+var TITLES={dashboard:"Dashboard",schedule:"Class Schedule","my-classes":"My Classes","class-details":"Class Details",library:"Video Library",events:"Community Events","ask-k":"Ask K",questions:"Client Questions",chatbot:"Help",shop:"Equipment Shop",members:"Members",registrations:"Registrations",content:"Content Planner",sponsorship:"Sponsorship Tracker",announcements:"Announcements"};
 function showPage(id){
   document.querySelectorAll(".page").forEach(function(p){p.classList.remove("active");});
   document.querySelectorAll(".nav-item").forEach(function(n){n.classList.remove("active");});
@@ -857,7 +1011,7 @@ function showPage(id){
   document.querySelectorAll(".nav-item[data-page='"+id+"']").forEach(function(n){n.classList.add("active");});
   document.getElementById("page-title").textContent=TITLES[id]||id;
   if(id==="schedule") buildCal();
-  if(id==="library") loadVideos();
+  if(id==="library"){ if(!isAdmin) loadFavorites(); else loadVideos(); }
   if(id==="events") loadEvents();
   if(id==="shop") loadShop();
   if(id==="members") loadMembers();
@@ -865,6 +1019,7 @@ function showPage(id){
   if(id==="questions") loadQuestions();
   if(id==="content") loadContent();
   if(id==="sponsorship") loadSponsors();
+  if(id==="announcements") loadAnnouncementsAdmin();
   if(id==="my-classes") loadMyClasses();
   if(id==="class-details") loadClassDetails();
   if(id==="dashboard") loadDashboard();
@@ -1324,7 +1479,8 @@ function saveVideo(){
   var dur=document.getElementById("vm-dur").value.trim()||"25 min";
   var dv=document.getElementById("vm-date").value;
   var ds=dv?new Date(dv).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}):new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});
-  db.collection("videos").add({url:url,title:title,category:cat,duration:dur,date:ds}).then(function(){
+  var diff=document.getElementById("vm-diff").value;
+  db.collection("videos").add({url:url,title:title,category:cat,duration:dur,date:ds,difficulty:diff}).then(function(){
     closeModal("m-video");
     ["vm-url","vm-title","vm-dur"].forEach(function(id){document.getElementById(id).value="";});
     showToast("Video added!");loadVideos();
@@ -1825,6 +1981,283 @@ function sendChat(){
   setTimeout(function(){var t=document.getElementById("typing-ind");if(t) t.remove();msgs.innerHTML+='<div class="chat-msg bot"><div class="chat-bubble">'+response+'</div><div class="chat-time">'+now+'</div></div>';msgs.scrollTop=msgs.scrollHeight;},1200);
 }
 
+// =============================================
+// FEATURE 1: ANNOUNCEMENTS
+// =============================================
+var editAnnounceId = null;
+
+function loadAnnouncements() {
+  var section = document.getElementById("announcements-section");
+  var list = document.getElementById("announcements-list");
+  if (!list) return;
+  db.collection("announcements").orderBy("createdAt","desc").limit(5).get().then(function(snap) {
+    if (snap.empty) { if (section) section.style.display = "none"; return; }
+    var items = [];
+    snap.forEach(function(d) { items.push(Object.assign({id:d.id}, d.data())); });
+    items.sort(function(a,b) { return (b.pinned?1:0) - (a.pinned?1:0); });
+    if (section) section.style.display = "block";
+    list.innerHTML = items.map(function(a) {
+      var date = a.createdAt ? new Date(a.createdAt).toLocaleDateString("en-US",{month:"short",day:"numeric"}) : "";
+      var pin = a.pinned ? '<span style="font-size:10px;background:var(--purple);color:white;padding:1px 6px;border-radius:8px;margin-left:6px">Pinned</span>' : "";
+      var delBtn = isAdmin ? '<button data-aid="'+a.id+'" onclick="delAnnounce(this.dataset.aid)" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:16px;padding:0 4px;line-height:1">&times;</button>' : "";
+      return '<div class="announce-card'+(a.pinned?" announce-pinned":"")+'"><div style="flex:1"><div class="announce-title">'+a.title+pin+'</div><div class="announce-body">'+a.body+'</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px"><span class="announce-date">'+date+'</span>'+delBtn+'</div></div>';
+    }).join("");
+  }).catch(function() { if (section) section.style.display = "none"; });
+}
+
+function loadAnnouncementsAdmin() {
+  var list = document.getElementById("admin-announce-list");
+  if (!list) return;
+  db.collection("announcements").orderBy("createdAt","desc").get().then(function(snap) {
+    if (snap.empty) { list.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-muted)">No announcements yet.</div>'; return; }
+    var items = [];
+    snap.forEach(function(d) { items.push(Object.assign({id:d.id}, d.data())); });
+    list.innerHTML = items.map(function(a) {
+      var date = a.createdAt ? new Date(a.createdAt).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}) : "";
+      var pin = a.pinned ? '<span style="font-size:10px;background:var(--purple);color:white;padding:1px 6px;border-radius:8px;margin-left:6px">Pinned</span>' : "";
+      return '<div class="card" style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div style="font-size:14px;font-weight:500;color:var(--purple)">'+a.title+pin+'</div><div style="font-size:12px;color:var(--text-muted);margin-top:4px">'+a.body+'</div><div style="font-size:10px;color:var(--text-muted);margin-top:6px">'+date+'</div></div><button data-aid="'+a.id+'" onclick="delAnnounce(this.dataset.aid)" class="btn-sm btn-red">Delete</button></div></div>';
+    }).join("");
+  });
+}
+
+function saveAnnounce() {
+  var title = document.getElementById("ann-title").value.trim();
+  var body = document.getElementById("ann-body").value.trim();
+  if (!title || !body) { showToast("Please fill in title and message"); return; }
+  db.collection("announcements").add({
+    title: title, body: body,
+    pinned: document.getElementById("ann-pinned").checked,
+    createdAt: new Date().toISOString(),
+    createdBy: currentUser ? currentUser.email : ""
+  }).then(function() {
+    closeModal("m-announce");
+    document.getElementById("ann-title").value = "";
+    document.getElementById("ann-body").value = "";
+    document.getElementById("ann-pinned").checked = false;
+    showToast("Announcement posted!");
+    loadAnnouncementsAdmin();
+    loadAnnouncements();
+  });
+}
+
+function delAnnounce(id) {
+  if (!confirm("Delete this announcement?")) return;
+  db.collection("announcements").doc(id).delete().then(function() {
+    showToast("Deleted");
+    loadAnnouncements();
+    var adminList = document.getElementById("admin-announce-list");
+    if (adminList && adminList.children.length > 0) loadAnnouncementsAdmin();
+  });
+}
+
+// =============================================
+// FEATURE 2: ONBOARDING QUIZ
+// =============================================
+var quizStep = 0;
+var quizData = { goals: [], level: "", freq: "", focus: [], rating: 0 };
+var quizIsUpdate = false;
+var totalQuizSteps = 6;
+
+function showQuizIfNeeded() {
+  if (!currentUser || isAdmin) return;
+  db.collection("userGoals").doc(currentUser.uid).get().then(function(snap) {
+    if (!snap.exists) {
+      // New user - show quiz
+      quizIsUpdate = false;
+      startQuiz();
+    } else {
+      var d = snap.data();
+      var lastAsked = d.lastAsked || 0;
+      var now = Date.now();
+      var oneDay = 24 * 60 * 60 * 1000;
+      // If they said "later", check again on next login (after 1 day)
+      if (d.askedLater && (now - lastAsked) > oneDay) {
+        quizIsUpdate = true;
+        startUpdateQuiz();
+      }
+    }
+  });
+}
+
+function startQuiz() {
+  quizData = { goals: [], level: "", freq: "", focus: [], rating: 0 };
+  quizStep = 0;
+  quizIsUpdate = false;
+  document.getElementById("rating-title").textContent = "How excited are you to start?";
+  document.getElementById("rating-sub").textContent = "Rate your enthusiasm from 1-5!";
+  renderQuizDots();
+  showQuizStep(0);
+  document.getElementById("quiz-overlay").classList.add("open");
+}
+
+function startUpdateQuiz() {
+  quizData = { goals: [], level: "", freq: "", focus: [], rating: 0 };
+  quizStep = 1;
+  document.getElementById("rating-title").textContent = "How are your classes going so far?";
+  document.getElementById("rating-sub").textContent = "Your rating helps K improve sessions for everyone";
+  // Update welcome step
+  document.querySelector("#qs-0 .quiz-title").textContent = "Want to update your goals?";
+  document.querySelector("#qs-0 .quiz-subtitle").textContent = "A lot can change! Update your Pilates goals and give K your latest feedback.";
+  renderQuizDots();
+  showQuizStep(0);
+  document.getElementById("quiz-overlay").classList.add("open");
+}
+
+function renderQuizDots() {
+  var dots = document.getElementById("quiz-dots");
+  if (!dots) return;
+  dots.innerHTML = Array.from({length: totalQuizSteps}, function(_,i) {
+    return '<div class="quiz-dot'+(i===quizStep?" active":"")+'"></div>';
+  }).join("");
+}
+
+function showQuizStep(step) {
+  document.querySelectorAll(".quiz-step").forEach(function(s) { s.classList.remove("active"); });
+  var el = document.getElementById("qs-"+step);
+  if (el) el.classList.add("active");
+  quizStep = step;
+  renderQuizDots();
+}
+
+function quizNext() {
+  if (quizStep < totalQuizSteps - 1) showQuizStep(quizStep + 1);
+}
+
+function quizBack() {
+  if (quizStep > 0) showQuizStep(quizStep - 1);
+}
+
+function quizLater() {
+  if (!currentUser) return;
+  db.collection("userGoals").doc(currentUser.uid).set({
+    askedLater: true, lastAsked: Date.now()
+  }, {merge: true});
+  document.getElementById("quiz-overlay").classList.remove("open");
+}
+
+function toggleQuizOpt(el, group) {
+  el.classList.toggle("selected");
+  var vals = [];
+  document.querySelectorAll("#"+group+"-options .quiz-option.selected").forEach(function(o) {
+    vals.push(o.getAttribute("data-val"));
+  });
+  quizData[group] = vals;
+}
+
+function selectQuizOpt(el, group) {
+  document.querySelectorAll("#"+group+"-options .quiz-option").forEach(function(o) { o.classList.remove("selected"); });
+  el.classList.add("selected");
+  quizData[group] = el.getAttribute("data-val");
+}
+
+function setRating(val) {
+  quizData.rating = val;
+  document.querySelectorAll(".star-btn").forEach(function(s, i) {
+    s.classList.toggle("lit", i < val);
+  });
+}
+
+function saveQuiz() {
+  if (!currentUser) return;
+  var data = {
+    goals: quizData.goals,
+    level: quizData.level,
+    freq: quizData.freq,
+    focus: quizData.focus,
+    rating: quizData.rating,
+    lastUpdated: new Date().toISOString(),
+    askedLater: false,
+    lastAsked: Date.now()
+  };
+  db.collection("userGoals").doc(currentUser.uid).set(data).then(function() {
+    document.getElementById("quiz-overlay").classList.remove("open");
+    showToast("Goals saved! K will use these to personalize your experience.");
+  });
+}
+
+// =============================================
+// FEATURE 3: PROGRESS TRACKING
+// =============================================
+function loadProgress() {
+  if (!currentUser || isAdmin) return;
+  var section = document.getElementById("progress-section");
+  if (!section) return;
+  db.collection("registrations").where("userId","==",currentUser.uid).get().then(function(snap) {
+    var regs = [];
+    snap.forEach(function(d) { regs.push(d.data()); });
+    var thisMonth = regs.filter(function(r) { return r.sessionMonth === calMonth; }).length;
+    var allTime = regs.length;
+    var el = document.getElementById("streak-count");
+    var el2 = document.getElementById("alltime-count");
+    if (el) el.textContent = thisMonth;
+    if (el2) el2.textContent = allTime;
+    buildMonthGrid(regs);
+    if (allTime > 0 || thisMonth > 0) section.style.display = "block";
+  });
+}
+
+function buildMonthGrid(regs) {
+  var grid = document.getElementById("month-grid");
+  if (!grid) return;
+  var days = new Date(calYear, calMonth+1, 0).getDate();
+  var today = new Date().getDate();
+  var attendedDays = {};
+  regs.forEach(function(r) {
+    if (r.sessionMonth === calMonth) attendedDays[r.sessionDay] = true;
+  });
+  grid.innerHTML = Array.from({length: days}, function(_,i) {
+    var d = i+1;
+    var cls = "month-dot";
+    if (attendedDays[d]) cls += " attended";
+    else if (d === today) cls += " today";
+    return '<div class="'+cls+'" title="'+MS[calMonth]+' '+d+'"></div>';
+  }).join("");
+}
+
+// =============================================
+// FEATURE 4 & 5: FAVORITES + DIFFICULTY
+// =============================================
+var userFavorites = [];
+var currentCatFilter = "all";
+var currentDiffFilter = "all";
+
+function loadFavorites() {
+  if (!currentUser || isAdmin) return;
+  db.collection("userFavorites").doc(currentUser.uid).get().then(function(snap) {
+    userFavorites = snap.exists ? (snap.data().videoIds || []) : [];
+    loadVideos();
+  }).catch(function() { loadVideos(); });
+}
+
+function toggleFavorite(videoId, btn) {
+  if (!currentUser) { showToast("Please log in to save favorites"); return; }
+  var idx = userFavorites.indexOf(videoId);
+  if (idx > -1) {
+    userFavorites.splice(idx, 1);
+    btn.classList.remove("active");
+    btn.title = "Add to favorites";
+  } else {
+    userFavorites.push(videoId);
+    btn.classList.add("active");
+    btn.title = "Remove from favorites";
+  }
+  db.collection("userFavorites").doc(currentUser.uid).set({videoIds: userFavorites}).then(function() {
+    if (currentCatFilter === "favorites") applyFilters();
+  });
+}
+
+function applyFilters() {
+  document.querySelectorAll(".video-card").forEach(function(card) {
+    var cat = card.getAttribute("data-cat") || "";
+    var diff = card.getAttribute("data-diff") || "";
+    var vid = card.getAttribute("data-vid") || "";
+    var catOk = currentCatFilter === "all" || cat === currentCatFilter || (currentCatFilter === "favorites" && userFavorites.indexOf(vid) > -1);
+    var diffOk = currentDiffFilter === "all" || diff === currentDiffFilter;
+    card.style.display = (catOk && diffOk) ? "block" : "none";
+  });
+}
+
+
 // MODAL HELPERS
 function openModal(id){var el=document.getElementById(id);if(el) el.classList.add("open");}
 function closeModal(id){var el=document.getElementById(id);if(el) el.classList.remove("open");}
@@ -1882,17 +2315,38 @@ document.addEventListener("DOMContentLoaded",function(){
     this.style.opacity="1"; document.getElementById("btn-cal-view").style.opacity="0.5";
     loadContent();
   });
-  document.querySelectorAll(".filter-pill").forEach(function(pill){
+  document.querySelectorAll("#lib-filters .filter-pill").forEach(function(pill){
     pill.addEventListener("click",function(){
-      document.querySelectorAll(".filter-pill").forEach(function(p){p.classList.remove("active");});
+      document.querySelectorAll("#lib-filters .filter-pill").forEach(function(p){p.classList.remove("active");});
       this.classList.add("active");
-      var cat=this.getAttribute("data-cat");
-      document.querySelectorAll(".video-card").forEach(function(c){c.style.display=(cat==="all"||c.getAttribute("data-cat")===cat)?"block":"none";});
+      currentCatFilter=this.getAttribute("data-cat");
+      applyFilters();
     });
   });
   document.querySelectorAll("[data-close]").forEach(function(el){el.addEventListener("click",function(){closeModal(this.getAttribute("data-close"));});});
   document.getElementById("btn-save-equip").addEventListener("click",saveEquip);
   document.getElementById("topbar-date").textContent=new Date().toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
+
+  // Announcements
+  document.getElementById("btn-post-announce").addEventListener("click",function(){
+    document.getElementById("ann-title").value="";
+    document.getElementById("ann-body").value="";
+    document.getElementById("ann-pinned").checked=false;
+    openModal("m-announce");
+  });
+  document.getElementById("btn-save-announce").addEventListener("click",saveAnnounce);
+
+  // Quiz (global onclick handlers used in HTML)
+
+  // Difficulty filter pills
+  document.querySelectorAll("#diff-filters .filter-pill").forEach(function(pill){
+    pill.addEventListener("click",function(){
+      document.querySelectorAll("#diff-filters .filter-pill").forEach(function(p){p.classList.remove("active");});
+      this.classList.add("active");
+      currentDiffFilter=this.getAttribute("data-diff");
+      applyFilters();
+    });
+  });
 
   // Handle shop product image load errors
   document.addEventListener("error", function(e){
@@ -1903,6 +2357,123 @@ document.addEventListener("DOMContentLoaded",function(){
   }, true);
 });
 </script>
+
+
+<!-- ONBOARDING QUIZ -->
+<div class="quiz-overlay" id="quiz-overlay">
+  <div class="quiz-card">
+    <div class="quiz-dots" id="quiz-dots"></div>
+
+    <div class="quiz-step active" id="qs-0">
+      <div class="quiz-title">Welcome to Pilates Sesh by K!</div>
+      <div class="quiz-subtitle">Take 60 seconds to personalize your experience. K uses this to tailor sessions just for you.</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn-pink" style="flex:1;padding:10px" onclick="quizNext()">Let's go!</button>
+        <button class="btn-cancel" style="flex:1;padding:10px" onclick="quizLater()">Ask me later</button>
+      </div>
+    </div>
+
+    <div class="quiz-step" id="qs-1">
+      <div class="quiz-title">What are your goals?</div>
+      <div class="quiz-subtitle">Select all that apply</div>
+      <div class="quiz-options" id="goals-options">
+        <div class="quiz-option" data-val="strength" onclick="toggleQuizOpt(this,'goals')">Strength and Tone</div>
+        <div class="quiz-option" data-val="flexibility" onclick="toggleQuizOpt(this,'goals')">Flexibility</div>
+        <div class="quiz-option" data-val="core" onclick="toggleQuizOpt(this,'goals')">Core Strength</div>
+        <div class="quiz-option" data-val="weightloss" onclick="toggleQuizOpt(this,'goals')">Weight Loss</div>
+        <div class="quiz-option" data-val="stress" onclick="toggleQuizOpt(this,'goals')">Stress Relief</div>
+        <div class="quiz-option" data-val="postpartum" onclick="toggleQuizOpt(this,'goals')">Postpartum Recovery</div>
+        <div class="quiz-option" data-val="balance" onclick="toggleQuizOpt(this,'goals')">Balance and Posture</div>
+        <div class="quiz-option" data-val="energy" onclick="toggleQuizOpt(this,'goals')">More Energy</div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn-cancel" style="flex:1;padding:10px" onclick="quizBack()">Back</button>
+        <button class="btn-pink" style="flex:2;padding:10px" onclick="quizNext()">Next</button>
+      </div>
+    </div>
+
+    <div class="quiz-step" id="qs-2">
+      <div class="quiz-title">What is your Pilates level?</div>
+      <div class="quiz-subtitle">Be honest - there is no wrong answer!</div>
+      <div class="quiz-options" style="grid-template-columns:1fr" id="level-options">
+        <div class="quiz-option" data-val="beginner" onclick="selectQuizOpt(this,'level')">Beginner - I am new to Pilates</div>
+        <div class="quiz-option" data-val="intermediate" onclick="selectQuizOpt(this,'level')">Intermediate - I know the basics</div>
+        <div class="quiz-option" data-val="advanced" onclick="selectQuizOpt(this,'level')">Advanced - I have been doing Pilates for years</div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn-cancel" style="flex:1;padding:10px" onclick="quizBack()">Back</button>
+        <button class="btn-pink" style="flex:2;padding:10px" onclick="quizNext()">Next</button>
+      </div>
+    </div>
+
+    <div class="quiz-step" id="qs-3">
+      <div class="quiz-title">How often do you want to practice?</div>
+      <div class="quiz-subtitle">We will help you stay on track</div>
+      <div class="quiz-options" style="grid-template-columns:1fr 1fr" id="freq-options">
+        <div class="quiz-option" data-val="1x" onclick="selectQuizOpt(this,'freq')">Once a week</div>
+        <div class="quiz-option" data-val="2x" onclick="selectQuizOpt(this,'freq')">Twice a week</div>
+        <div class="quiz-option" data-val="3x" onclick="selectQuizOpt(this,'freq')">3x a week</div>
+        <div class="quiz-option" data-val="daily" onclick="selectQuizOpt(this,'freq')">Daily</div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn-cancel" style="flex:1;padding:10px" onclick="quizBack()">Back</button>
+        <button class="btn-pink" style="flex:2;padding:10px" onclick="quizNext()">Next</button>
+      </div>
+    </div>
+
+    <div class="quiz-step" id="qs-4">
+      <div class="quiz-title">What areas do you want to focus on?</div>
+      <div class="quiz-subtitle">Select all that apply</div>
+      <div class="quiz-options" id="focus-options">
+        <div class="quiz-option" data-val="abs" onclick="toggleQuizOpt(this,'focus')">Abs and Core</div>
+        <div class="quiz-option" data-val="arms" onclick="toggleQuizOpt(this,'focus')">Arms and Shoulders</div>
+        <div class="quiz-option" data-val="legs" onclick="toggleQuizOpt(this,'focus')">Legs and Glutes</div>
+        <div class="quiz-option" data-val="back" onclick="toggleQuizOpt(this,'focus')">Back and Posture</div>
+        <div class="quiz-option" data-val="fullbody" onclick="toggleQuizOpt(this,'focus')">Full Body</div>
+        <div class="quiz-option" data-val="mobility" onclick="toggleQuizOpt(this,'focus')">Mobility and Flexibility</div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn-cancel" style="flex:1;padding:10px" onclick="quizBack()">Back</button>
+        <button class="btn-pink" style="flex:2;padding:10px" onclick="quizNext()">Next</button>
+      </div>
+    </div>
+
+    <div class="quiz-step" id="qs-5">
+      <div class="quiz-title" id="rating-title">How are your classes going so far?</div>
+      <div class="quiz-subtitle" id="rating-sub">Your rating helps K improve sessions for everyone</div>
+      <div class="star-row" id="star-row">
+        <span class="star-btn" data-val="1" onclick="setRating(1)">&#9733;</span>
+        <span class="star-btn" data-val="2" onclick="setRating(2)">&#9733;</span>
+        <span class="star-btn" data-val="3" onclick="setRating(3)">&#9733;</span>
+        <span class="star-btn" data-val="4" onclick="setRating(4)">&#9733;</span>
+        <span class="star-btn" data-val="5" onclick="setRating(5)">&#9733;</span>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn-cancel" style="flex:1;padding:10px" onclick="quizBack()">Back</button>
+        <button class="btn-pink" style="flex:2;padding:10px" onclick="saveQuiz()">Save My Goals</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ANNOUNCE MODAL -->
+<div class="modal-overlay" id="m-announce">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">Post Announcement</div><button class="modal-close" data-close="m-announce">x</button></div>
+    <label class="form-label">Title</label>
+    <input class="form-input" id="ann-title" placeholder="e.g. No class this Saturday"/>
+    <label class="form-label">Message</label>
+    <textarea class="form-textarea" id="ann-body" placeholder="Write your announcement here..."></textarea>
+    <label class="form-label" style="display:flex;align-items:center;gap:8px;text-transform:none;letter-spacing:0">
+      <input type="checkbox" id="ann-pinned" style="accent-color:var(--pink)"/> Pin to top
+    </label>
+    <div class="modal-footer">
+      <button class="btn-cancel" data-close="m-announce">Cancel</button>
+      <button class="btn-pink" style="flex:2;padding:10px;border-radius:20px" id="btn-save-announce">Post</button>
+    </div>
+  </div>
+</div>
 
 <!-- Equipment Edit Modal -->
 <div class="modal-overlay" id="m-equip">
@@ -1917,6 +2488,93 @@ document.addEventListener("DOMContentLoaded",function(){
     <div class="modal-footer">
       <button class="btn-cancel" data-close="m-equip">Cancel</button>
       <button class="btn-pink" style="flex:2;padding:10px;border-radius:20px" id="btn-save-equip">Save Equipment List</button>
+    </div>
+  </div>
+</div>
+<!-- ONBOARDING QUIZ MODAL -->
+<div class="modal-overlay" id="m-quiz">
+  <div class="modal" style="max-width:500px">
+    <div class="modal-header">
+      <div class="modal-title" id="quiz-title">Welcome to Pilates Sesh by K!</div>
+      <button class="modal-close" id="btn-skip-quiz">Skip</button>
+    </div>
+    <div style="font-size:12px;color:var(--text-muted);margin-bottom:1rem" id="quiz-subtitle">Help K personalize your experience (takes 1 minute)</div>
+    <!-- Step 1: Goals -->
+    <div class="quiz-step active" id="quiz-step-1">
+      <div style="font-size:14px;font-weight:500;color:var(--purple);margin-bottom:10px">What are your main goals? (select all that apply)</div>
+      <button class="quiz-option" data-goal="Weight loss and toning" onclick="toggleGoal(this)">Weight loss and toning</button>
+      <button class="quiz-option" data-goal="Core strength" onclick="toggleGoal(this)">Core strength</button>
+      <button class="quiz-option" data-goal="Flexibility and mobility" onclick="toggleGoal(this)">Flexibility and mobility</button>
+      <button class="quiz-option" data-goal="Postpartum recovery" onclick="toggleGoal(this)">Postpartum recovery</button>
+      <button class="quiz-option" data-goal="Stress relief and mindfulness" onclick="toggleGoal(this)">Stress relief and mindfulness</button>
+      <button class="quiz-option" data-goal="General fitness" onclick="toggleGoal(this)">General fitness</button>
+      <button class="quiz-option" data-goal="Injury rehabilitation" onclick="toggleGoal(this)">Injury rehabilitation</button>
+    </div>
+    <!-- Step 2: Fitness Level -->
+    <div class="quiz-step" id="quiz-step-2">
+      <div style="font-size:14px;font-weight:500;color:var(--purple);margin-bottom:10px">What is your Pilates experience level?</div>
+      <button class="quiz-option" data-level="Beginner" onclick="selectLevel(this)">Beginner - brand new to Pilates</button>
+      <button class="quiz-option" data-level="Some experience" onclick="selectLevel(this)">Some experience - done a few classes</button>
+      <button class="quiz-option" data-level="Intermediate" onclick="selectLevel(this)">Intermediate - comfortable with the basics</button>
+      <button class="quiz-option" data-level="Advanced" onclick="selectLevel(this)">Advanced - practiced for years</button>
+    </div>
+    <!-- Step 3: Focus areas -->
+    <div class="quiz-step" id="quiz-step-3">
+      <div style="font-size:14px;font-weight:500;color:var(--purple);margin-bottom:10px">Any areas you want to focus on?</div>
+      <button class="quiz-option" data-focus="Upper body" onclick="toggleFocus(this)">Upper body - arms, shoulders, back</button>
+      <button class="quiz-option" data-focus="Lower body" onclick="toggleFocus(this)">Lower body - glutes, legs, hips</button>
+      <button class="quiz-option" data-focus="Core and abs" onclick="toggleFocus(this)">Core and abs</button>
+      <button class="quiz-option" data-focus="Full body" onclick="toggleFocus(this)">Full body balance</button>
+      <button class="quiz-option" data-focus="Posture" onclick="toggleFocus(this)">Posture and alignment</button>
+      <button class="quiz-option" data-focus="No preference" onclick="toggleFocus(this)">No specific preference</button>
+    </div>
+    <!-- Step 4: How often -->
+    <div class="quiz-step" id="quiz-step-4">
+      <div style="font-size:14px;font-weight:500;color:var(--purple);margin-bottom:10px">How often do you plan to practice?</div>
+      <button class="quiz-option" data-freq="Once a week" onclick="selectFreq(this)">Once a week</button>
+      <button class="quiz-option" data-freq="2-3 times a week" onclick="selectFreq(this)">2-3 times a week</button>
+      <button class="quiz-option" data-freq="Daily" onclick="selectFreq(this)">Daily</button>
+      <button class="quiz-option" data-freq="Whenever I can" onclick="selectFreq(this)">Whenever I can</button>
+    </div>
+    <!-- Step 5: Rating (for returning users) -->
+    <div class="quiz-step" id="quiz-step-5" style="display:none">
+      <div style="font-size:14px;font-weight:500;color:var(--purple);margin-bottom:10px">How are you enjoying your classes so far?</div>
+      <div style="display:flex;gap:8px;justify-content:center;font-size:2rem;margin-bottom:1rem">
+        <span onclick="setRating(1)" style="cursor:pointer" class="rating-star">&#9734;</span>
+        <span onclick="setRating(2)" style="cursor:pointer" class="rating-star">&#9734;</span>
+        <span onclick="setRating(3)" style="cursor:pointer" class="rating-star">&#9734;</span>
+        <span onclick="setRating(4)" style="cursor:pointer" class="rating-star">&#9734;</span>
+        <span onclick="setRating(5)" style="cursor:pointer" class="rating-star">&#9734;</span>
+      </div>
+      <textarea class="form-textarea" id="quiz-feedback" placeholder="Any feedback for K? (optional)" style="min-height:60px"></textarea>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:1.2rem">
+      <button class="btn-cancel" id="btn-quiz-back" style="display:none" onclick="quizBack()">Back</button>
+      <button class="btn-pink" style="flex:1;padding:10px;border-radius:20px" id="btn-quiz-next" onclick="quizNext()">Next</button>
+    </div>
+    <div style="display:flex;justify-content:center;gap:6px;margin-top:10px" id="quiz-dots"></div>
+  </div>
+</div>
+
+<!-- ANNOUNCEMENT MODAL (admin) -->
+<div class="modal-overlay" id="m-announce">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="am-title-h">Post Announcement</div>
+      <button class="modal-close" data-close="m-announce">x</button>
+    </div>
+    <label class="form-label">Title</label>
+    <input class="form-input" id="am-title" placeholder="e.g. No class this Saturday"/>
+    <label class="form-label">Message</label>
+    <textarea class="form-textarea" id="am-body" placeholder="Write your announcement here..."></textarea>
+    <label class="form-label">Pin to top</label>
+    <select class="form-select" id="am-pinned">
+      <option value="false">No - show in order</option>
+      <option value="true">Yes - pin to top</option>
+    </select>
+    <div class="modal-footer">
+      <button class="btn-cancel" data-close="m-announce">Cancel</button>
+      <button class="btn-pink" style="flex:2;padding:10px;border-radius:20px" id="btn-save-announce">Post Announcement</button>
     </div>
   </div>
 </div>
