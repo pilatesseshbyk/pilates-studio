@@ -134,7 +134,7 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 .shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
 .shop-card{background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all 0.2s}
 .shop-card:hover{border-color:var(--pink);box-shadow:0 4px 16px rgba(233,30,140,0.1)}
-.shop-img{height:120px;background:linear-gradient(135deg,var(--blush2),var(--pink-light));display:flex;align-items:center;justify-content:center;font-size:2.5rem}
+.shop-img{height:120px;background:linear-gradient(135deg,var(--blush2),var(--pink-light));display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:var(--pink)}
 .shop-info{padding:10px}
 .shop-name{font-size:13px;font-weight:500;color:var(--purple);margin-bottom:3px}
 .shop-desc{font-size:11px;color:var(--text-muted);margin-bottom:8px;line-height:1.5}
@@ -171,8 +171,9 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 .status-pill{display:inline-block;font-size:10px;font-weight:500;padding:3px 9px;border-radius:10px}
 .my-class-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1rem;display:flex;align-items:center;gap:12px;margin-bottom:8px}
 .icon-picker-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:8px}
-.icon-btn{font-size:1.3rem;padding:8px;border:2px solid var(--border);border-radius:8px;cursor:pointer;background:white;transition:all 0.15s}
+.icon-btn{font-size:1.3rem;padding:8px;border:2px solid var(--border);border-radius:8px;cursor:pointer;background:white;transition:all 0.15s;color:var(--pink)}
 .icon-btn.selected,.icon-btn:hover{border-color:var(--pink);background:var(--blush)}
+.shop-icon-display{color:var(--pink);font-size:2.5rem}
 .toast{position:fixed;bottom:24px;right:24px;background:var(--purple);color:white;padding:10px 18px;border-radius:20px;font-family:'Jost',sans-serif;font-size:13px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.2);animation:fadeIn 0.3s ease}
 .detail-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--border)}
 .detail-row:last-child{border-bottom:none}
@@ -1441,13 +1442,39 @@ function renderShop(items){
   var grid=document.getElementById("shop-grid");
   if(!grid) return;
   grid.innerHTML=items.map(function(item){
-    var ico=ICON_MAP[item.icon]||item.icon||"&#128717;";
-    var adminBtns=isAdmin?'<div style="display:flex;gap:4px;margin-top:6px"><button class="btn-sm btn-grn" style="flex:1" data-sid="'+item.id+'" onclick="openEditShop(this.dataset.sid)">Edit</button><button class="btn-sm btn-red" style="flex:1" data-sid="'+item.id+'" onclick="delShop(this.dataset.sid)">Delete</button></div>':"";
-    var shopBtn=item.link?'<a href="'+item.link+'" target="_blank" style="display:block;width:100%;text-align:center;background:var(--purple);color:white;border-radius:20px;padding:8px;font-family:Jost,sans-serif;font-size:11px;font-weight:500;cursor:pointer;text-decoration:none;margin-top:8px;box-sizing:border-box">Shop Now</a>':'<button style="width:100%;background:var(--purple);color:white;border:none;border-radius:20px;padding:8px;font-family:Jost,sans-serif;font-size:11px;font-weight:500;cursor:pointer;margin-top:8px">Shop Now</button>';
-    return '<div class="shop-card"><div class="shop-img">'+ico+'</div><div class="shop-info"><div class="shop-name">'+item.name+'</div><div class="shop-desc">'+item.desc+'</div><div class="shop-price">'+item.price+'</div>'+shopBtn+adminBtns+'</div></div>';
+    var ico=ICON_MAP[item.icon]||"&#128717;";
+    // Show image if imgUrl exists, otherwise show icon
+    var thumbHtml;
+    if(item.imgUrl && item.imgUrl.trim()!==""){
+      thumbHtml='<div class="shop-img" style="padding:0;overflow:hidden"><img src="'+item.imgUrl+'" style="width:100%;height:100%;object-fit:cover" class="shop-prod-img"></div>';
+    } else {
+      thumbHtml='<div class="shop-img"><span style="color:var(--pink)">'+ico+'</span></div>';
+    }
+    var discountHtml="";
+    if(item.discountCode&&item.discountCode.trim()!==""){
+      discountHtml='<div style="background:#FFF8E1;border:1px dashed #F57F17;border-radius:8px;padding:6px 10px;margin-top:6px">'
+        +'<div style="font-size:9px;text-transform:uppercase;letter-spacing:0.08em;color:#F57F17;font-weight:500;margin-bottom:2px">Discount Code</div>'
+        +'<div style="font-size:13px;font-weight:600;color:#E65100;letter-spacing:0.05em">'+item.discountCode+'</div>'
+        +(item.discountDesc?'<div style="font-size:10px;color:#795548;margin-top:1px">'+item.discountDesc+'</div>':"")
+        +'</div>';
+    }
+    var adminBtns=isAdmin
+      ?'<div style="display:flex;gap:4px;margin-top:6px">'
+        +'<button class="btn-sm btn-grn" style="flex:1" data-sid="'+item.id+'" onclick="openEditShop(this.dataset.sid)">Edit</button>'
+        +'<button class="btn-sm btn-red" style="flex:1" data-sid="'+item.id+'" onclick="delShop(this.dataset.sid)">Delete</button>'
+        +'</div>'
+      :"";
+    var shopBtn=item.link&&item.link.trim()!==""
+      ?'<a href="'+item.link+'" target="_blank" style="display:block;width:100%;text-align:center;background:var(--purple);color:white;border-radius:20px;padding:8px;font-family:Jost,sans-serif;font-size:11px;font-weight:500;cursor:pointer;text-decoration:none;margin-top:8px;box-sizing:border-box">Shop Now &#8594;</a>'
+      :"";
+    return '<div class="shop-card">'+thumbHtml+'<div class="shop-info">'
+      +'<div class="shop-name">'+item.name+'</div>'
+      +'<div class="shop-desc">'+item.desc+'</div>'
+      +'<div class="shop-price">'+item.price+'</div>'
+      +discountHtml+shopBtn+adminBtns
+      +'</div></div>';
   }).join("");
 }
-
 function buildIconPicker(){
   var grid=document.getElementById("icon-grid");
   if(!grid) return;
@@ -1866,6 +1893,14 @@ document.addEventListener("DOMContentLoaded",function(){
   document.querySelectorAll("[data-close]").forEach(function(el){el.addEventListener("click",function(){closeModal(this.getAttribute("data-close"));});});
   document.getElementById("btn-save-equip").addEventListener("click",saveEquip);
   document.getElementById("topbar-date").textContent=new Date().toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
+
+  // Handle shop product image load errors
+  document.addEventListener("error", function(e){
+    if(e.target && e.target.classList && e.target.classList.contains("shop-prod-img")){
+      e.target.parentElement.style.background="linear-gradient(135deg,#FCE4EC,#F8BBD9)";
+      e.target.style.display="none";
+    }
+  }, true);
 });
 </script>
 
