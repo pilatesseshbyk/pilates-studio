@@ -183,10 +183,10 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 .planner-item-row{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px}
 
 /* PROGRESS / STREAK */
-.streak-card{background:linear-gradient(135deg,var(--purple),var(--pink-dark));border-radius:14px;padding:1.2rem;color:white;margin-bottom:1rem}
-.streak-num{font-size:48px;font-weight:700;line-height:1;color:white}
+.streak-card{background:linear-gradient(135deg,var(--purple),var(--pink-dark));border-radius:14px;padding:1rem 1.2rem;color:white;margin-bottom:1rem}
+.streak-num{font-size:30px;font-weight:600;line-height:1;color:white}
 .streak-label{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.7)}
-.month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:10px}
+.month-grid{display:flex;flex-wrap:wrap;gap:3px;margin-top:8px}
 .month-day{height:20px;border-radius:3px;background:rgba(255,255,255,0.15)}
 .month-day.attended{background:var(--green)}
 .month-day.today{background:rgba(255,255,255,0.4);border:1px solid white}
@@ -209,11 +209,11 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 .quiz-option:hover,.quiz-option.selected{border-color:var(--pink);background:var(--blush)}
 .quiz-option.selected{font-weight:500;color:var(--purple)}
 /* PROGRESS TRACKING */
-.streak-card{background:linear-gradient(135deg,var(--purple),var(--pink-dark));border-radius:14px;padding:1.2rem;color:white;margin-bottom:1rem}
-.streak-num{font-size:42px;font-weight:500;line-height:1}
-.streak-label{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.75);margin-top:2px}
-.month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:10px}
-.month-dot{width:100%;aspect-ratio:1;border-radius:4px;background:rgba(255,255,255,0.2)}
+.streak-card{background:linear-gradient(135deg,var(--purple),var(--pink-dark));border-radius:14px;padding:1rem 1.2rem;color:white;margin-bottom:1rem}
+.streak-num{font-size:30px;font-weight:600;line-height:1;color:white}
+.streak-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-top:2px}
+.month-grid{display:flex;flex-wrap:wrap;gap:3px;margin-top:8px}
+.month-dot{width:10px;height:10px;border-radius:2px;background:rgba(255,255,255,0.15);flex-shrink:0}
 .month-dot.attended{background:var(--green)}
 .month-dot.today{background:white;opacity:0.9}
 
@@ -456,8 +456,8 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
         <div class="section-title">My Classes</div>
         <button class="btn-purple" id="btn-update-goals" style="font-size:11px;padding:6px 12px">Update Goals</button>
       </div>
-      <!-- Progress stats -->
-      <div class="stats-row" style="margin-bottom:1rem">
+      <!-- Progress stats populated by loadMyClasses -->
+      <div class="stats-row" style="margin-bottom:1rem" id="mc-stats-row" style="display:none">
         <div class="stat-card"><div class="stat-num" id="mc-thismonth">-</div><div class="stat-label">This Month</div></div>
         <div class="stat-card"><div class="stat-num" id="mc-alltime">-</div><div class="stat-label">All Time</div></div>
         <div class="stat-card"><div class="stat-num" id="mc-upcoming">-</div><div class="stat-label">Upcoming</div></div>
@@ -520,7 +520,7 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
         <div class="filter-pill" data-diff="beginner" style="font-size:10px;padding:3px 10px">Beginner</div>
         <div class="filter-pill" data-diff="intermediate" style="font-size:10px;padding:3px 10px">Intermediate</div>
         <div class="filter-pill" data-diff="advanced" style="font-size:10px;padding:3px 10px">Advanced</div>
-      </div></div>
+      </div>
       <div class="video-grid" id="video-grid"><div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading library...</div></div>
     </div>
 
@@ -1282,6 +1282,19 @@ function loadMyClasses(){
       }
     });
     if(mine.length===0){list.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-muted)">No registered classes yet. Go to Schedule to register!</div>';return;}
+    mine.sort(function(a,b){return (a.sessionDay||0)-(b.sessionDay||0);});
+    // Populate stats
+    var today=new Date().getDate();
+    var thisMonth=mine.filter(function(r){return r.sessionMonth===calMonth;}).length;
+    var upcoming=mine.filter(function(r){return r.sessionMonth===calMonth&&(r.sessionDay||0)>=today;}).length;
+    var tmEl=document.getElementById("mc-thismonth");
+    var atEl=document.getElementById("mc-alltime");
+    var upEl=document.getElementById("mc-upcoming");
+    var statsRow=document.getElementById("mc-stats-row");
+    if(tmEl) tmEl.textContent=thisMonth;
+    if(atEl) atEl.textContent=mine.length;
+    if(upEl) upEl.textContent=upcoming;
+    if(statsRow) statsRow.style.display="grid";
     mine.sort(function(a,b){return (a.sessionDay||0)-(b.sessionDay||0);});
     list.innerHTML=mine.map(function(r){
       var sessions=sessionData[r.sessionKey];
