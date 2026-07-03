@@ -180,6 +180,35 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 .detail-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em}
 .detail-val{font-size:13px;color:var(--text)}
 .planner-item-row{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px}
+
+/* MOBILE */
+@media(max-width:768px){
+  :root{--sidebar:0px}
+  .sidebar{transform:translateX(-100%);transition:transform 0.3s ease;width:260px;z-index:200}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .page{padding:1rem}
+  .topbar{padding:0.8rem 1rem}
+  #mobile-menu-btn{display:flex!important}
+  #mobile-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:199}
+  #mobile-overlay.open{display:block}
+  .quick-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .shop-grid{grid-template-columns:repeat(2,1fr)}
+  .video-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .cal-cells{grid-template-columns:repeat(7,1fr)}
+  .cal-cell{min-height:60px;padding:3px}
+  .sess-block{padding:2px 3px}
+  .sess-name{font-size:7px}
+  .sess-time{font-size:6px}
+  .data-table{font-size:11px}
+  .data-table th,.data-table td{padding:8px 8px}
+  .modal{width:95%;max-height:95vh;padding:1rem}
+}
+@media(min-width:769px){
+  #mobile-menu-btn{display:none!important}
+}
 </style>
 </head>
 <body>
@@ -250,8 +279,18 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
   </nav>
 
   <div class="main">
+    <!-- Mobile overlay -->
+    <div id="mobile-overlay" onclick="closeMobileMenu()"></div>
+
     <div class="topbar">
-      <div class="topbar-title" id="page-title">Dashboard</div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <button id="mobile-menu-btn" onclick="toggleMobileMenu()" style="display:none;background:none;border:none;cursor:pointer;padding:4px;flex-direction:column;gap:4px">
+          <span style="display:block;width:20px;height:2px;background:var(--purple);border-radius:2px"></span>
+          <span style="display:block;width:20px;height:2px;background:var(--purple);border-radius:2px"></span>
+          <span style="display:block;width:20px;height:2px;background:var(--purple);border-radius:2px"></span>
+        </button>
+        <div class="topbar-title" id="page-title">Dashboard</div>
+      </div>
       <div style="display:flex;align-items:center;gap:12px">
         <span class="topbar-date" id="topbar-date"></span>
         <span class="topbar-badge" id="tbadge">Member</span>
@@ -326,7 +365,7 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
         <div class="detail-row"><div class="detail-icon">&#9201;</div><div><div class="detail-label">Duration</div><div class="detail-val" id="cd-duration">20-25 minutes</div></div></div>
         <div class="detail-row"><div class="detail-icon">&#128197;</div><div><div class="detail-label">Schedule</div><div class="detail-val" id="cd-schedule">Fridays and Saturdays</div></div></div>
         <div class="detail-row"><div class="detail-icon">&#127919;</div><div><div class="detail-label">Level</div><div class="detail-val" id="cd-level">All levels - modifications always offered</div></div></div>
-        <div class="detail-row"><div class="detail-icon">&#128105;</div><div><div class="detail-label">Instructor</div><div class="detail-val" id="cd-instructor">Karen - STOTT Pilates Certified</div></div></div>
+        <div class="detail-row"><div class="detail-icon">&#128105;</div><div><div class="detail-label">Instructor</div><div class="detail-val" id="cd-instructor">K - STOTT Pilates Certified</div></div></div>
         <div class="detail-row"><div class="detail-icon">&#128249;</div><div><div class="detail-label">Recording</div><div class="detail-val" id="cd-recording">Added to library within 24 hours if you miss it</div></div></div>
       </div>
       <div class="card">
@@ -376,7 +415,7 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
       <div class="section-header"><div class="section-title">Ask K</div></div>
       <div class="card" style="display:flex;gap:12px;align-items:flex-start;margin-bottom:1rem">
         <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--pink));display:flex;align-items:center;justify-content:center;font-family:'Dancing Script',cursive;font-size:1.4rem;color:white;flex-shrink:0">K</div>
-        <div><div style="font-size:14px;font-weight:500;color:var(--purple);margin-bottom:4px">Ask Karen a Question</div><div style="font-size:12px;color:var(--text-muted)">Karen will respond within 48 hours.</div></div>
+        <div><div style="font-size:14px;font-weight:500;color:var(--purple);margin-bottom:4px">Ask K a Question</div><div style="font-size:12px;color:var(--text-muted)">K will respond within 48 hours.</div></div>
       </div>
       <div class="card">
         <label class="form-label">Category</label>
@@ -420,7 +459,7 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
         <div class="section-title">Equipment Shop</div>
         <button class="btn-pink" id="btn-add-shop" style="display:none">+ Add Item</button>
       </div>
-      <div style="background:linear-gradient(120deg,var(--purple),var(--pink-dark));border-radius:14px;padding:1.1rem 1.4rem;margin-bottom:1rem;color:white;font-size:13px">Everything Karen recommends for your practice.</div>
+      <div style="background:linear-gradient(120deg,var(--purple),var(--pink-dark));border-radius:14px;padding:1.1rem 1.4rem;margin-bottom:1rem;color:white;font-size:13px">Everything K recommends for your practice.</div>
       <div class="shop-grid" id="shop-grid"><div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading shop...</div></div>
     </div>
 
@@ -732,7 +771,7 @@ var editKey=null, editIdx=-1, editEventId=null, editSponsorId=null, editContentI
 var MN=["January","February","March","April","May","June","July","August","September","October","November","December"];
 var MS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 var TYPE_COLORS={live:"#E91E8C",recorded:"#2e7d32",community:"#00BCD4",holiday:"#F57F17"};
-var ICON_MAP={mat:"&#129336;",ring:"&#11093;",bands:"&#127965;",ball:"&#9917;",weights:"&#128170;",socks:"&#129510;",water:"&#128167;",bag:"&#128717;",roller:"&#129398;",heart:"&#10084;",star:"&#11088;",flower:"&#127800;"};
+var ICON_MAP={mat:"&#129336;",ring:"&#11093;",bands:"&#127965;",ball:"&#11044;",weights:"&#128170;",socks:"&#129510;",water:"&#128167;",bag:"&#128717;",roller:"&#129398;",heart:"&#10084;",star:"&#11088;",flower:"&#127800;"};
 var ICONS=Object.keys(ICON_MAP);
 
 // AUTH
@@ -758,7 +797,7 @@ function setMode(m){
   document.getElementById("login-error").style.display="none";
   document.getElementById("tog-client").classList.toggle("active",m==="client");
   document.getElementById("tog-admin").classList.toggle("active",m==="admin");
-  document.getElementById("login-hint").textContent=m==="admin"?"Admin login - Karen and Jose only":"New clients: enter name, email, password then Sign Up";
+  document.getElementById("login-hint").textContent=m==="admin"?"Admin login - K and Jose only":"New clients: enter name, email, password then Sign Up";
 }
 function doLogin(){
   var email=document.getElementById("inp-email").value.trim().toLowerCase();
@@ -1445,6 +1484,9 @@ function openEditShop(id){
     document.getElementById("shm-price").value=item.price||"";
     document.getElementById("shm-icon").value=item.icon||"mat";
     document.getElementById("shm-link").value=item.link||"";
+    document.getElementById("shm-img").value=item.imgUrl||"";
+    document.getElementById("shm-discount").value=item.discountCode||"";
+    document.getElementById("shm-discount-desc").value=item.discountDesc||"";
     document.querySelectorAll(".icon-btn").forEach(function(b){b.classList.remove("selected");});
     var match=document.querySelector(".icon-btn[data-icon='"+item.icon+"']");
     if(match) match.classList.add("selected");
@@ -1729,7 +1771,7 @@ function saveSponsor(){
 function delSponsor(id){if(!confirm("Delete?")) return;db.collection("sponsors").doc(id).delete().then(function(){showToast("Deleted");loadSponsors();}).catch(function(e){showToast("Error: "+e.message);});}
 
 // CHATBOT
-var CHAT_R={join:"To join a live class, click the Join button on the calendar. The Google Meet or Zoom link is in your confirmation email!",register:"To register for a class, go to Class Schedule and click the Register button on any upcoming session.",equipment:"For most sessions you need: Pilates mat, resistance bands, 9 inch inflatable ball, magic circle, light weights 1-3 lbs, and grip socks.",cancel:"You can cancel your membership anytime - no contracts! Send Karen a message through the Ask K page.",miss:"Every class is recorded and added to your Video Library within 24 hours. Watch anytime!",library:"Click Video Library in the sidebar to access all recorded sessions organized by category.",price:"Founding member rate is $39.99 per month locked in for the first 10 members. After that it is $49 per month. No contracts, cancel anytime!",schedule:"Classes are on Fridays and Saturdays. Check the Class Schedule for exact times.",default:"Great question! Send this directly to Karen via the Ask K page - she responds within 48 hours."};
+var CHAT_R={join:"To join a live class, click the Join button on the calendar. The Google Meet or Zoom link is in your confirmation email!",register:"To register for a class, go to Class Schedule and click the Register button on any upcoming session.",equipment:"For most sessions you need: Pilates mat, resistance bands, 9 inch inflatable ball, magic circle, light weights 1-3 lbs, and grip socks.",cancel:"You can cancel your membership anytime - no contracts! Send K a message through the Ask K page.",miss:"Every class is recorded and added to your Video Library within 24 hours. Watch anytime!",library:"Click Video Library in the sidebar to access all recorded sessions organized by category.",price:"Founding member rate is $39.99 per month locked in for the first 10 members. After that it is $49 per month. No contracts, cancel anytime!",schedule:"Classes are on Fridays and Saturdays. Check the Class Schedule for exact times.",default:"Great question! Send this directly to K via the Ask K page - she responds within 48 hours."};
 function getChatR(msg){
   msg=msg.toLowerCase();
   if(msg.indexOf("join")>-1||msg.indexOf("link")>-1) return CHAT_R.join;
@@ -1762,6 +1804,15 @@ function closeModal(id){var el=document.getElementById(id);if(el) el.classList.r
 function showToast(msg){var ex=document.querySelector(".toast");if(ex) ex.remove();var t=document.createElement("div");t.className="toast";t.textContent=msg;document.body.appendChild(t);setTimeout(function(){if(t.parentNode) t.remove();},3000);}
 
 // EVENT LISTENERS
+function toggleMobileMenu(){
+  document.querySelector(".sidebar").classList.toggle("open");
+  document.getElementById("mobile-overlay").classList.toggle("open");
+}
+function closeMobileMenu(){
+  document.querySelector(".sidebar").classList.remove("open");
+  document.getElementById("mobile-overlay").classList.remove("open");
+}
+
 document.addEventListener("DOMContentLoaded",function(){
   document.getElementById("tog-client").addEventListener("click",function(){setMode("client");});
   document.getElementById("tog-admin").addEventListener("click",function(){setMode("admin");});
@@ -1769,7 +1820,7 @@ document.addEventListener("DOMContentLoaded",function(){
   document.getElementById("btn-signup").addEventListener("click",doSignup);
   document.getElementById("inp-pass").addEventListener("keydown",function(e){if(e.key==="Enter") doLogin();});
   document.getElementById("btn-logout").addEventListener("click",doLogout);
-  document.querySelectorAll(".nav-item[data-page],.quick-card[data-page]").forEach(function(el){el.addEventListener("click",function(){showPage(this.getAttribute("data-page"));});});
+  document.querySelectorAll(".nav-item[data-page],.quick-card[data-page]").forEach(function(el){el.addEventListener("click",function(){showPage(this.getAttribute("data-page"));closeMobileMenu();});});
   document.getElementById("sm-type").addEventListener("change",updateSessTypeUI);
   document.getElementById("btn-save-session").addEventListener("click",saveSess);
   document.getElementById("btn-chg-month").addEventListener("click",function(){openModal("m-month");});
