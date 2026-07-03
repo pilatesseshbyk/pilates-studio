@@ -200,6 +200,10 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
       <button class="login-btn" style="flex:1" id="btn-signin">Sign in</button>
       <button class="login-btn" style="flex:1;background:var(--purple)" id="btn-signup">Sign up</button>
     </div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;justify-content:center">
+      <input type="checkbox" id="remember-me" style="width:14px;height:14px;accent-color:var(--pink);cursor:pointer" checked/>
+      <label for="remember-me" style="font-size:12px;color:var(--text-muted);cursor:pointer">Keep me signed in</label>
+    </div>
     <div class="login-hint" id="login-hint">New clients: enter name, email, password then Sign Up</div>
   </div>
 </div>
@@ -610,7 +614,15 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
     <label class="form-label">Pick an Icon</label>
     <div class="icon-picker-grid" id="icon-grid"></div>
     <input type="hidden" id="shm-icon" value="mat"/>
-    <label class="form-label">Shop Link</label><input class="form-input" type="url" id="shm-link" placeholder="https://..."/>
+    <label class="form-label">Shop Link (Amazon, etc.)</label>
+    <input class="form-input" type="url" id="shm-link" placeholder="https://www.amazon.com/..."/>
+    <label class="form-label">Product Image URL (optional)</label>
+    <input class="form-input" type="url" id="shm-img" placeholder="Paste image URL from Amazon product page"/>
+    <div style="font-size:10px;color:var(--text-muted);margin-top:2px">On Amazon: right-click the product image > Copy image address</div>
+    <label class="form-label">Discount Code (optional)</label>
+    <input class="form-input" id="shm-discount" placeholder="e.g. PILATES15"/>
+    <label class="form-label">Discount Description (optional)</label>
+    <input class="form-input" id="shm-discount-desc" placeholder="e.g. 15% off at checkout"/>
     <div class="modal-footer">
       <button class="btn-cancel" data-close="m-shop">Cancel</button>
       <button class="btn-pink" style="flex:2;padding:10px;border-radius:20px" id="btn-save-shop">Save Item</button>
@@ -753,7 +765,11 @@ function doLogin(){
   var pass=document.getElementById("inp-pass").value;
   if(!email||!pass){showErr("Please enter email and password");return;}
   if(loginMode==="admin"&&ADMINS.indexOf(email)===-1){showErr("Admin access restricted.");return;}
-  auth.signInWithEmailAndPassword(email,pass).catch(function(e){showErr(e.code==="auth/invalid-credential"?"Incorrect email or password.":e.message);});
+  var rememberMe=document.getElementById("remember-me").checked;
+  var persistence=rememberMe?firebase.auth.Auth.Persistence.LOCAL:firebase.auth.Auth.Persistence.SESSION;
+  auth.setPersistence(persistence).then(function(){
+    return auth.signInWithEmailAndPassword(email,pass);
+  }).catch(function(e){showErr(e.code==="auth/invalid-credential"?"Incorrect email or password.":e.message);});
 }
 function doSignup(){
   var email=document.getElementById("inp-email").value.trim().toLowerCase();
@@ -839,7 +855,6 @@ function loadCal(){
   db.collection("calendar").doc("sessions").get().then(function(snap){
     if(snap.exists){
       var raw=snap.data();
-      // Migrate old format (single object) to new format (array)
       Object.keys(raw).forEach(function(k){
         if(raw[k]&&!Array.isArray(raw[k])) raw[k]=[raw[k]];
       });
@@ -847,8 +862,28 @@ function loadCal(){
     } else {
       sessionData=getDefSessions();
     }
-    buildCal();
-    loadDashboard();
+    // Sync registered arrays from registrations collection
+    db.collection("registrations").get().then(function(rSnap){
+      // Clear all registered arrays first
+      Object.keys(sessionData).forEach(function(key){
+        var sessions=sessionData[key];
+        if(sessions) sessions.forEach(function(s){if(s) s.registered=[];});
+      });
+      // Rebuild from registrations collection
+      rSnap.forEach(function(d){
+        var r=d.data();
+        if(r.sessionKey&&sessionData[r.sessionKey]){
+          var idx=r.sessionIdx||0;
+          if(sessionData[r.sessionKey][idx]){
+            var reg=sessionData[r.sessionKey][idx].registered||[];
+            if(reg.indexOf(r.userId)===-1) reg.push(r.userId);
+            sessionData[r.sessionKey][idx].registered=reg;
+          }
+        }
+      });
+      buildCal();
+      loadDashboard();
+    }).catch(function(){buildCal();loadDashboard();});
   }).catch(function(){sessionData=getDefSessions();buildCal();});
 }
 
@@ -1154,22 +1189,29 @@ function openRoster(key,idx,day){
 function loadRegistrations(){
   var list=document.getElementById("reg-list");
   if(!list) return;
-  var all=[];
-  Object.keys(sessionData).forEach(function(key){
-    var sessions=sessionData[key]||[];
-    sessions.forEach(function(s,idx){
-      if(s&&s.type==="live"&&(s.registered||[]).length>0){
-        var parts=key.split("-");
-        all.push({key:key,idx:idx,day:parseInt(parts[2]),data:s});
-      }
+  list.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading registrations...</div>';
+  db.collection("registrations").get().then(function(snap){
+    if(snap.empty){
+      list.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-muted)">No registrations yet.</div>';
+      return;
+    }
+    var grouped={};
+    snap.forEach(function(d){
+      var r=d.data();
+      var gk=r.sessionKey+"-"+(r.sessionIdx||0);
+      if(!grouped[gk]) grouped[gk]={key:r.sessionKey,idx:r.sessionIdx||0,name:r.sessionName,time:r.sessionTime,day:r.sessionDay,month:r.sessionMonth,regs:[],spots:10};
+      grouped[gk].regs.push(r);
     });
-  });
-  all.sort(function(a,b){return a.day-b.day;});
-  if(all.length===0){list.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-muted)">No registrations yet.</div>';return;}
-  list.innerHTML=all.map(function(s){
-    var reg=s.data.registered||[];
-    return '<div class="card" style="margin-bottom:10px"><div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px"><div><div style="font-size:14px;font-weight:500;color:var(--purple)">'+(s.data.name||"Session")+'</div><div style="font-size:11px;color:var(--text-muted)">'+MS[calMonth]+' '+s.day+' at '+fmt12(s.data.time)+'</div></div><div style="display:flex;gap:8px;align-items:center"><span style="background:var(--pink);color:white;font-size:11px;padding:3px 10px;border-radius:10px">'+reg.length+'/'+( s.data.spots||10)+'</span><button data-key="'+s.key+'" data-idx="'+s.idx+'" data-day="'+s.day+'" onclick="openRoster(this.dataset.key,parseInt(this.dataset.idx),this.dataset.day)" class="btn-purple" style="font-size:11px;padding:5px 12px">View Roster</button></div></div></div>';
-  }).join("");
+    Object.keys(grouped).forEach(function(gk){
+      var g=grouped[gk];
+      if(sessionData[g.key]&&sessionData[g.key][g.idx]) g.spots=sessionData[g.key][g.idx].spots||10;
+    });
+    var cards=Object.keys(grouped).map(function(k){return grouped[k];}).sort(function(a,b){return (a.day||0)-(b.day||0);});
+    list.innerHTML=cards.map(function(g){
+      var mn=MS[g.month!=null?g.month:calMonth];
+      return '<div class="card" style="margin-bottom:10px"><div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px"><div><div style="font-size:14px;font-weight:500;color:var(--purple)">'+(g.name||"Session")+'</div><div style="font-size:11px;color:var(--text-muted)">'+mn+' '+(g.day||"?")+ ' at '+fmt12(g.time)+'</div></div><div style="display:flex;gap:8px;align-items:center"><span style="background:var(--pink);color:white;font-size:11px;padding:3px 10px;border-radius:10px">'+g.regs.length+'/'+g.spots+'</span><button data-key="'+g.key+'" data-idx="'+g.idx+'" data-day="'+(g.day||1)+'" onclick="openRoster(this.dataset.key,parseInt(this.dataset.idx),this.dataset.day)" class="btn-purple" style="font-size:11px;padding:5px 12px">View Roster</button></div></div></div>';
+    }).join("");
+  }).catch(function(e){list.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-muted)">Error: '+e.message+'</div>';});
 }
 
 // MEMBERS
@@ -1384,7 +1426,7 @@ function selectIcon(btn,key){
 function openAddShop(){
   editShopId=null;
   document.getElementById("shm-title-h").textContent="Add Item";
-  ["shm-name","shm-desc","shm-price","shm-link"].forEach(function(id){document.getElementById(id).value="";});
+  ["shm-name","shm-desc","shm-price","shm-link","shm-img","shm-discount","shm-discount-desc"].forEach(function(id){document.getElementById(id).value="";});
   document.getElementById("shm-icon").value="mat";
   document.querySelectorAll(".icon-btn").forEach(function(b){b.classList.remove("selected");});
   var first=document.querySelector(".icon-btn[data-icon='mat']");
@@ -1413,7 +1455,16 @@ function openEditShop(id){
 function saveShop(){
   var name=document.getElementById("shm-name").value.trim();
   if(!name){showToast("Please enter a name");return;}
-  var data={name:name,desc:document.getElementById("shm-desc").value.trim(),price:document.getElementById("shm-price").value.trim(),icon:document.getElementById("shm-icon").value||"mat",link:document.getElementById("shm-link").value.trim()};
+  var data={
+    name:name,
+    desc:document.getElementById("shm-desc").value.trim(),
+    price:document.getElementById("shm-price").value.trim(),
+    icon:document.getElementById("shm-icon").value||"mat",
+    link:document.getElementById("shm-link").value.trim(),
+    imgUrl:document.getElementById("shm-img").value.trim(),
+    discountCode:document.getElementById("shm-discount").value.trim(),
+    discountDesc:document.getElementById("shm-discount-desc").value.trim()
+  };
   var p=editShopId?db.collection("shop").doc(editShopId).update(data):db.collection("shop").add(data);
   p.then(function(){closeModal("m-shop");showToast(editShopId?"Item updated!":"Item added!");loadShop();});
 }
