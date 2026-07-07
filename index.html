@@ -31,7 +31,7 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 #login-error{display:none;background:#FFEBEE;color:#C62828;font-size:11px;padding:8px 12px;border-radius:8px;margin-bottom:10px;text-align:left}
 #app{display:none;min-height:100vh;flex-direction:row}
 #app.visible{display:flex}
-.sidebar{width:var(--sidebar);background:var(--charcoal);min-height:100vh;display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:100}
+.sidebar{width:var(--sidebar);background:var(--charcoal);height:100vh;display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:100;overflow:hidden}
 .sidebar-brand{padding:1.5rem 1.2rem 1rem;border-bottom:1px solid rgba(255,255,255,0.1)}
 .sidebar-brand-name{font-family:'Dancing Script',cursive;font-size:1.5rem;color:var(--pink)}
 .sidebar-brand-sub{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-top:2px}
@@ -40,6 +40,7 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 .sidebar-user-name{font-size:12px;color:var(--white)}
 .sidebar-user-role{font-size:10px;color:rgba(255,255,255,0.5)}
 .sidebar-section{padding:0.8rem 1.2rem 0.3rem;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--lime);font-weight:600;opacity:0.8}
+.sidebar-nav-wrap{flex:1;overflow-y:auto;overflow-x:hidden}
 .nav-item{display:flex;align-items:center;gap:10px;padding:9px 1.2rem;cursor:pointer;transition:background 0.15s;border-left:3px solid transparent;color:rgba(255,255,255,0.65);font-size:13px}
 .nav-item:hover{background:rgba(255,255,255,0.07);color:var(--white)}
 .nav-item.active{background:rgba(233,30,140,0.2);border-left-color:var(--lime);color:var(--white)}
@@ -259,6 +260,11 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 
 /* MOBILE */
 @media(max-width:768px){
+  .nav-item{padding:7px 1rem;font-size:12px}
+  .sidebar-section{padding:0.5rem 1rem 0.2rem;font-size:8px}
+  .sidebar-brand{padding:1rem;}
+  .sidebar-user{padding:0.6rem 1rem;}
+
   :root{--sidebar:0px}
   .sidebar{transform:translateX(-100%);transition:transform 0.3s ease;width:260px;z-index:200}
   .sidebar.open{transform:translateX(0)}
@@ -323,7 +329,7 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
       <div class="sidebar-avatar" id="sav">C</div>
       <div><div class="sidebar-user-name" id="sname">Client</div><div class="sidebar-user-role" id="srole">Member</div></div>
     </div>
-    <div id="client-nav">
+    <div class="sidebar-nav-wrap"><div id="client-nav">
       <div class="sidebar-section">My Studio</div>
       <div class="nav-item active" data-page="dashboard">&#127968; Dashboard</div>
       <div class="nav-item" data-page="schedule">&#128197; Class Schedule</div>
@@ -351,7 +357,7 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
       <div class="nav-item" data-page="content">&#128197; Content Planner</div>
       <div class="nav-item" data-page="sponsorship">&#129309; Sponsorships</div>
       <div class="nav-item" data-page="announcements">&#128226; Announcements</div>
-    </div>
+    </div></div>
     <div class="sidebar-footer"><button class="logout-btn" id="btn-logout">Sign out</button></div>
   </nav>
 
