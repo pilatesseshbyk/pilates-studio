@@ -1489,9 +1489,26 @@ function loadMembers(){
         var togLabel=isFounding?"Remove Founding":"Make Founding";
         var joined=m.createdAt?new Date(m.createdAt).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}):"Unknown";
         var count=regCounts[m.id]||0;
-        return '<tr><td><strong>'+(m.name||"Unknown")+'</strong></td><td>'+(m.email||"")+'</td><td>'+badge+'</td><td>'+joined+'</td><td style="text-align:center;font-weight:600;color:var(--pink)">'+count+'</td><td><button data-uid="'+m.id+'" data-f="'+isFounding+'" onclick="toggleFounder(this.dataset.uid,this.dataset.f)" class="btn-sm btn-grn" style="margin-right:3px">'+togLabel+'</button><button data-uid="'+m.id+'" onclick="delMember(this.dataset.uid)" class="btn-sm btn-red">Remove</button></td></tr>';
+        // Membership status
+        var memStatus=m.membershipStatus||"active";
+        var memRenewal=m.renewalDate||"Not set";
+        var memColor=memStatus==="active"?"#E8F5E9|#2E7D32":memStatus==="overdue"?"#FFEBEE|#C62828":"#FFF8E1|#F57F17";
+        var memCols=memColor.split("|");
+        var memBadge='<span style="background:'+memCols[0]+';color:'+memCols[1]+';font-size:10px;padding:2px 8px;border-radius:10px;font-weight:500">'+memStatus.charAt(0).toUpperCase()+memStatus.slice(1)+'</span>';
+        var updateBtn='<button data-uid="'+m.id+'" data-status="'+memStatus+'" onclick="cycleMemberStatus(this.dataset.uid,this.dataset.status)" style="display:block;margin-top:4px;background:#2d2f32;color:white;border:none;border-radius:8px;padding:3px 10px;font-size:9px;cursor:pointer;font-family:Jost,sans-serif">Edit Status</button>';
+        var toggleBtn='<button data-uid="'+m.id+'" data-f="'+isFounding+'" onclick="toggleFounder(this.dataset.uid,this.dataset.f)" class="btn-sm btn-grn" style="margin-right:3px">'+togLabel+'</button>';
+        var delBtn='<button data-uid="'+m.id+'" onclick="delMember(this.dataset.uid)" class="btn-sm btn-red">Remove</button>';
+        return '<tr>'
+          +'<td><strong>'+(m.name||"Unknown")+'</strong></td>'
+          +'<td>'+(m.email||"")+'</td>'
+          +'<td>'+badge+'</td>'
+          +'<td>'+joined+'</td>'
+          +'<td>'+memBadge+'<div style="font-size:9px;color:var(--text-muted);margin-top:2px">Renews: '+memRenewal+'</div>'+updateBtn+'</td>'
+          +'<td style="text-align:center;font-weight:600;color:var(--pink)">'+count+'</td>'
+          +'<td>'+toggleBtn+delBtn+'</td>'
+          +'</tr>';
       }).join("");
-      wrap.innerHTML='<table class="data-table"><thead><tr><th>Name</th><th>Email</th><th>Status</th><th>Joined</th><th>Membership</th><th>Classes</th><th>Actions</th></tr></thead><tbody>'+rows+'</tbody></table>';
+      wrap.innerHTML='<table class="data-table" style="width:100%"><thead><tr><th>Name</th><th>Email</th><th>Status</th><th>Joined</th><th>Membership</th><th>Classes</th><th>Actions</th></tr></thead><tbody>'+rows+'</tbody></table>';
     });
   }).catch(function(e){wrap.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-muted)">Error loading: '+e.message+'</div>';});
 }
@@ -3069,7 +3086,7 @@ function loadMembers(){
         var count=regCounts[m.id]||0;
         return '<tr><td><strong>'+(m.name||"Unknown")+'</strong></td><td>'+(m.email||"")+'</td><td>'+badge+'</td><td>'+joined+'</td><td style="text-align:center;font-weight:600;color:var(--pink)">'+count+'</td><td><button data-uid="'+m.id+'" data-f="'+isFounding+'" onclick="toggleFounder(this.dataset.uid,this.dataset.f)" class="btn-sm btn-grn" style="margin-right:3px">'+togLabel+'</button><button data-uid="'+m.id+'" onclick="delMember(this.dataset.uid)" class="btn-sm btn-red">Remove</button></td></tr>';
       }).join("");
-      wrap.innerHTML='<table class="data-table"><thead><tr><th>Name</th><th>Email</th><th>Status</th><th>Joined</th><th>Membership</th><th>Classes</th><th>Actions</th></tr></thead><tbody>'+rows+'</tbody></table>';
+      wrap.innerHTML='<table class="data-table" style="width:100%"><thead><tr><th>Name</th><th>Email</th><th>Status</th><th>Joined</th><th>Membership</th><th>Classes</th><th>Actions</th></tr></thead><tbody>'+rows+'</tbody></table>';
     });
   }).catch(function(e){wrap.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-muted)">Error loading: '+e.message+'</div>';});
 }
