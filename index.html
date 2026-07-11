@@ -1800,16 +1800,129 @@ function loadQuestions(){
   });
 }
 
+// MEMBERSHIP CALENDAR
+var memEditUid = null;
+var memCalMonth = new Date().getMonth();
+var memCalYear = new Date().getFullYear();
+var memSelectedDate = null;
+var memSelectedStatus = "active";
+
 function cycleMemberStatus(uid, currentStatus){
-  var statuses=["active","overdue","pending"];
-  var next=statuses[(statuses.indexOf(currentStatus)+1)%statuses.length];
-  var renewal=prompt("Set renewal date (e.g. Aug 1, 2026):",
-    new Date(Date.now()+30*24*60*60*1000).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}));
-  if(renewal===null) return;
-  db.collection("users").doc(uid).update({membershipStatus:next,renewalDate:renewal}).then(function(){
-    showToast("Membership updated to "+next+"!");
-    loadMembers();
+  memEditUid = uid;
+  memSelectedStatus = currentStatus || "active";
+  memSelectedDate = null;
+
+  // Set default calendar to next month
+  var next = new Date();
+  next.setMonth(next.getMonth() + 1);
+  memCalMonth = next.getMonth();
+  memCalYear = next.getFullYear();
+
+  // Populate year dropdown (current year + 3 years)
+  var yearSel = document.getElementById("mem-cal-year");
+  yearSel.innerHTML = "";
+  for(var y = new Date().getFullYear(); y <= new Date().getFullYear() + 3; y++){
+    var opt = document.createElement("option");
+    opt.value = y;
+    opt.textContent = y;
+    if(y === memCalYear) opt.selected = true;
+    yearSel.appendChild(opt);
+  }
+  document.getElementById("mem-cal-month").value = memCalMonth;
+
+  // Highlight correct status button
+  setMemStatus(memSelectedStatus);
+
+  buildMemCal();
+  openModal("m-membership");
+}
+
+function setMemStatus(status){
+  memSelectedStatus = status;
+  var statuses = ["active","overdue","pending"];
+  var colors = {
+    active:  {border:"#2E7D32", bg:"#E8F5E9", text:"#2E7D32"},
+    overdue: {border:"#C62828", bg:"#FFEBEE", text:"#C62828"},
+    pending: {border:"#F57F17", bg:"#FFF8E1", text:"#F57F17"}
+  };
+  statuses.forEach(function(s){
+    var btn = document.getElementById("ms-btn-"+s);
+    if(!btn) return;
+    if(s === status){
+      btn.style.borderColor = colors[s].border;
+      btn.style.background = colors[s].bg;
+      btn.style.color = colors[s].text;
+    } else {
+      btn.style.borderColor = "#e0e0e0";
+      btn.style.background = "white";
+      btn.style.color = "#999";
+    }
   });
+}
+
+function buildMemCal(){
+  memCalMonth = parseInt(document.getElementById("mem-cal-month").value);
+  memCalYear = parseInt(document.getElementById("mem-cal-year").value);
+  var firstDay = new Date(memCalYear, memCalMonth, 1).getDay();
+  var daysInMonth = new Date(memCalYear, memCalMonth+1, 0).getDate();
+  var today = new Date();
+  var container = document.getElementById("mem-cal-days");
+  if(!container) return;
+  var cells = "";
+  for(var i = 0; i < firstDay; i++){
+    cells += '<div></div>';
+  }
+  for(var d = 1; d <= daysInMonth; d++){
+    var isToday = (d === today.getDate() && memCalMonth === today.getMonth() && memCalYear === today.getFullYear());
+    var isSelected = memSelectedDate && memSelectedDate.d === d && memSelectedDate.m === memCalMonth && memSelectedDate.y === memCalYear;
+    var baseStyle = "text-align:center;font-size:11px;padding:5px 2px;border-radius:6px;cursor:pointer;font-family:Jost,sans-serif;font-weight:500;";
+    var style = isSelected
+      ? baseStyle+"background:var(--pink);color:white;"
+      : isToday
+      ? baseStyle+"background:var(--blush2);color:var(--pink);font-weight:700;"
+      : baseStyle+"background:white;color:#2d2f32;";
+    cells += '<div style="'+style+'" onclick="selectMemDate('+d+')">'+d+'</div>';
+  }
+  container.innerHTML = cells;
+}
+
+function selectMemDate(d){
+  memSelectedDate = {d:d, m:memCalMonth, y:memCalYear};
+  var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var full = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  document.getElementById("mem-selected-date").textContent = full[memCalMonth]+" "+d+", "+memCalYear;
+  buildMemCal();
+}
+
+function memCalPrev(){
+  memCalMonth--;
+  if(memCalMonth < 0){ memCalMonth = 11; memCalYear--; }
+  document.getElementById("mem-cal-month").value = memCalMonth;
+  document.getElementById("mem-cal-year").value = memCalYear;
+  buildMemCal();
+}
+
+function memCalNext(){
+  memCalMonth++;
+  if(memCalMonth > 11){ memCalMonth = 0; memCalYear++; }
+  document.getElementById("mem-cal-month").value = memCalMonth;
+  document.getElementById("mem-cal-year").value = memCalYear;
+  buildMemCal();
+}
+
+function saveMembership(){
+  if(!memEditUid){ showToast("No member selected"); return; }
+  if(!memSelectedDate){ showToast("Please select a renewal date"); return; }
+  var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var renewal = months[memSelectedDate.m]+" "+memSelectedDate.d+", "+memSelectedDate.y;
+  db.collection("users").doc(memEditUid).update({
+    membershipStatus: memSelectedStatus,
+    renewalDate: renewal
+  }).then(function(){
+    closeModal("m-membership");
+    showToast("Membership updated to "+memSelectedStatus+" — renews "+renewal);
+    loadMembers();
+  }).catch(function(e){ showToast("Error: "+e.message); });
 }
 
 function markQ(id,answered){var isAns=answered==="true"||answered===true;db.collection("questions").doc(id).update({answered:!isAns}).then(function(){loadQuestions();});}
@@ -2461,6 +2574,7 @@ document.addEventListener("DOMContentLoaded",function(){
   });
   document.querySelectorAll("[data-close]").forEach(function(el){el.addEventListener("click",function(){closeModal(this.getAttribute("data-close"));});});
   document.getElementById("btn-save-equip").addEventListener("click",saveEquip);
+  document.getElementById("btn-save-membership").addEventListener("click",saveMembership);
   document.getElementById("topbar-date").textContent=new Date().toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
 
   // Announcements
@@ -2607,6 +2721,55 @@ document.addEventListener("DOMContentLoaded",function(){
     <div class="modal-footer">
       <button class="btn-cancel" data-close="m-announce">Cancel</button>
       <button class="btn-pink" style="flex:2;padding:10px;border-radius:20px" id="btn-save-announce">Post</button>
+    </div>
+  </div>
+</div>
+
+<!-- MEMBERSHIP STATUS MODAL -->
+<div class="modal-overlay" id="m-membership">
+  <div class="modal" style="max-width:380px">
+    <div class="modal-header">
+      <div class="modal-title">Update Membership</div>
+      <button class="modal-close" data-close="m-membership">x</button>
+    </div>
+    <label class="form-label">Membership Status</label>
+    <div style="display:flex;gap:8px;margin-bottom:1rem">
+      <button onclick="setMemStatus('active')" id="ms-btn-active" style="flex:1;padding:10px;border:2px solid #2E7D32;border-radius:12px;background:#E8F5E9;color:#2E7D32;font-family:Jost,sans-serif;font-size:12px;font-weight:600;cursor:pointer">Active</button>
+      <button onclick="setMemStatus('overdue')" id="ms-btn-overdue" style="flex:1;padding:10px;border:2px solid #e0e0e0;border-radius:12px;background:white;color:#999;font-family:Jost,sans-serif;font-size:12px;font-weight:600;cursor:pointer">Overdue</button>
+      <button onclick="setMemStatus('pending')" id="ms-btn-pending" style="flex:1;padding:10px;border:2px solid #e0e0e0;border-radius:12px;background:white;color:#999;font-family:Jost,sans-serif;font-size:12px;font-weight:600;cursor:pointer">Pending</button>
+    </div>
+    <label class="form-label">Renewal Date</label>
+    <!-- Mini calendar -->
+    <div style="background:var(--blush);border-radius:14px;padding:12px;margin-bottom:12px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <button onclick="memCalPrev()" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--pink);padding:4px 8px">&#8249;</button>
+        <div style="display:flex;gap:6px">
+          <select id="mem-cal-month" onchange="buildMemCal()" style="border:1px solid var(--border);border-radius:8px;padding:4px 8px;font-family:Jost,sans-serif;font-size:12px;background:white;cursor:pointer">
+            <option value="0">January</option><option value="1">February</option><option value="2">March</option>
+            <option value="3">April</option><option value="4">May</option><option value="5">June</option>
+            <option value="6">July</option><option value="7">August</option><option value="8">September</option>
+            <option value="9">October</option><option value="10">November</option><option value="11">December</option>
+          </select>
+          <select id="mem-cal-year" onchange="buildMemCal()" style="border:1px solid var(--border);border-radius:8px;padding:4px 8px;font-family:Jost,sans-serif;font-size:12px;background:white;cursor:pointer">
+          </select>
+        </div>
+        <button onclick="memCalNext()" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--pink);padding:4px 8px">&#8250;</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:6px">
+        <div style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:4px">Su</div>
+        <div style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:4px">Mo</div>
+        <div style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:4px">Tu</div>
+        <div style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:4px">We</div>
+        <div style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:4px">Th</div>
+        <div style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:4px">Fr</div>
+        <div style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:4px">Sa</div>
+      </div>
+      <div id="mem-cal-days" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px"></div>
+      <div style="margin-top:10px;text-align:center;font-size:12px;color:var(--purple);font-weight:500" id="mem-selected-date">No date selected</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" data-close="m-membership">Cancel</button>
+      <button class="btn-pink" style="flex:2;padding:10px;border-radius:20px" id="btn-save-membership">Save</button>
     </div>
   </div>
 </div>
@@ -3378,16 +3541,129 @@ function loadQuestions(){
   });
 }
 
+// MEMBERSHIP CALENDAR
+var memEditUid = null;
+var memCalMonth = new Date().getMonth();
+var memCalYear = new Date().getFullYear();
+var memSelectedDate = null;
+var memSelectedStatus = "active";
+
 function cycleMemberStatus(uid, currentStatus){
-  var statuses=["active","overdue","pending"];
-  var next=statuses[(statuses.indexOf(currentStatus)+1)%statuses.length];
-  var renewal=prompt("Set renewal date (e.g. Aug 1, 2026):",
-    new Date(Date.now()+30*24*60*60*1000).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}));
-  if(renewal===null) return;
-  db.collection("users").doc(uid).update({membershipStatus:next,renewalDate:renewal}).then(function(){
-    showToast("Membership updated to "+next+"!");
-    loadMembers();
+  memEditUid = uid;
+  memSelectedStatus = currentStatus || "active";
+  memSelectedDate = null;
+
+  // Set default calendar to next month
+  var next = new Date();
+  next.setMonth(next.getMonth() + 1);
+  memCalMonth = next.getMonth();
+  memCalYear = next.getFullYear();
+
+  // Populate year dropdown (current year + 3 years)
+  var yearSel = document.getElementById("mem-cal-year");
+  yearSel.innerHTML = "";
+  for(var y = new Date().getFullYear(); y <= new Date().getFullYear() + 3; y++){
+    var opt = document.createElement("option");
+    opt.value = y;
+    opt.textContent = y;
+    if(y === memCalYear) opt.selected = true;
+    yearSel.appendChild(opt);
+  }
+  document.getElementById("mem-cal-month").value = memCalMonth;
+
+  // Highlight correct status button
+  setMemStatus(memSelectedStatus);
+
+  buildMemCal();
+  openModal("m-membership");
+}
+
+function setMemStatus(status){
+  memSelectedStatus = status;
+  var statuses = ["active","overdue","pending"];
+  var colors = {
+    active:  {border:"#2E7D32", bg:"#E8F5E9", text:"#2E7D32"},
+    overdue: {border:"#C62828", bg:"#FFEBEE", text:"#C62828"},
+    pending: {border:"#F57F17", bg:"#FFF8E1", text:"#F57F17"}
+  };
+  statuses.forEach(function(s){
+    var btn = document.getElementById("ms-btn-"+s);
+    if(!btn) return;
+    if(s === status){
+      btn.style.borderColor = colors[s].border;
+      btn.style.background = colors[s].bg;
+      btn.style.color = colors[s].text;
+    } else {
+      btn.style.borderColor = "#e0e0e0";
+      btn.style.background = "white";
+      btn.style.color = "#999";
+    }
   });
+}
+
+function buildMemCal(){
+  memCalMonth = parseInt(document.getElementById("mem-cal-month").value);
+  memCalYear = parseInt(document.getElementById("mem-cal-year").value);
+  var firstDay = new Date(memCalYear, memCalMonth, 1).getDay();
+  var daysInMonth = new Date(memCalYear, memCalMonth+1, 0).getDate();
+  var today = new Date();
+  var container = document.getElementById("mem-cal-days");
+  if(!container) return;
+  var cells = "";
+  for(var i = 0; i < firstDay; i++){
+    cells += '<div></div>';
+  }
+  for(var d = 1; d <= daysInMonth; d++){
+    var isToday = (d === today.getDate() && memCalMonth === today.getMonth() && memCalYear === today.getFullYear());
+    var isSelected = memSelectedDate && memSelectedDate.d === d && memSelectedDate.m === memCalMonth && memSelectedDate.y === memCalYear;
+    var baseStyle = "text-align:center;font-size:11px;padding:5px 2px;border-radius:6px;cursor:pointer;font-family:Jost,sans-serif;font-weight:500;";
+    var style = isSelected
+      ? baseStyle+"background:var(--pink);color:white;"
+      : isToday
+      ? baseStyle+"background:var(--blush2);color:var(--pink);font-weight:700;"
+      : baseStyle+"background:white;color:#2d2f32;";
+    cells += '<div style="'+style+'" onclick="selectMemDate('+d+')">'+d+'</div>';
+  }
+  container.innerHTML = cells;
+}
+
+function selectMemDate(d){
+  memSelectedDate = {d:d, m:memCalMonth, y:memCalYear};
+  var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var full = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  document.getElementById("mem-selected-date").textContent = full[memCalMonth]+" "+d+", "+memCalYear;
+  buildMemCal();
+}
+
+function memCalPrev(){
+  memCalMonth--;
+  if(memCalMonth < 0){ memCalMonth = 11; memCalYear--; }
+  document.getElementById("mem-cal-month").value = memCalMonth;
+  document.getElementById("mem-cal-year").value = memCalYear;
+  buildMemCal();
+}
+
+function memCalNext(){
+  memCalMonth++;
+  if(memCalMonth > 11){ memCalMonth = 0; memCalYear++; }
+  document.getElementById("mem-cal-month").value = memCalMonth;
+  document.getElementById("mem-cal-year").value = memCalYear;
+  buildMemCal();
+}
+
+function saveMembership(){
+  if(!memEditUid){ showToast("No member selected"); return; }
+  if(!memSelectedDate){ showToast("Please select a renewal date"); return; }
+  var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var renewal = months[memSelectedDate.m]+" "+memSelectedDate.d+", "+memSelectedDate.y;
+  db.collection("users").doc(memEditUid).update({
+    membershipStatus: memSelectedStatus,
+    renewalDate: renewal
+  }).then(function(){
+    closeModal("m-membership");
+    showToast("Membership updated to "+memSelectedStatus+" — renews "+renewal);
+    loadMembers();
+  }).catch(function(e){ showToast("Error: "+e.message); });
 }
 
 function markQ(id,answered){var isAns=answered==="true"||answered===true;db.collection("questions").doc(id).update({answered:!isAns}).then(function(){loadQuestions();});}
@@ -4039,6 +4315,7 @@ document.addEventListener("DOMContentLoaded",function(){
   });
   document.querySelectorAll("[data-close]").forEach(function(el){el.addEventListener("click",function(){closeModal(this.getAttribute("data-close"));});});
   document.getElementById("btn-save-equip").addEventListener("click",saveEquip);
+  document.getElementById("btn-save-membership").addEventListener("click",saveMembership);
   document.getElementById("topbar-date").textContent=new Date().toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
 
   // Announcements
@@ -4185,6 +4462,55 @@ document.addEventListener("DOMContentLoaded",function(){
     <div class="modal-footer">
       <button class="btn-cancel" data-close="m-announce">Cancel</button>
       <button class="btn-pink" style="flex:2;padding:10px;border-radius:20px" id="btn-save-announce">Post</button>
+    </div>
+  </div>
+</div>
+
+<!-- MEMBERSHIP STATUS MODAL -->
+<div class="modal-overlay" id="m-membership">
+  <div class="modal" style="max-width:380px">
+    <div class="modal-header">
+      <div class="modal-title">Update Membership</div>
+      <button class="modal-close" data-close="m-membership">x</button>
+    </div>
+    <label class="form-label">Membership Status</label>
+    <div style="display:flex;gap:8px;margin-bottom:1rem">
+      <button onclick="setMemStatus('active')" id="ms-btn-active" style="flex:1;padding:10px;border:2px solid #2E7D32;border-radius:12px;background:#E8F5E9;color:#2E7D32;font-family:Jost,sans-serif;font-size:12px;font-weight:600;cursor:pointer">Active</button>
+      <button onclick="setMemStatus('overdue')" id="ms-btn-overdue" style="flex:1;padding:10px;border:2px solid #e0e0e0;border-radius:12px;background:white;color:#999;font-family:Jost,sans-serif;font-size:12px;font-weight:600;cursor:pointer">Overdue</button>
+      <button onclick="setMemStatus('pending')" id="ms-btn-pending" style="flex:1;padding:10px;border:2px solid #e0e0e0;border-radius:12px;background:white;color:#999;font-family:Jost,sans-serif;font-size:12px;font-weight:600;cursor:pointer">Pending</button>
+    </div>
+    <label class="form-label">Renewal Date</label>
+    <!-- Mini calendar -->
+    <div style="background:var(--blush);border-radius:14px;padding:12px;margin-bottom:12px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <button onclick="memCalPrev()" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--pink);padding:4px 8px">&#8249;</button>
+        <div style="display:flex;gap:6px">
+          <select id="mem-cal-month" onchange="buildMemCal()" style="border:1px solid var(--border);border-radius:8px;padding:4px 8px;font-family:Jost,sans-serif;font-size:12px;background:white;cursor:pointer">
+            <option value="0">January</option><option value="1">February</option><option value="2">March</option>
+            <option value="3">April</option><option value="4">May</option><option value="5">June</option>
+            <option value="6">July</option><option value="7">August</option><option value="8">September</option>
+            <option value="9">October</option><option value="10">November</option><option value="11">December</option>
+          </select>
+          <select id="mem-cal-year" onchange="buildMemCal()" style="border:1px solid var(--border);border-radius:8px;padding:4px 8px;font-family:Jost,sans-serif;font-size:12px;background:white;cursor:pointer">
+          </select>
+        </div>
+        <button onclick="memCalNext()" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--pink);padding:4px 8px">&#8250;</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:6px">
+        <div style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:4px">Su</div>
+        <div style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:4px">Mo</div>
+        <div style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:4px">Tu</div>
+        <div style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:4px">We</div>
+        <div style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:4px">Th</div>
+        <div style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:4px">Fr</div>
+        <div style="text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:4px">Sa</div>
+      </div>
+      <div id="mem-cal-days" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px"></div>
+      <div style="margin-top:10px;text-align:center;font-size:12px;color:var(--purple);font-weight:500" id="mem-selected-date">No date selected</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" data-close="m-membership">Cancel</button>
+      <button class="btn-pink" style="flex:2;padding:10px;border-radius:20px" id="btn-save-membership">Save</button>
     </div>
   </div>
 </div>
