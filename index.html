@@ -15,285 +15,315 @@
   --border:#e0e0e0;--sidebar:220px;
   --lime:#f5fca6;--charcoal:#2d2f32;
 }
-body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color:var(--text);min-height:100vh}
-#login-screen{min-height:100vh;background:linear-gradient(135deg,var(--charcoal) 0%,#1a1c1e 60%,#2d2f32 100%);display:flex;align-items:center;justify-content:center;padding:2rem}
-.login-card{background:var(--white);border-radius:20px;padding:2.5rem 2rem;width:100%;max-width:400px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.5);border-top:4px solid var(--pink)}
-.login-brand{font-family:'Dancing Script',cursive;font-size:2.2rem;color:var(--pink);margin-bottom:4px}
-.login-sub{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2rem}
-.login-toggle{display:flex;background:var(--blush);border-radius:30px;padding:4px;margin-bottom:1.5rem;gap:4px}
-.login-toggle button{flex:1;padding:8px;border:none;border-radius:26px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all 0.2s;background:transparent;color:var(--text-muted)}
-.login-toggle button.active{background:var(--pink);color:var(--white)}
-.login-input{width:100%;padding:12px 16px;border:1px solid var(--border);border-radius:10px;font-family:'Jost',sans-serif;font-size:14px;margin-bottom:12px;outline:none}
-.login-input:focus{border-color:var(--pink)}
-.login-btn{padding:13px;background:var(--pink);color:var(--white);border:none;border-radius:30px;font-family:'Jost',sans-serif;font-weight:500;font-size:14px;cursor:pointer}
-.login-btn:hover{background:var(--pink-dark)}
-.login-hint{font-size:11px;color:var(--text-muted);margin-top:1rem}
-#login-error{display:none;background:#FFEBEE;color:#C62828;font-size:11px;padding:8px 12px;border-radius:8px;margin-bottom:10px;text-align:left}
-#app{display:none;min-height:100vh;flex-direction:row}
-#app.visible{display:flex}
-.sidebar{width:var(--sidebar);background:var(--charcoal);height:100vh;display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:100;overflow:hidden}
-.sidebar-brand{padding:1.5rem 1.2rem 1rem;border-bottom:1px solid rgba(255,255,255,0.1)}
-.sidebar-brand-name{font-family:'Dancing Script',cursive;font-size:1.5rem;color:var(--pink)}
-.sidebar-brand-sub{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-top:2px}
-.sidebar-user{padding:0.8rem 1.2rem;background:rgba(255,255,255,0.07);display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,0.1)}
-.sidebar-avatar{width:30px;height:30px;border-radius:50%;background:var(--pink);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--white);flex-shrink:0}
-.sidebar-user-name{font-size:12px;color:var(--white)}
-.sidebar-user-role{font-size:10px;color:rgba(255,255,255,0.5)}
-.sidebar-section{padding:0.8rem 1.2rem 0.3rem;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--lime);font-weight:600;opacity:0.8}
-.sidebar-nav-wrap{flex:1;overflow-y:auto;overflow-x:hidden}
-.nav-item{display:flex;align-items:center;gap:10px;padding:9px 1.2rem;cursor:pointer;transition:background 0.15s;border-left:3px solid transparent;color:rgba(255,255,255,0.65);font-size:13px}
-.nav-item:hover{background:rgba(255,255,255,0.07);color:var(--white)}
-.nav-item.active{background:rgba(233,30,140,0.2);border-left-color:var(--lime);color:var(--white)}
-.nav-icon{font-size:15px;width:18px;text-align:center;flex-shrink:0}
-.sidebar-footer{margin-top:auto;padding:1rem 1.2rem;border-top:1px solid rgba(255,255,255,0.1)}
-.logout-btn{width:100%;padding:8px;background:transparent;border:1px solid rgba(255,255,255,0.2);border-radius:20px;color:rgba(255,255,255,0.6);font-family:'Jost',sans-serif;font-size:11px;cursor:pointer}
-.main{margin-left:var(--sidebar);flex:1;min-height:100vh;background:var(--blush)}
-.topbar{background:var(--white);border-bottom:2px solid var(--pink);padding:0.9rem 1.8rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
-.topbar-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:500;color:var(--pink)}
-.topbar-badge{background:var(--pink);color:var(--white);font-size:10px;font-weight:500;padding:3px 10px;border-radius:20px}
-.topbar-date{font-size:11px;color:var(--text-muted)}
-.page{display:none;padding:1.5rem 1.8rem;animation:fadeIn 0.3s ease}
-.page.active{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:10px}
-.section-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:500;color:var(--charcoal);padding-bottom:6px;border-bottom:2px solid var(--pink)}
-.card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.2rem;margin-bottom:10px}
-.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:1.2rem}
-.stat-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1rem;text-align:center}
-.stat-num{font-size:24px;font-weight:500;color:var(--pink);margin-bottom:2px}
-.stat-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em}
-.btn-pink{background:var(--pink);color:var(--white);border:none;border-radius:20px;padding:8px 18px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:0.06em}
+body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);color:var(--text);min-height:100vh;margin:0;-webkit-font-smoothing:antialiased}
+
+/* ── LOGIN ── */
+#login-screen{min-height:100vh;background:var(--charcoal);display:flex;align-items:center;justify-content:center;padding:1.5rem;position:relative;overflow:hidden}
+#login-screen::before{content:'';position:absolute;top:-100px;right:-100px;width:300px;height:300px;border-radius:50%;background:var(--pink);opacity:0.15}
+#login-screen::after{content:'';position:absolute;bottom:-80px;left:-80px;width:240px;height:240px;border-radius:50%;background:var(--lime);opacity:0.12}
+.login-card{background:var(--white);border-radius:28px;padding:2.5rem 2rem;width:100%;max-width:380px;text-align:center;position:relative;z-index:1;border-top:5px solid var(--pink)}
+.login-brand{font-family:'Dancing Script',cursive;font-size:2.4rem;color:var(--pink);margin-bottom:2px;line-height:1}
+.login-sub{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1.8rem}
+.login-toggle{display:flex;background:var(--offwhite);border-radius:30px;padding:4px;margin-bottom:1.4rem;gap:4px}
+.login-toggle button{flex:1;padding:9px;border:none;border-radius:26px;font-family:'Jost',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;background:transparent;color:var(--text-muted);letter-spacing:0.05em}
+.login-toggle button.active{background:var(--charcoal);color:var(--lime)}
+.login-input{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:14px;font-family:'Jost',sans-serif;font-size:14px;margin-bottom:10px;outline:none;background:var(--offwhite);box-sizing:border-box;transition:border 0.2s}
+.login-input:focus{border-color:var(--pink);background:white}
+.login-btn{width:100%;padding:14px;background:var(--charcoal);color:var(--lime);border:none;border-radius:30px;font-family:'Jost',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;text-transform:uppercase}
+.login-btn:hover{background:var(--pink);color:white}
+.login-btn.secondary{background:var(--pink);color:white;margin-top:8px}
+.login-hint{font-size:11px;color:var(--text-muted);margin-top:12px;line-height:1.5}
+#login-error{display:none;background:#FFEBEE;color:#C62828;font-size:11px;padding:8px 12px;border-radius:10px;margin-bottom:10px;text-align:left}
+
+/* ── APP SHELL ── */
+#app{display:none;min-height:100vh;flex-direction:column;background:var(--offwhite);overflow:hidden}
+#app.visible{display:flex;height:100vh}
+
+/* ── TOP HEADER ── */
+.app-header{height:var(--header-height);background:var(--charcoal);display:flex;align-items:center;justify-content:space-between;padding:0 1.2rem;z-index:100;flex-shrink:0}
+.app-header-brand{font-family:'Dancing Script',cursive;font-size:1.5rem;color:var(--pink);line-height:1}
+.app-header-right{display:flex;align-items:center;gap:10px}
+.app-header-badge{background:var(--pink);color:white;font-size:9px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:0.08em;text-transform:uppercase}
+.app-header-date{font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.06em}
+.header-menu-btn{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:4px;padding:4px}
+.header-menu-btn span{display:block;width:20px;height:2px;background:var(--lime);border-radius:2px}
+
+/* ── MAIN CONTENT ── */
+.main-content{flex:1;overflow-y:auto;padding-bottom:calc(var(--tab-height) + 20px);-webkit-overflow-scrolling:touch}
+
+/* ── BOTTOM TAB BAR ── */
+.tab-bar{height:var(--tab-height);background:var(--charcoal);display:flex;align-items:center;justify-content:space-around;flex-shrink:0;padding:0 4px;padding-bottom:env(safe-area-inset-bottom)}
+.tab-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 8px;cursor:pointer;flex:1;transition:all 0.15s;border-radius:12px;position:relative}
+.tab-item:hover{background:rgba(245,252,166,0.08)}
+.tab-item.active{background:rgba(245,252,166,0.12)}
+.tab-icon{font-size:1.3rem;line-height:1}
+.tab-label{font-size:9px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.4)}
+.tab-item.active .tab-label{color:var(--lime)}
+.tab-item.active .tab-icon{filter:drop-shadow(0 0 4px rgba(245,252,166,0.5))}
+.tab-notif{position:absolute;top:2px;right:12px;background:var(--pink);color:white;font-size:8px;font-weight:700;min-width:14px;height:14px;border-radius:7px;line-height:14px;text-align:center;padding:0 3px}
+
+/* ── PAGES ── */
+.page{display:none;padding-bottom:1rem}
+.page.active{display:block;animation:fadeUp 0.25s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── PAGE HEADER (in-page) ── */
+.page-title-bar{padding:1.4rem 1.2rem 0.8rem;display:flex;align-items:center;justify-content:space-between}
+.page-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:500;color:var(--charcoal);line-height:1.1}
+.page-sub{font-size:12px;color:var(--text-muted);margin-top:2px}
+
+/* ── DASHBOARD ── */
+.hero-card{margin:1.2rem;border-radius:24px;background:var(--charcoal);padding:1.8rem;position:relative;overflow:hidden;min-height:160px}
+.hero-card::after{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:var(--pink);opacity:0.15}
+.hero-eyebrow{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;font-weight:600}
+.hero-title{font-family:'Playfair Display',serif;font-style:italic;font-size:26px;color:white;margin-bottom:6px;position:relative;z-index:1}
+.hero-sub{font-size:12px;color:rgba(255,255,255,0.6);position:relative;z-index:1}
+.next-class-strip{margin:0 1.2rem 1rem;background:white;border-radius:18px;padding:1rem 1.2rem;display:flex;align-items:center;gap:12px;border:1.5px solid var(--border)}
+.next-class-badge{background:var(--lime);color:var(--charcoal);font-size:9px;font-weight:700;padding:4px 10px;border-radius:20px;white-space:nowrap;letter-spacing:0.06em;text-transform:uppercase}
+.next-class-info{flex:1}
+.next-class-name{font-size:14px;font-weight:600;color:var(--charcoal);margin-bottom:2px}
+.next-class-time{font-size:11px;color:var(--text-muted)}
+.next-class-equip{font-size:10px;color:var(--pink);margin-top:2px;font-weight:500}
+.join-btn{background:var(--pink);color:white;border:none;border-radius:20px;padding:9px 18px;font-family:'Jost',sans-serif;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;letter-spacing:0.04em}
+
+/* ── APP GRID (like Raven's card grid) ── */
+.app-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 1.2rem 1.2rem}
+.app-grid-card{border-radius:20px;padding:1rem 1.2rem;cursor:pointer;transition:transform 0.15s;display:flex;flex-direction:column;justify-content:space-between;min-height:100px;position:relative;overflow:hidden}
+.app-grid-card:active{transform:scale(0.97)}
+.app-grid-card.dark{background:var(--charcoal);color:white}
+.app-grid-card.pink{background:var(--pink);color:white}
+.app-grid-card.lime{background:var(--lime);color:var(--charcoal)}
+.app-grid-card.light{background:white;color:var(--charcoal);border:1.5px solid var(--border)}
+.app-grid-label{font-size:13px;font-weight:700;letter-spacing:0.02em;line-height:1.2}
+.app-grid-sub{font-size:10px;opacity:0.7;margin-top:3px}
+.app-grid-icon{font-size:2rem;margin-bottom:6px;display:block}
+
+/* ── ANNOUNCEMENTS ── */
+.announce-feed{padding:0 1.2rem;margin-bottom:1rem}
+.announce-feed-title{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
+.announce-item{background:white;border-radius:14px;padding:12px 14px;margin-bottom:8px;border-left:4px solid var(--pink);display:flex;justify-content:space-between;align-items:flex-start}
+.announce-item.pinned{border-left-color:var(--charcoal)}
+.announce-item-title{font-size:13px;font-weight:600;color:var(--charcoal);margin-bottom:2px}
+.announce-item-body{font-size:11px;color:var(--text-muted);line-height:1.5}
+.announce-item-date{font-size:10px;color:var(--text-muted);white-space:nowrap;margin-left:8px;flex-shrink:0}
+
+/* ── PROGRESS ── */
+.progress-card{margin:0 1.2rem 1rem;background:var(--lime);border-radius:20px;padding:1.2rem}
+.progress-nums{display:flex;justify-content:space-between;margin-bottom:10px}
+.progress-num{font-size:36px;font-weight:700;color:var(--charcoal);line-height:1}
+.progress-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:rgba(45,47,50,0.6)}
+.month-dots{display:flex;flex-wrap:wrap;gap:4px}
+.month-dot{width:10px;height:10px;border-radius:3px;background:rgba(45,47,50,0.15);flex-shrink:0}
+.month-dot.attended{background:var(--pink)}
+.month-dot.upcoming{background:var(--charcoal);opacity:0.5}
+.month-dot.today{background:var(--charcoal)}
+
+/* ── SECTION HEADERS ── */
+.section-hdr{padding:1.2rem 1.2rem 0.6rem;display:flex;align-items:center;justify-content:space-between}
+.section-hdr-title{font-size:18px;font-weight:700;color:var(--charcoal)}
+.section-hdr-action{font-size:11px;font-weight:600;color:var(--pink);cursor:pointer}
+
+/* ── CARDS ── */
+.card{background:white;border-radius:18px;padding:1.2rem;margin:0 1.2rem 10px;border:1.5px solid var(--border)}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 1.2rem;margin-bottom:1rem}
+.stat-card{background:white;border-radius:16px;padding:1rem;text-align:center;border:1.5px solid var(--border)}
+.stat-num{font-size:28px;font-weight:700;color:var(--pink);line-height:1}
+.stat-label{font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-top:3px}
+
+/* ── BUTTONS ── */
+.btn-primary{background:var(--charcoal);color:var(--lime);border:none;border-radius:30px;padding:12px 24px;font-family:'Jost',sans-serif;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:0.06em;text-transform:uppercase}
+.btn-primary:hover{background:var(--pink);color:white}
+.btn-pink{background:var(--pink);color:white;border:none;border-radius:30px;padding:10px 20px;font-family:'Jost',sans-serif;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:0.05em}
 .btn-pink:hover{background:var(--pink-dark)}
-.btn-purple{background:var(--pink);color:var(--white);border:none;border-radius:20px;padding:8px 18px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;cursor:pointer}
-.btn-purple:hover{background:var(--pink-dark)}
-.btn-teal{background:var(--teal);color:var(--white);border:none;border-radius:20px;padding:8px 18px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;cursor:pointer}
-.btn-sm{padding:4px 10px;font-size:10px;border-radius:10px;border:none;cursor:pointer;font-family:'Jost',sans-serif;font-weight:500;margin:1px}
+.btn-lime{background:var(--lime);color:var(--charcoal);border:none;border-radius:30px;padding:10px 20px;font-family:'Jost',sans-serif;font-size:12px;font-weight:700;cursor:pointer}
+.btn-ghost{background:transparent;color:var(--charcoal);border:2px solid var(--charcoal);border-radius:30px;padding:9px 18px;font-family:'Jost',sans-serif;font-size:12px;font-weight:600;cursor:pointer}
+.btn-sm{padding:5px 12px;font-size:10px;border-radius:12px;border:none;cursor:pointer;font-family:'Jost',sans-serif;font-weight:600;margin:1px}
 .btn-red{background:#c62828;color:white}
 .btn-grn{background:#2e7d32;color:white}
-.form-label{font-size:11px;font-weight:500;color:var(--charcoal);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:5px;display:block;margin-top:10px}
-.form-input,.form-textarea,.form-select{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:var(--cream);margin-bottom:2px}
-.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--pink);background:var(--white)}
+.btn-purple{background:var(--charcoal);color:var(--lime)}
+.btn-purple:hover{background:var(--pink);color:white}
+
+/* ── FORMS ── */
+.form-label{font-size:11px;font-weight:700;color:var(--charcoal);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:5px;display:block;margin-top:12px}
+.form-input,.form-textarea,.form-select{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:14px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:var(--offwhite);box-sizing:border-box;transition:border 0.2s}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--pink);background:white}
 .form-textarea{min-height:80px;resize:vertical}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(45,47,50,0.65);z-index:999;align-items:center;justify-content:center}
+
+/* ── MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;align-items:flex-end;justify-content:center}
 .modal-overlay.open{display:flex}
-.modal{background:var(--white);border-radius:18px;padding:1.5rem;width:90%;max-width:480px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.4)}
+.modal{background:white;border-radius:28px 28px 0 0;padding:1.5rem;width:100%;max-width:600px;max-height:92vh;overflow-y:auto}
+.modal-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 1.2rem}
 .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
-.modal-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:500;color:var(--purple)}
-.modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-muted);padding:2px 8px}
-.modal-footer{display:flex;gap:8px;margin-top:1.2rem}
-.btn-cancel{flex:1;padding:10px;border:1px solid var(--border);border-radius:20px;background:var(--white);font-family:'Jost',sans-serif;font-size:13px;cursor:pointer;color:var(--text-muted)}
-.welcome-hero{background:linear-gradient(120deg,var(--charcoal),#1a1c1e);border-radius:16px;padding:1.8rem;margin-bottom:1.2rem;color:var(--white)}
-.welcome-eyebrow{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--pink-light);margin-bottom:6px}
-.welcome-title{font-family:'Playfair Display',serif;font-style:italic;font-size:22px;margin-bottom:6px}
-.welcome-sub{font-size:13px;color:rgba(255,255,255,0.75);font-weight:200}
-.quick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:1.2rem}
-.quick-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1rem;cursor:pointer;transition:all 0.2s;text-align:center}
-.quick-card:hover{border-color:var(--pink);transform:translateY(-2px);box-shadow:0 4px 16px rgba(236,34,135,0.15)}
-.next-class-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.2rem;display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;flex-wrap:wrap}
-.join-btn{background:var(--pink);color:var(--white);border:none;border-radius:20px;padding:8px 18px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;cursor:pointer}
-/* CALENDAR */
-.cal-grid-wrap{background:var(--white);border-radius:14px;overflow:hidden;border:1px solid var(--border)}
+.modal-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:500;color:var(--charcoal)}
+.modal-close{background:var(--offwhite);border:none;border-radius:50%;width:32px;height:32px;font-size:16px;cursor:pointer;color:var(--text-muted);display:flex;align-items:center;justify-content:center}
+.modal-footer{display:flex;gap:8px;margin-top:1.4rem}
+.btn-cancel{flex:1;padding:12px;border:1.5px solid var(--border);border-radius:20px;background:white;font-family:'Jost',sans-serif;font-size:13px;cursor:pointer;color:var(--text-muted)}
+
+/* ── CALENDAR ── */
+.cal-wrap{margin:0 1.2rem}
+.cal-header-strip{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;padding:0 0.2rem}
+.cal-month-title{font-size:20px;font-weight:700;color:var(--charcoal)}
+.cal-grid-outer{background:white;border-radius:20px;overflow:hidden;border:1.5px solid var(--border)}
 .cal-day-headers{display:grid;grid-template-columns:repeat(7,1fr);background:var(--charcoal)}
-.cal-day-hdr{padding:8px;text-align:center;font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.7)}
+.cal-day-hdr{padding:10px 4px;text-align:center;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--lime)}
 .cal-cells{display:grid;grid-template-columns:repeat(7,1fr)}
-.cal-cell{min-height:100px;border-right:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:5px;background:var(--cream)}
-.cal-cell.empty{background:#F5E8EE}
-.cal-num{font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:3px}
-.sess-block{border-radius:5px;padding:4px 5px;margin-bottom:3px;border:1px solid rgba(0,0,0,0.1)}
-.sess-name{font-size:9px;font-weight:600;color:var(--white);margin-bottom:1px}
-.sess-time{font-size:8px;color:rgba(255,255,255,0.85)}
-.sess-equip{font-size:7px;color:rgba(255,255,255,0.8);font-style:italic;margin-top:1px}
-.sess-spots{font-size:8px;font-weight:500;margin-top:2px}
-.sess-btn{display:block;width:100%;font-size:8px;padding:2px 4px;border:none;border-radius:3px;cursor:pointer;font-family:'Jost',sans-serif;font-weight:500;margin-top:2px;text-align:center}
-.add-sess-btn{display:block;width:100%;font-size:8px;padding:3px 4px;border:none;border-radius:3px;cursor:pointer;font-family:'Jost',sans-serif;background:#9E9D24;color:white;margin-top:3px;text-align:center}
-/* VIDEO */
-.lib-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
-.filter-pill{padding:5px 14px;border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--text-muted)}
-.filter-pill.active{background:var(--pink);color:var(--white);border-color:var(--pink)}
-.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-.video-card{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:all 0.2s}
-.video-card:hover{border-color:var(--pink);box-shadow:0 4px 14px rgba(233,30,140,0.1)}
-.video-thumb{height:100px;background:linear-gradient(135deg,var(--charcoal),var(--pink));display:flex;align-items:center;justify-content:center;font-size:2rem;position:relative}
-.video-duration{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,0.7);color:white;font-size:9px;padding:2px 5px;border-radius:3px}
+.cal-cell{min-height:90px;border-right:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:6px;background:white}
+.cal-cell.empty{background:#fafafa}
+.cal-num{font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:4px}
+.sess-block{border-radius:8px;padding:5px 6px;margin-bottom:3px}
+.sess-name{font-size:8px;font-weight:700;color:white;margin-bottom:1px;line-height:1.2}
+.sess-time{font-size:7px;color:rgba(255,255,255,0.8)}
+.sess-equip{font-size:7px;color:rgba(255,255,255,0.75);font-style:italic;margin-top:1px}
+.sess-spots{font-size:8px;font-weight:600;margin-top:2px;background:rgba(255,255,255,0.2);border-radius:4px;padding:1px 4px;display:inline-block}
+.sess-btn{display:block;width:100%;font-size:8px;padding:3px 4px;border:none;border-radius:5px;cursor:pointer;font-family:'Jost',sans-serif;font-weight:700;margin-top:2px;text-align:center}
+.add-sess-btn{display:block;width:100%;font-size:8px;padding:3px 4px;border:none;border-radius:5px;cursor:pointer;font-family:'Jost',sans-serif;background:var(--lime);color:var(--charcoal);margin-top:4px;font-weight:700;text-align:center}
+
+/* ── VIDEO LIBRARY ── */
+.lib-filter{display:flex;gap:6px;flex-wrap:wrap;padding:0 1.2rem;margin-bottom:0.8rem;overflow-x:auto}
+.filter-pill{padding:7px 16px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:white;color:var(--text-muted);white-space:nowrap;transition:all 0.15s}
+.filter-pill.active{background:var(--charcoal);color:var(--lime);border-color:var(--charcoal)}
+.video-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 1.2rem}
+.video-card{background:white;border-radius:16px;overflow:hidden;cursor:pointer;transition:all 0.2s;border:1.5px solid var(--border)}
+.video-card:active{transform:scale(0.98)}
+.video-thumb{height:110px;background:linear-gradient(135deg,var(--charcoal),var(--pink));display:flex;align-items:center;justify-content:center;font-size:2rem;position:relative}
+.video-duration{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,0.75);color:white;font-size:9px;padding:2px 6px;border-radius:6px;font-weight:600}
 .video-info{padding:10px}
-.video-title{font-size:12px;font-weight:500;color:var(--charcoal);margin-bottom:3px}
+.video-title{font-size:12px;font-weight:700;color:var(--charcoal);margin-bottom:3px;line-height:1.3}
 .video-meta{font-size:10px;color:var(--text-muted)}
-.video-tag{display:inline-block;background:#fff9e6;color:var(--charcoal);font-size:9px;border-radius:10px;padding:1px 7px;margin-top:4px}
-/* EVENTS */
-.event-list{display:flex;flex-direction:column;gap:12px}
-.event-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.1rem;display:flex;gap:1rem;align-items:flex-start}
-.event-date-box{background:var(--charcoal);color:var(--white);border-radius:10px;padding:8px 12px;text-align:center;flex-shrink:0;min-width:52px}
-.event-date-month{font-size:9px;text-transform:uppercase;letter-spacing:0.1em}
-.event-date-day{font-size:22px;font-weight:500;line-height:1}
+.video-tag{display:inline-block;background:var(--lime);color:var(--charcoal);font-size:9px;border-radius:8px;padding:2px 8px;margin-top:4px;font-weight:600}
+.diff-tag{display:inline-block;font-size:9px;font-weight:600;padding:2px 8px;border-radius:8px;margin-left:4px;text-transform:uppercase}
+.diff-beginner{background:#f0fce0;color:#3a7d00}
+.diff-intermediate{background:#FFF8E1;color:#F57F17}
+.diff-advanced{background:#FFEBEE;color:#C62828}
+.fav-btn{position:absolute;top:6px;left:6px;background:rgba(255,255,255,0.9);border:none;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;z-index:2}
+.fav-btn.active{color:var(--pink)}
+
+/* ── EVENTS ── */
+.event-list{padding:0 1.2rem;display:flex;flex-direction:column;gap:10px}
+.event-card{background:white;border-radius:18px;padding:1.1rem;display:flex;gap:1rem;align-items:flex-start;border:1.5px solid var(--border)}
+.event-date-box{background:var(--charcoal);color:white;border-radius:14px;padding:8px 12px;text-align:center;flex-shrink:0;min-width:52px}
+.event-date-month{font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--lime);font-weight:700}
+.event-date-day{font-size:24px;font-weight:700;line-height:1;color:white}
 .event-info{flex:1}
-.event-title{font-size:14px;font-weight:500;color:var(--purple);margin-bottom:3px}
+.event-title{font-size:14px;font-weight:700;color:var(--charcoal);margin-bottom:3px}
 .event-location{font-size:11px;color:var(--text-muted);margin-bottom:6px}
 .event-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px}
-.event-tag{font-size:10px;background:#f5fca640;color:var(--charcoal);border-radius:10px;padding:2px 8px;border:1px solid #d4e000}
-.rsvp-btn{background:var(--charcoal);color:var(--white);border:none;border-radius:20px;padding:7px 16px;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;cursor:pointer;white-space:nowrap;align-self:center;flex-shrink:0;text-decoration:none;display:inline-block}
-/* SHOP */
-.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
-.shop-card{background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all 0.2s}
-.shop-card:hover{border-color:var(--pink);box-shadow:0 4px 16px rgba(233,30,140,0.1)}
-.shop-img{height:120px;background:linear-gradient(135deg,#f5f5f5,#ebebeb);display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:var(--pink)}
+.event-tag{font-size:10px;background:var(--lime);color:var(--charcoal);border-radius:8px;padding:2px 8px;font-weight:600}
+.rsvp-btn{background:var(--pink);color:white;border:none;border-radius:20px;padding:8px 18px;font-family:'Jost',sans-serif;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;align-self:center;flex-shrink:0;text-decoration:none;display:inline-block}
+
+/* ── SHOP ── */
+.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 1.2rem}
+.shop-card{background:white;border-radius:18px;overflow:hidden;border:1.5px solid var(--border)}
+.shop-img{height:130px;background:linear-gradient(135deg,#f5f5f5,#ebebeb);display:flex;align-items:center;justify-content:center;font-size:2.8rem;color:var(--pink)}
 .shop-info{padding:10px}
-.shop-name{font-size:13px;font-weight:500;color:var(--charcoal);margin-bottom:3px}
-.shop-desc{font-size:11px;color:var(--text-muted);margin-bottom:8px;line-height:1.5}
-.shop-price{font-size:15px;font-weight:500;color:var(--pink);margin-bottom:8px}
-/* TABLES */
-.data-table{width:100%;border-collapse:collapse;background:var(--white);border-radius:14px;overflow:hidden;border:1px solid var(--border)}
-.data-table th{background:var(--charcoal);color:var(--white);padding:10px 12px;text-align:left;font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase}
-.data-table td{padding:10px 12px;border-bottom:0.5px solid var(--border);font-size:12px}
+.shop-name{font-size:13px;font-weight:700;color:var(--charcoal);margin-bottom:2px}
+.shop-desc{font-size:10px;color:var(--text-muted);margin-bottom:6px;line-height:1.4}
+.shop-price{font-size:16px;font-weight:700;color:var(--pink);margin-bottom:6px}
+
+/* ── TABLES ── */
+.data-table{width:100%;border-collapse:collapse;background:white;border-radius:18px;overflow:hidden;border:1.5px solid var(--border);font-size:12px}
+.data-table th{background:var(--charcoal);color:var(--lime);padding:12px 12px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase}
+.data-table td{padding:12px 12px;border-bottom:1px solid var(--border);color:var(--text)}
 .data-table tr:last-child td{border-bottom:none}
-.data-table tr:hover td{background:var(--blush)}
-/* CHAT */
-.chat-wrap{background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;height:480px}
-.chat-header{background:linear-gradient(120deg,var(--charcoal),#ec2287);padding:1rem 1.2rem;display:flex;align-items:center;gap:10px}
-.chat-messages{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:10px;background:var(--blush)}
-.chat-msg{max-width:80%;display:flex;flex-direction:column;gap:4px}
+.data-table tr:hover td{background:#fafafa}
+.founding-badge{background:var(--lime);color:var(--charcoal);font-size:9px;padding:3px 8px;border-radius:8px;font-weight:700}
+.regular-badge{background:#f0f0f0;color:var(--charcoal);font-size:9px;padding:3px 8px;border-radius:8px;font-weight:600}
+
+/* ── CHAT ── */
+.chat-wrap{margin:0 1.2rem;background:white;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;height:calc(100vh - var(--header-height) - var(--tab-height) - 100px)}
+.chat-header{background:var(--charcoal);padding:1rem 1.2rem;display:flex;align-items:center;gap:10px}
+.chat-messages{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:10px;background:var(--offwhite)}
+.chat-msg{max-width:80%;display:flex;flex-direction:column;gap:3px}
 .chat-msg.bot{align-self:flex-start}
 .chat-msg.user{align-self:flex-end}
-.chat-bubble{padding:10px 14px;border-radius:14px;font-size:13px;line-height:1.55}
-.chat-msg.bot .chat-bubble{background:var(--white);color:var(--text);border-bottom-left-radius:4px;border:1px solid var(--border)}
-.chat-msg.user .chat-bubble{background:var(--pink);color:var(--white);border-bottom-right-radius:4px}
+.chat-bubble{padding:10px 14px;border-radius:18px;font-size:13px;line-height:1.5}
+.chat-msg.bot .chat-bubble{background:white;color:var(--text);border-bottom-left-radius:4px;border:1px solid var(--border)}
+.chat-msg.user .chat-bubble{background:var(--pink);color:white;border-bottom-right-radius:4px}
 .chat-time{font-size:10px;color:var(--text-muted)}
 .chat-msg.user .chat-time{text-align:right}
-.chat-input-row{padding:12px;border-top:1px solid var(--border);display:flex;gap:8px;background:var(--white)}
-.chat-input{flex:1;padding:10px 14px;border:1px solid var(--border);border-radius:20px;font-family:'Jost',sans-serif;font-size:13px;outline:none}
-.chat-send{background:var(--pink);color:var(--white);border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.typing{display:flex;gap:4px;align-items:center;padding:10px 14px}
+.chat-input-row{padding:12px;border-top:1px solid var(--border);display:flex;gap:8px;background:white}
+.chat-input{flex:1;padding:10px 16px;border:1.5px solid var(--border);border-radius:24px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:var(--offwhite)}
+.chat-input:focus{border-color:var(--pink)}
+.chat-send{background:var(--pink);color:white;border:none;border-radius:50%;width:40px;height:40px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.typing{display:flex;gap:4px;align-items:center;padding:8px}
 .typing span{width:6px;height:6px;border-radius:50%;background:var(--text-muted);animation:bounce 1s infinite}
 .typing span:nth-child(2){animation-delay:0.15s}
 .typing span:nth-child(3){animation-delay:0.3s}
 @keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
-.content-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.founding-badge{background:var(--lime);color:var(--charcoal);font-size:9px;padding:2px 7px;border-radius:10px;font-weight:500;border:1px solid #F57F17}
-.regular-badge{background:#f0f0f0;color:var(--charcoal);font-size:9px;padding:2px 7px;border-radius:10px;font-weight:500}
-.status-pill{display:inline-block;font-size:10px;font-weight:500;padding:3px 9px;border-radius:10px}
-.my-class-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1rem;display:flex;align-items:center;gap:12px;margin-bottom:8px}
-.icon-picker-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:8px}
-.icon-btn{font-size:1.3rem;padding:8px;border:2px solid var(--border);border-radius:8px;cursor:pointer;background:white;transition:all 0.15s;color:var(--pink)}
-.icon-btn.selected,.icon-btn:hover{border-color:var(--pink);background:var(--blush)}
-.shop-icon-display{color:var(--pink);font-size:2.5rem}
-/* NOTIFICATION BADGE */
-.notif-badge{display:none;background:#ec2287;color:white;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;padding:0 4px;line-height:16px;text-align:center;margin-left:auto;flex-shrink:0}
+
+/* ── QUIZ ── */
+.quiz-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;align-items:flex-end;justify-content:center}
+.quiz-overlay.open{display:flex}
+.quiz-card{background:white;border-radius:28px 28px 0 0;padding:1.8rem;width:100%;max-width:600px;max-height:90vh;overflow-y:auto}
+.quiz-step{display:none}
+.quiz-step.active{display:block}
+.quiz-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:500;color:var(--charcoal);margin-bottom:6px}
+.quiz-subtitle{font-size:13px;color:var(--text-muted);margin-bottom:1.2rem;line-height:1.5}
+.quiz-dots{display:flex;gap:6px;justify-content:center;margin-bottom:1.4rem}
+.quiz-dot{width:8px;height:8px;border-radius:50%;background:var(--border)}
+.quiz-dot.active{background:var(--pink)}
+.quiz-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem}
+.quiz-option{padding:12px;border:1.5px solid var(--border);border-radius:14px;cursor:pointer;font-size:12px;font-weight:600;color:var(--text);text-align:center;transition:all 0.15s;background:white}
+.quiz-option.selected{border-color:var(--pink);background:#fff0f7;color:var(--pink)}
+.star-row{display:flex;gap:10px;font-size:2.2rem;margin-bottom:1rem}
+.star-btn{cursor:pointer;color:var(--border);transition:all 0.1s}
+.star-btn.lit{color:#F57F17}
+
+/* ── PROGRESS ── */
+.notif-badge{display:none;background:var(--pink);color:white;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;padding:0 4px;line-height:16px;text-align:center;margin-left:auto;flex-shrink:0}
 .notif-badge.show{display:inline-block}
 
-.toast{position:fixed;bottom:24px;right:24px;background:var(--purple);color:white;padding:10px 18px;border-radius:20px;font-family:'Jost',sans-serif;font-size:13px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.2);animation:fadeIn 0.3s ease}
-.detail-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--border)}
+/* ── MY CLASSES ── */
+.my-class-card{background:white;border:1.5px solid var(--border);border-radius:16px;padding:1rem;display:flex;align-items:center;gap:12px;margin:0 1.2rem 8px}
+.my-class-date{background:var(--charcoal);color:white;border-radius:12px;padding:8px 10px;text-align:center;flex-shrink:0;min-width:50px}
+
+/* ── DETAIL ROWS ── */
+.detail-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
 .detail-row:last-child{border-bottom:none}
-.detail-icon{width:32px;height:32px;border-radius:8px;background:var(--blush);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
-.detail-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em}
-.detail-val{font-size:13px;color:var(--text)}
-.planner-item-row{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px}
+.detail-icon{width:36px;height:36px;border-radius:10px;background:var(--offwhite);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.detail-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:600}
+.detail-val{font-size:13px;color:var(--text);margin-top:1px}
 
-/* PROGRESS / STREAK */
-.streak-card{background:linear-gradient(135deg,var(--charcoal),#1a1c1e);border-radius:14px;padding:1rem 1.2rem;color:white;margin-bottom:1rem}
-.streak-num{font-size:30px;font-weight:600;line-height:1;color:white}
-.streak-label{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.7)}
-.month-grid{display:flex;flex-wrap:wrap;gap:3px;margin-top:8px}
-.month-day{height:20px;border-radius:3px;background:rgba(255,255,255,0.15)}
-.month-day.attended{background:var(--green)}
-.month-day.today{background:rgba(255,255,255,0.4);border:1px solid white}
-/* ANNOUNCEMENTS */
-.announce-card{background:var(--white);border-left:4px solid var(--pink);border-radius:0 12px 12px 0;padding:12px 14px;margin-bottom:8px;box-shadow:0 1px 6px rgba(233,30,140,0.08)}
-.announce-title{font-size:13px;font-weight:500;color:var(--charcoal);margin-bottom:3px}
-.announce-body{font-size:12px;color:var(--text-muted);line-height:1.5}
-.announce-date{font-size:10px;color:var(--text-muted);margin-top:4px}
-/* FAVORITES */
-.fav-btn{background:none;border:none;cursor:pointer;font-size:16px;padding:2px 4px;transition:transform 0.15s}
-.fav-btn:hover{transform:scale(1.2)}
-/* DIFFICULTY TAGS */
-.diff-beginner{background:#E8F5E9;color:#2E7D32;font-size:9px;padding:2px 7px;border-radius:10px;font-weight:500;display:inline-block}
-.diff-intermediate{background:#FFF8E1;color:#F57F17;font-size:9px;padding:2px 7px;border-radius:10px;font-weight:500;display:inline-block}
-.diff-advanced{background:#FFEBEE;color:#C62828;font-size:9px;padding:2px 7px;border-radius:10px;font-weight:500;display:inline-block}
-/* QUIZ MODAL */
-.quiz-step{display:none}
-.quiz-step.active{display:block}
-.quiz-option{width:100%;padding:10px 14px;margin-bottom:8px;border:1.5px solid var(--border);border-radius:10px;background:white;font-family:Jost,sans-serif;font-size:13px;cursor:pointer;text-align:left;transition:all 0.15s}
-.quiz-option:hover,.quiz-option.selected{border-color:var(--pink);background:var(--blush)}
-.quiz-option.selected{font-weight:500;color:var(--purple)}
-/* PROGRESS TRACKING */
-.streak-card{background:linear-gradient(135deg,var(--charcoal),#1a1c1e);border-radius:14px;padding:1rem 1.2rem;color:white;margin-bottom:1rem}
-.streak-num{font-size:30px;font-weight:600;line-height:1;color:white}
-.streak-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-top:2px}
-.month-grid{display:flex;flex-wrap:wrap;gap:3px;margin-top:8px}
-.month-dot{width:10px;height:10px;border-radius:2px;background:rgba(255,255,255,0.15);flex-shrink:0}
-.month-dot.attended{background:var(--green)}
-.month-dot.upcoming{background:var(--pink)}
-.month-dot.today{background:white;opacity:0.9}
+/* ── CONTENT PLANNER ── */
+.planner-item-row{background:white;border:1.5px solid var(--border);border-radius:14px;padding:10px 14px;margin:0 1.2rem 8px;display:flex;align-items:center;gap:12px}
+.content-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 
-/* ANNOUNCEMENTS */
-.announce-card{background:var(--white);border-left:4px solid var(--pink);border-radius:0 12px 12px 0;padding:10px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;box-shadow:0 2px 8px rgba(233,30,140,0.08)}
-.announce-pinned{border-color:var(--charcoal)}
-.announce-title{font-size:13px;font-weight:500;color:var(--charcoal);margin-bottom:2px}
-.announce-body{font-size:12px;color:var(--text-muted);line-height:1.5}
-.announce-date{font-size:10px;color:var(--text-muted);white-space:nowrap;margin-top:2px}
+/* ── TOAST ── */
+.toast{position:fixed;bottom:calc(var(--tab-height) + 16px);left:50%;transform:translateX(-50%);background:var(--charcoal);color:var(--lime);padding:10px 20px;border-radius:24px;font-family:'Jost',sans-serif;font-size:13px;font-weight:600;z-index:9999;box-shadow:0 4px 24px rgba(0,0,0,0.2);white-space:nowrap;animation:fadeUp 0.3s ease}
 
-/* QUIZ */
-.quiz-overlay{display:none;position:fixed;inset:0;background:rgba(45,47,50,0.75);z-index:1000;align-items:center;justify-content:center}
-.quiz-overlay.open{display:flex}
-.quiz-card{background:var(--white);border-radius:20px;padding:2rem;width:90%;max-width:500px;max-height:90vh;overflow-y:auto}
-.quiz-step{display:none}
-.quiz-step.active{display:block}
-.quiz-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:500;color:var(--charcoal);margin-bottom:6px}
-.quiz-subtitle{font-size:13px;color:var(--text-muted);margin-bottom:1.2rem}
-.quiz-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem}
-.quiz-option{padding:10px 12px;border:2px solid var(--border);border-radius:12px;cursor:pointer;font-size:12px;font-weight:500;color:var(--text);text-align:center;transition:all 0.15s;background:white}
-.quiz-option.selected{border-color:var(--pink);background:#fff0f7;color:var(--pink)}
-.quiz-option:hover{border-color:var(--pink-light)}
-.quiz-dots{display:flex;gap:6px;justify-content:center;margin-bottom:1.2rem}
-.quiz-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background 0.2s}
-.quiz-dot.active{background:var(--pink)}
-.star-row{display:flex;gap:8px;font-size:2rem;cursor:pointer;margin-bottom:1rem}
-.star-btn{cursor:pointer;transition:transform 0.1s;color:var(--border)}
-.star-btn.lit{color:#F57F17}
-.star-btn:hover{transform:scale(1.2)}
+/* ── SIDEBAR (admin overlay on mobile) ── */
+.sidebar{width:280px;background:var(--charcoal);height:100vh;display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transform:translateX(-100%);transition:transform 0.3s ease;overflow:hidden}
+.sidebar.open{transform:translateX(0)}
+.sidebar-brand{flex-shrink:0;padding:1.5rem 1.2rem 1rem;border-bottom:1px solid rgba(245,252,166,0.15)}
+.sidebar-brand-name{font-family:'Dancing Script',cursive;font-size:1.6rem;color:var(--pink)}
+.sidebar-brand-sub{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:2px}
+.sidebar-user{flex-shrink:0;padding:0.8rem 1.2rem;background:rgba(245,252,166,0.06);display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(245,252,166,0.1)}
+.sidebar-avatar{width:34px;height:34px;border-radius:50%;background:var(--pink);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;flex-shrink:0}
+.sidebar-user-name{font-size:13px;color:white;font-weight:600}
+.sidebar-user-role{font-size:10px;color:rgba(255,255,255,0.5)}
+.sidebar-nav-wrap{flex:1;overflow-y:auto}
+.sidebar-section{padding:0.8rem 1.2rem 0.3rem;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--lime);font-weight:700;opacity:0.8}
+.nav-item{display:flex;align-items:center;gap:10px;padding:11px 1.2rem;cursor:pointer;transition:background 0.15s;border-left:3px solid transparent;color:rgba(255,255,255,0.65);font-size:13px;font-weight:500}
+.nav-item:hover{background:rgba(245,252,166,0.08);color:white}
+.nav-item.active{background:rgba(236,34,135,0.2);border-left-color:var(--lime);color:white;font-weight:600}
+.sidebar-footer{flex-shrink:0;padding:1rem 1.2rem;border-top:1px solid rgba(245,252,166,0.1)}
+.logout-btn{width:100%;padding:10px;background:transparent;border:1.5px solid rgba(255,255,255,0.2);border-radius:20px;color:rgba(255,255,255,0.65);font-family:'Jost',sans-serif;font-size:11px;font-weight:600;cursor:pointer;letter-spacing:0.06em}
+#mobile-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:199}
+#mobile-overlay.open{display:block}
 
-/* FAVORITES */
-.fav-btn{position:absolute;top:6px;left:6px;background:rgba(255,255,255,0.9);border:none;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;transition:all 0.15s;z-index:2}
-.fav-btn:hover{background:white;transform:scale(1.1)}
-.fav-btn.active{color:var(--pink)}
-
-/* DIFFICULTY TAGS */
-.diff-tag{display:inline-block;font-size:9px;font-weight:600;padding:2px 8px;border-radius:10px;margin-left:4px;text-transform:uppercase;letter-spacing:0.06em}
-.diff-beginner{background:#f5fca680;color:#5a6e00}
-.diff-intermediate{background:#FFF8E1;color:#F57F17}
-.diff-advanced{background:#FFEBEE;color:#C62828}
-
-/* MOBILE */
+/* ── MOBILE ── */
 @media(max-width:768px){
-  .nav-item{padding:7px 1rem;font-size:12px}
-  .sidebar-section{padding:0.5rem 1rem 0.2rem;font-size:8px}
-  .sidebar-brand{padding:1rem;}
-  .sidebar-user{padding:0.6rem 1rem;}
-
-  :root{--sidebar:0px}
-  .sidebar{transform:translateX(-100%);transition:transform 0.3s ease;width:260px;z-index:200}
-  .sidebar.open{transform:translateX(0)}
-  .main{margin-left:0}
-  .page{padding:1rem}
-  .topbar{padding:0.8rem 1rem}
-  #mobile-menu-btn{display:flex!important}
-  #mobile-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:199}
-  #mobile-overlay.open{display:block}
-  .quick-grid{grid-template-columns:repeat(2,1fr)}
-  .stats-row{grid-template-columns:repeat(2,1fr)}
-  .shop-grid{grid-template-columns:repeat(2,1fr)}
-  .video-grid{grid-template-columns:1fr}
+  .video-grid{grid-template-columns:1fr 1fr}
+  .app-grid{grid-template-columns:1fr 1fr}
   .form-row{grid-template-columns:1fr}
-  .cal-cells{grid-template-columns:repeat(7,1fr)}
-  .cal-cell{min-height:60px;padding:3px}
-  .sess-block{padding:2px 3px}
-  .sess-name{font-size:7px}
-  .sess-time{font-size:6px}
-  .data-table{font-size:11px}
-  .data-table th,.data-table td{padding:8px 8px}
-  .modal{width:95%;max-height:95vh;padding:1rem}
+  .cal-cell{min-height:70px}
 }
 @media(min-width:769px){
-  #mobile-menu-btn{display:none!important}
+  .app-grid{grid-template-columns:repeat(3,1fr)}
+  .video-grid{grid-template-columns:repeat(3,1fr)}
+  .shop-grid{grid-template-columns:repeat(3,1fr)}
 }
 </style>
 </head>
@@ -324,7 +354,9 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 </div>
 
 <div id="app">
-  <nav class="sidebar">
+  <!-- SIDEBAR (admin menu, slides in) -->
+  <div id="mobile-overlay" onclick="closeMobileMenu()"></div>
+  <nav class="sidebar" id="sidebar">
     <div class="sidebar-brand">
       <div class="sidebar-brand-name">Pilates Sesh by K</div>
       <div class="sidebar-brand-sub">Virtual Studio</div>
@@ -356,7 +388,7 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
       <div class="nav-item" data-page="shop">&#128717; Shop</div>
       <div class="sidebar-section">Admin</div>
       <div class="nav-item" data-page="members">&#128101; Members</div>
-      <div class="nav-item" data-page="registrations">&#128221; Registrations <span class="notif-badge" id="reg-badge"></span></div>
+      <div class="nav-item" data-page="registrations">&#128221; Registrations</div>
       <div class="nav-item" data-page="questions">&#128172; Client Questions</div>
       <div class="nav-item" data-page="content">&#128197; Content Planner</div>
       <div class="nav-item" data-page="sponsorship">&#129309; Sponsorships</div>
@@ -365,78 +397,135 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
     <div class="sidebar-footer"><button class="logout-btn" id="btn-logout">Sign out</button></div>
   </nav>
 
-  <div class="main">
-    <!-- Mobile overlay -->
-    <div id="mobile-overlay" onclick="closeMobileMenu()"></div>
-
-    <div class="topbar">
-      <div style="display:flex;align-items:center;gap:12px">
-        <button id="mobile-menu-btn" onclick="toggleMobileMenu()" style="display:none;background:none;border:none;cursor:pointer;padding:4px;flex-direction:column;gap:4px">
-          <span style="display:block;width:20px;height:2px;background:var(--pink);border-radius:2px"></span>
-          <span style="display:block;width:20px;height:2px;background:var(--pink);border-radius:2px"></span>
-          <span style="display:block;width:20px;height:2px;background:var(--pink);border-radius:2px"></span>
-        </button>
-        <div class="topbar-title" id="page-title">Dashboard</div>
-      </div>
-      <div style="display:flex;align-items:center;gap:12px">
-        <span class="topbar-date" id="topbar-date"></span>
-        <span class="topbar-badge" id="tbadge">Member</span>
-      </div>
+  <!-- TOP HEADER -->
+  <div class="app-header" id="app-header">
+    <div style="display:flex;align-items:center;gap:10px">
+      <button onclick="toggleMobileMenu()" class="header-menu-btn" id="mobile-menu-btn" style="display:flex;flex-direction:column;justify-content:center">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="app-header-brand">Pilates Sesh by K</div>
     </div>
+    <div class="app-header-right">
+      <span class="app-header-date" id="topbar-date"></span>
+      <span class="app-header-badge" id="tbadge">Member</span>
+      <button id="btn-logout-header" onclick="document.getElementById('btn-logout').click()" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:20px;color:rgba(255,255,255,0.7);font-family:Jost,sans-serif;font-size:10px;font-weight:600;padding:5px 12px;cursor:pointer;letter-spacing:0.05em">Sign out</button>
+    </div>
+  </div>
 
+  <!-- MAIN SCROLL AREA -->
+  <div class="main-content" id="main-content">
     <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
-      <div class="welcome-hero">
-        <div class="welcome-eyebrow">Welcome back</div>
-        <div class="welcome-title" id="welcome-name">Hello, Beautiful</div>
-        <div class="welcome-sub">Your next class is coming up - let's move together.</div>
-      </div>
-      <!-- ANNOUNCEMENTS FEED -->
-      <div id="announcements-section" style="margin-bottom:1rem">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-          <div style="font-size:12px;font-weight:500;color:var(--purple);text-transform:uppercase;letter-spacing:0.1em">From K</div>
-          <button class="btn-pink" id="btn-post-announce" style="display:none;font-size:10px;padding:4px 12px">+ Post</button>
-        </div>
-        <div id="announcements-list"><div style="text-align:center;padding:1rem;color:var(--text-muted);font-size:12px">Loading...</div></div>
+      <!-- Hero Card -->
+      <div class="hero-card">
+        <div class="hero-eyebrow">Welcome back</div>
+        <div class="hero-title" id="welcome-name">Hello, Beautiful</div>
+        <div class="hero-sub">Your next class is coming up &mdash; let&rsquo;s move together.</div>
       </div>
 
-      <div class="next-class-card">
-        <span style="background:var(--lime);color:var(--charcoal);font-size:10px;font-weight:500;padding:4px 10px;border-radius:20px;white-space:nowrap">Next Class</span>
-        <div style="flex:1"><div style="font-size:14px;font-weight:500;color:var(--purple)" id="dash-title">Loading...</div><div style="font-size:12px;color:var(--text-muted)" id="dash-time"></div><div style="font-size:11px;color:var(--pink);margin-top:2px" id="dash-equip"></div></div>
-        <button class="join-btn" id="dash-join">View Schedule</button>
+      <!-- Announcements -->
+      <div id="announcements-section" style="display:none;padding:0 1.2rem;margin-bottom:1rem">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted)">Studio Updates</div>
+          <button id="btn-add-announce" style="display:none;background:var(--pink);color:white;border:none;border-radius:12px;padding:3px 10px;font-size:10px;cursor:pointer;font-family:Jost,sans-serif;font-weight:600">+ Post</button>
+        </div>
+        <div id="announcements-list" class="announce-feed-wrap"></div>
       </div>
-      <!-- PROGRESS TRACKER -->
-      <div id="progress-section" style="margin-bottom:1rem;display:none">
-        <div class="streak-card">
-          <div style="display:flex;align-items:center;justify-content:space-between">
+
+      <!-- Progress (client only) -->
+      <div id="progress-section" style="display:none">
+        <div class="progress-card">
+          <div class="progress-nums">
             <div>
-              <div class="streak-label">Registered This Month</div>
-              <div class="streak-num" id="streak-num">0</div>
+              <div class="progress-num" id="streak-num">0</div>
+              <div class="progress-label">Registered This Month</div>
             </div>
             <div style="text-align:right">
-              <div class="streak-label">All Time</div>
-              <div style="font-size:28px;font-weight:600;color:white" id="alltime-num">0</div>
+              <div class="progress-num" id="alltime-num">0</div>
+              <div class="progress-label">All Time</div>
             </div>
           </div>
-          <div id="month-grid" class="month-grid" style="margin-top:12px"></div>
-          <div style="font-size:10px;color:rgba(255,255,255,0.6);margin-top:6px" id="goals-display"></div>
+          <div style="font-size:9px;color:rgba(45,47,50,0.55);margin-bottom:6px">Registrations &mdash; pink = upcoming, dark = attended, today is outlined</div>
+          <div class="month-dots" id="month-grid"></div>
         </div>
       </div>
 
-      <div class="quick-grid">
-        <div class="quick-card" data-page="schedule"><div style="font-size:1.8rem;margin-bottom:8px">&#128197;</div><div style="font-size:12px;font-weight:500;color:var(--purple)">Schedule</div></div>
-        <div class="quick-card" data-page="my-classes" id="qc-mine"><div style="font-size:1.8rem;margin-bottom:8px">&#11088;</div><div style="font-size:12px;font-weight:500;color:var(--purple)">My Classes</div></div>
-        <div class="quick-card" data-page="library"><div style="font-size:1.8rem;margin-bottom:8px">&#9654;</div><div style="font-size:12px;font-weight:500;color:var(--purple)">Video Library</div></div>
-        <div class="quick-card" data-page="events"><div style="font-size:1.8rem;margin-bottom:8px">&#127800;</div><div style="font-size:12px;font-weight:500;color:var(--purple)">Events</div></div>
-        <div class="quick-card" data-page="ask-k" id="qc-ask"><div style="font-size:1.8rem;margin-bottom:8px">&#128172;</div><div style="font-size:12px;font-weight:500;color:var(--purple)">Ask K</div></div>
-        <div class="quick-card" data-page="shop"><div style="font-size:1.8rem;margin-bottom:8px">&#128717;</div><div style="font-size:12px;font-weight:500;color:var(--purple)">Shop</div></div>
+      <!-- Next Class -->
+      <div class="next-class-strip">
+        <span class="next-class-badge">Next Class</span>
+        <div class="next-class-info">
+          <div class="next-class-name" id="dash-title">Loading...</div>
+          <div class="next-class-time" id="dash-time"></div>
+          <div class="next-class-equip" id="dash-equip"></div>
+        </div>
+        <button class="join-btn" id="dash-join">View</button>
+      </div>
+
+      <!-- App Grid -->
+      <div class="section-hdr"><div class="section-hdr-title">Studio</div></div>
+      <div class="app-grid">
+        <div class="app-grid-card dark" data-page="schedule">
+          <span class="app-grid-icon">&#128197;</span>
+          <div><div class="app-grid-label">Schedule</div><div class="app-grid-sub">July 2026</div></div>
+        </div>
+        <div class="app-grid-card pink" data-page="my-classes" id="qc-mine">
+          <span class="app-grid-icon">&#11088;</span>
+          <div><div class="app-grid-label">My Classes</div><div class="app-grid-sub">Your registrations</div></div>
+        </div>
+        <div class="app-grid-card lime" data-page="library">
+          <span class="app-grid-icon">&#9654;</span>
+          <div><div class="app-grid-label">Videos</div><div class="app-grid-sub">Watch anytime</div></div>
+        </div>
+        <div class="app-grid-card light" data-page="events">
+          <span class="app-grid-icon">&#127800;</span>
+          <div><div class="app-grid-label">Events</div><div class="app-grid-sub">Community</div></div>
+        </div>
+        <div class="app-grid-card light" data-page="ask-k" id="qc-ask">
+          <span class="app-grid-icon">&#128172;</span>
+          <div><div class="app-grid-label">Ask K</div><div class="app-grid-sub">Get answers</div></div>
+        </div>
+        <div class="app-grid-card dark" data-page="shop">
+          <span class="app-grid-icon">&#128717;</span>
+          <div><div class="app-grid-label">Shop</div><div class="app-grid-sub">Equipment</div></div>
+        </div>
+      </div>
+
+      <!-- Admin Grid (admin only) -->
+      <div id="admin-grid-section" style="display:none">
+        <div class="section-hdr"><div class="section-hdr-title">Admin</div></div>
+        <div class="app-grid">
+          <div class="app-grid-card dark" data-page="members">
+            <span class="app-grid-icon">&#128101;</span>
+            <div><div class="app-grid-label">Members</div><div class="app-grid-sub">Studio roster</div></div>
+          </div>
+          <div class="app-grid-card pink" data-page="registrations" style="position:relative">
+            <span class="app-grid-icon">&#128221;</span>
+            <div><div class="app-grid-label">Registrations</div><div class="app-grid-sub">Class signups</div></div>
+            <span id="reg-badge-dash" style="display:none;position:absolute;top:10px;right:10px;background:#f5fca6;color:#2d2f32;font-size:9px;font-weight:700;min-width:18px;height:18px;border-radius:9px;line-height:18px;text-align:center;padding:0 4px"></span>
+          </div>
+          <div class="app-grid-card lime" data-page="questions">
+            <span class="app-grid-icon">&#128172;</span>
+            <div><div class="app-grid-label">Questions</div><div class="app-grid-sub">From clients</div></div>
+          </div>
+          <div class="app-grid-card light" data-page="announcements">
+            <span class="app-grid-icon">&#128226;</span>
+            <div><div class="app-grid-label">Announcements</div><div class="app-grid-sub">Post updates</div></div>
+          </div>
+          <div class="app-grid-card light" data-page="content">
+            <span class="app-grid-icon">&#128197;</span>
+            <div><div class="app-grid-label">Content</div><div class="app-grid-sub">Planner</div></div>
+          </div>
+          <div class="app-grid-card dark" data-page="sponsorship">
+            <span class="app-grid-icon">&#129309;</span>
+            <div><div class="app-grid-label">Sponsors</div><div class="app-grid-sub">Tracker</div></div>
+          </div>
+        </div>
       </div>
     </div>
-
     <!-- SCHEDULE -->
     <div class="page" id="page-schedule">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:10px">
-        <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:500;color:var(--purple)" id="cal-title">July 2026 - Class Schedule</div>
+      <div class="page-title-bar">
+        <div><div class="page-title" id="cal-title">Schedule</div><div class="page-sub">July 2026</div></div>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
           <div style="font-size:11px;color:var(--text-muted);display:flex;gap:10px;flex-wrap:wrap">
             <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--pink);margin-right:4px"></span>Live</span>
@@ -450,7 +539,7 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
       <div id="admin-cal-note" style="display:none;background:var(--white);border:2px solid var(--pink);border-radius:12px;padding:10px 14px;margin-bottom:1rem;font-size:12px;color:var(--purple)">
         Admin mode - Click Edit or Delete on any session, or click "+ Add" to add a new session to that day.
       </div>
-      <div class="cal-grid-wrap">
+      <div class="cal-grid-outer">
         <div class="cal-day-headers">
           <div class="cal-day-hdr">Sun</div><div class="cal-day-hdr">Mon</div><div class="cal-day-hdr">Tue</div>
           <div class="cal-day-hdr">Wed</div><div class="cal-day-hdr">Thu</div><div class="cal-day-hdr">Fri</div><div class="cal-day-hdr">Sat</div>
@@ -464,12 +553,11 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 
     <!-- MY CLASSES -->
     <div class="page" id="page-my-classes">
-      <div class="section-header">
-        <div class="section-title">My Classes</div>
+      <div class="page-title-bar"><div><div class="page-title">My Classes</div><div class="page-sub">Your registrations</div></div>
         <button class="btn-purple" id="btn-update-goals" style="font-size:11px;padding:6px 12px">Update Goals</button>
       </div>
       <!-- Progress stats populated by loadMyClasses -->
-      <div class="stats-row" style="margin-bottom:1rem" id="mc-stats-row" style="display:none">
+      <div class="stat-row" style="margin-bottom:1rem" id="mc-stats-row" style="display:none">
         <div class="stat-card"><div class="stat-num" id="mc-thismonth">-</div><div class="stat-label">This Month</div></div>
         <div class="stat-card"><div class="stat-num" id="mc-alltime">-</div><div class="stat-label">All Time</div></div>
         <div class="stat-card"><div class="stat-num" id="mc-upcoming">-</div><div class="stat-label">Upcoming</div></div>
@@ -484,8 +572,7 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 
     <!-- CLASS DETAILS -->
     <div class="page" id="page-class-details">
-      <div class="section-header">
-        <div class="section-title">Class Details</div>
+      <div class="page-title-bar"><div><div class="page-title">Class Details</div><div class="page-sub">What to expect</div></div>
         <button class="btn-purple" id="btn-edit-cd" style="display:none">Edit Details</button>
       </div>
       <div class="card">
@@ -514,8 +601,7 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 
     <!-- LIBRARY -->
     <div class="page" id="page-library">
-      <div class="section-header">
-        <div class="section-title">Video Library</div>
+      <div class="page-title-bar"><div><div class="page-title">Video Library</div><div class="page-sub">Favorites &amp; new sessions</div></div>
         <button class="btn-pink" id="btn-add-video" style="display:none">+ Add Video</button>
       </div>
       <div class="lib-filter" id="lib-filters">
@@ -538,8 +624,7 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 
     <!-- EVENTS -->
     <div class="page" id="page-events">
-      <div class="section-header">
-        <div class="section-title">Community Events</div>
+      <div class="page-title-bar"><div class="page-title">Community Events</div>
         <button class="btn-pink" id="btn-add-event" style="display:none">+ Add Event</button>
       </div>
       <div id="events-list" class="event-list"><div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading events...</div></div>
@@ -547,7 +632,7 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 
     <!-- ASK K -->
     <div class="page" id="page-ask-k">
-      <div class="section-header"><div class="section-title">Ask K</div></div>
+      <div class="page-title-bar"><div class="page-title">Ask K</div></div>
       <div class="card" style="display:flex;gap:12px;align-items:flex-start;margin-bottom:1rem">
         <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--pink));display:flex;align-items:center;justify-content:center;font-family:'Dancing Script',cursive;font-size:1.4rem;color:white;flex-shrink:0">K</div>
         <div><div style="font-size:14px;font-weight:500;color:var(--purple);margin-bottom:4px">Ask K a Question</div><div style="font-size:12px;color:var(--text-muted)">K will respond within 48 hours.</div></div>
@@ -566,13 +651,13 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 
     <!-- CLIENT QUESTIONS (admin) -->
     <div class="page" id="page-questions">
-      <div class="section-header"><div class="section-title">Client Questions</div></div>
+      <div class="page-title-bar"><div class="page-title">Client Questions</div></div>
       <div id="questions-list"><div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading...</div></div>
     </div>
 
     <!-- CHATBOT -->
     <div class="page" id="page-chatbot">
-      <div class="section-header"><div class="section-title">Help and Onboarding</div></div>
+      <div class="page-title-bar"><div class="page-title">Help and Onboarding</div></div>
       <div class="chat-wrap">
         <div class="chat-header">
           <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-family:'Dancing Script',cursive;font-size:1.2rem;color:white">K</div>
@@ -590,8 +675,7 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 
     <!-- SHOP -->
     <div class="page" id="page-shop">
-      <div class="section-header">
-        <div class="section-title">Equipment Shop</div>
+      <div class="page-title-bar"><div class="page-title">Equipment Shop</div>
         <button class="btn-pink" id="btn-add-shop" style="display:none">+ Add Item</button>
       </div>
       <div style="background:linear-gradient(120deg,var(--pink),var(--pink-dark));border-radius:14px;padding:1.1rem 1.4rem;margin-bottom:1rem;color:white;font-size:13px">Everything K recommends for your practice.</div>
@@ -600,8 +684,8 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 
     <!-- MEMBERS (admin) -->
     <div class="page" id="page-members">
-      <div class="section-header"><div class="section-title">Members</div></div>
-      <div class="stats-row">
+      <div class="page-title-bar"><div class="page-title">Members</div></div>
+      <div class="stat-row">
         <div class="stat-card"><div class="stat-num" id="m-total">-</div><div class="stat-label">Total</div></div>
         <div class="stat-card"><div class="stat-num" id="m-founding">-</div><div class="stat-label">Founding</div></div>
         <div class="stat-card"><div class="stat-num" id="m-regular">-</div><div class="stat-label">Regular</div></div>
@@ -611,14 +695,13 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 
     <!-- REGISTRATIONS (admin) -->
     <div class="page" id="page-registrations">
-      <div class="section-header"><div class="section-title">Class Registrations</div></div>
+      <div class="page-title-bar"><div class="page-title">Class Registrations</div></div>
       <div id="reg-list"><div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading...</div></div>
     </div>
 
     <!-- CONTENT PLANNER (admin) -->
     <div class="page" id="page-content">
-      <div class="section-header">
-        <div class="section-title">Content Planner</div>
+      <div class="page-title-bar"><div><div class="page-title">Content Planner</div><div class="page-sub">Schedule &amp; strategy</div></div>
         <div style="display:flex;gap:8px">
           <button class="btn-purple" id="btn-cal-view" style="font-size:11px;padding:6px 12px">Calendar</button>
           <button class="btn-purple" id="btn-list-view" style="font-size:11px;padding:6px 12px;opacity:0.5">List</button>
@@ -631,8 +714,7 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 
     <!-- ANNOUNCEMENTS (admin) -->
     <div class="page" id="page-announcements">
-      <div class="section-header">
-        <div class="section-title">Announcements</div>
+      <div class="page-title-bar"><div><div class="page-title">Announcements</div><div class="page-sub">Post studio updates</div></div>
         <button class="btn-pink" id="btn-add-announce">+ Post Announcement</button>
       </div>
       <div id="admin-announce-list"><div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading...</div></div>
@@ -640,11 +722,10 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--blush);color
 
     <!-- SPONSORSHIP (admin) -->
     <div class="page" id="page-sponsorship">
-      <div class="section-header">
-        <div class="section-title">Sponsorship Tracker</div>
+      <div class="page-title-bar"><div class="page-title">Sponsorship Tracker</div>
         <button class="btn-purple" id="btn-add-sponsor">+ Add Brand</button>
       </div>
-      <div class="stats-row">
+      <div class="stat-row">
         <div class="stat-card"><div class="stat-num" id="sp-total">-</div><div class="stat-label">Total</div></div>
         <div class="stat-card"><div class="stat-num" id="sp-confirmed">-</div><div class="stat-label">Confirmed</div></div>
         <div class="stat-card"><div class="stat-num" id="sp-interested">-</div><div class="stat-label">Interested</div></div>
@@ -984,7 +1065,9 @@ function showErr(msg){var el=document.getElementById("login-error");el.textConte
 
 function showApp(u){
   document.getElementById("login-screen").style.display="none";
-  document.getElementById("app").classList.add("visible");
+  var appEl=document.getElementById("app");
+  appEl.style.display="flex";
+  appEl.classList.add("visible");
   var rawName=u.displayName||u.email.split("@")[0];
   // Extract first name only - split on space, underscore, dot, or number
   var firstName=rawName.split(/[\s_.\d]/)[0];
@@ -997,15 +1080,42 @@ function showApp(u){
   document.getElementById("welcome-name").textContent="Hello, "+name;
   document.getElementById("client-nav").style.display=isAdmin?"none":"block";
   document.getElementById("admin-nav").style.display=isAdmin?"block":"none";
-  if(document.getElementById("qc-mine")) document.getElementById("qc-mine").style.display=isAdmin?"none":"block";
-  if(document.getElementById("qc-ask")) document.getElementById("qc-ask").style.display=isAdmin?"none":"block";
+  if(document.getElementById("qc-mine")) document.getElementById("qc-mine").style.display=isAdmin?"none":"flex";
+  if(document.getElementById("qc-ask")) document.getElementById("qc-ask").style.display=isAdmin?"none":"flex";
+  var adminGrid=document.getElementById("admin-grid-section");
+  if(adminGrid) adminGrid.style.display=isAdmin?"block":"none";
   var adminOnly=["btn-add-video","btn-add-event","btn-add-shop","btn-chg-month","admin-cal-note","btn-edit-cd","btn-edit-equip","btn-add-sponsor","btn-add-content","btn-add-announce"];
   adminOnly.forEach(function(id){var el=document.getElementById(id);if(el) el.style.display=isAdmin?"block":"none";});
   // Favorites pill for clients only
   var favPill=document.getElementById("pill-favorites");
   if(favPill) favPill.style.display=isAdmin?"none":"inline-block";
+  // App grid card navigation
+  document.querySelectorAll(".app-grid-card[data-page]").forEach(function(el){
+    el.addEventListener("click",function(){
+      showPage(this.getAttribute("data-page"));
+    });
+  });
+
   document.getElementById("topbar-date").textContent=new Date().toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
   buildIconPicker();
+  // Wire app grid cards
+  document.querySelectorAll(".app-grid-card[data-page]").forEach(function(el){
+    el.addEventListener("click",function(){ showPage(this.getAttribute("data-page")); });
+  });
+
+  // Wire tab bar items
+  document.querySelectorAll(".tab-item[data-page]").forEach(function(el){
+    el.addEventListener("click",function(){
+      showPage(this.getAttribute("data-page"));
+      closeMobileMenu();
+    });
+  });
+  // Show/hide tab bar items based on role
+  var tabSchedule = document.querySelector(".tab-item[data-page='schedule']");
+  var tabVideos = document.querySelector(".tab-item[data-page='library']");
+  if(tabSchedule) tabSchedule.style.display = "flex";
+  if(tabVideos) tabVideos.style.display = "flex";
+
   showPage("dashboard");
   if(!isAdmin){
     setTimeout(showQuizIfNeeded, 1500);
@@ -1024,10 +1134,14 @@ var TITLES={dashboard:"Dashboard",schedule:"Class Schedule","my-classes":"My Cla
 function showPage(id){
   document.querySelectorAll(".page").forEach(function(p){p.classList.remove("active");});
   document.querySelectorAll(".nav-item").forEach(function(n){n.classList.remove("active");});
+  document.querySelectorAll(".tab-item[data-page]").forEach(function(n){n.classList.remove("active");});
   var el=document.getElementById("page-"+id);
   if(el) el.classList.add("active");
   document.querySelectorAll(".nav-item[data-page='"+id+"']").forEach(function(n){n.classList.add("active");});
-  document.getElementById("page-title").textContent=TITLES[id]||id;
+  document.querySelectorAll(".tab-item[data-page='"+id+"']").forEach(function(n){n.classList.add("active");});
+  // Scroll main content to top
+  var mc=document.getElementById("main-content");
+  if(mc) mc.scrollTop=0;
   if(id==="schedule") buildCal();
   if(id==="library"){ if(!isAdmin) loadFavorites(); else loadVideos(); }
   if(id==="events") loadEvents();
@@ -2204,7 +2318,7 @@ function loadAnnouncements() {
       var date = a.createdAt ? new Date(a.createdAt).toLocaleDateString("en-US",{month:"short",day:"numeric"}) : "";
       var pin = a.pinned ? '<span style="font-size:10px;background:var(--purple);color:white;padding:1px 6px;border-radius:8px;margin-left:6px">Pinned</span>' : "";
       var delBtn = isAdmin ? '<button data-aid="'+a.id+'" onclick="delAnnounce(this.dataset.aid)" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:16px;padding:0 4px;line-height:1">&times;</button>' : "";
-      return '<div class="announce-card'+(a.pinned?" announce-pinned":"")+'"><div style="flex:1"><div class="announce-title">'+a.title+pin+'</div><div class="announce-body">'+a.body+'</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px"><span class="announce-date">'+date+'</span>'+delBtn+'</div></div>';
+      return '<div class="announce-item'+(a.pinned?" announce-pinned":"")+'"><div style="flex:1"><div class="announce-item-title">'+a.title+pin+'</div><div class="announce-item-body">'+a.body+'</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px"><span class="announce-item-date">'+date+'</span>'+delBtn+'</div></div>';
     }).join("");
   }).catch(function() { if (section) section.style.display = "none"; });
 }
@@ -2494,12 +2608,25 @@ function loadNotifications() {
 
 function updateRegBadge(count) {
   var badge = document.getElementById("reg-badge");
-  if (!badge) return;
-  if (count > 0) {
-    badge.textContent = count > 99 ? "99+" : count;
-    badge.classList.add("show");
-  } else {
-    badge.classList.remove("show");
+  if (badge) {
+    if (count > 0) {
+      badge.textContent = count > 99 ? "99+" : count;
+      badge.classList.add("show");
+      badge.style.display = "inline-block";
+    } else {
+      badge.classList.remove("show");
+      badge.style.display = "none";
+    }
+  }
+  // Also update dashboard admin grid badge
+  var dashBadge = document.getElementById("reg-badge-dash");
+  if (dashBadge) {
+    if (count > 0) {
+      dashBadge.textContent = count > 99 ? "99+" : count;
+      dashBadge.style.display = "inline-block";
+    } else {
+      dashBadge.style.display = "none";
+    }
   }
 }
 
@@ -2578,6 +2705,13 @@ document.addEventListener("DOMContentLoaded",function(){
   document.querySelectorAll("[data-close]").forEach(function(el){el.addEventListener("click",function(){closeModal(this.getAttribute("data-close"));});});
   document.getElementById("btn-save-equip").addEventListener("click",saveEquip);
   document.getElementById("btn-save-membership").addEventListener("click",saveMembership);
+  // App grid card navigation
+  document.querySelectorAll(".app-grid-card[data-page]").forEach(function(el){
+    el.addEventListener("click",function(){
+      showPage(this.getAttribute("data-page"));
+    });
+  });
+
   document.getElementById("topbar-date").textContent=new Date().toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
 
   // Announcements
@@ -2707,8 +2841,29 @@ document.addEventListener("DOMContentLoaded",function(){
       </div>
     </div>
 
+  </div><!-- /main-content -->
+
+  <!-- BOTTOM TAB BAR -->
+  <div class="tab-bar" id="tab-bar">
+    <div class="tab-item active" data-page="dashboard">
+      <span class="tab-icon">&#127968;</span>
+      <span class="tab-label">Home</span>
+    </div>
+    <div class="tab-item" data-page="schedule">
+      <span class="tab-icon">&#128197;</span>
+      <span class="tab-label">Schedule</span>
+    </div>
+    <div class="tab-item" data-page="library">
+      <span class="tab-icon">&#9654;</span>
+      <span class="tab-label">Videos</span>
+    </div>
+    <div class="tab-item" id="tab-more" onclick="toggleMobileMenu()">
+      <span class="tab-icon">&#8801;</span>
+      <span class="tab-label">More</span>
+      <span class="tab-notif" id="reg-badge" style="display:none"></span>
+    </div>
   </div>
-</div>
+</div><!-- /app -->
 
 <!-- ANNOUNCE MODAL -->
 <div class="modal-overlay" id="m-announce">
