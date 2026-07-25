@@ -99,6 +99,21 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);co
 .hero-title{font-family:'Playfair Display',serif;font-style:italic;font-size:26px;color:white;margin-bottom:6px;position:relative;z-index:1}
 .hero-sub{font-size:12px;color:rgba(255,255,255,0.6);position:relative;z-index:1}
 .next-class-strip{margin:0 1.2rem 1rem;background:white;border-radius:18px;padding:1rem 1.2rem;display:flex;align-items:center;gap:12px;border:1.5px solid var(--border)}
+.upcoming-hdr{display:flex;justify-content:space-between;align-items:center;padding:0 1.2rem;margin-bottom:8px}
+.upcoming-hdr-title{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted)}
+.upcoming-view-cal{font-size:11px;color:var(--pink);font-weight:600;cursor:pointer}
+.upcoming-list{padding:0 1.2rem;margin-bottom:1.2rem;display:flex;flex-direction:column;gap:8px}
+.upcoming-card{background:white;border-radius:16px;padding:10px 14px;display:flex;align-items:center;gap:12px;border:1.5px solid var(--border)}
+.upcoming-daybox{width:38px;text-align:center;flex-shrink:0}
+.upcoming-day-name{font-size:9px;font-weight:700;color:var(--pink);text-transform:uppercase;letter-spacing:0.03em}
+.upcoming-day-num{font-size:18px;font-weight:700;color:var(--charcoal);line-height:1.15}
+.upcoming-mon{font-size:9px;color:var(--text-muted);text-transform:uppercase}
+.upcoming-info{flex:1;min-width:0}
+.upcoming-title{font-size:13px;font-weight:600;color:var(--charcoal);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.upcoming-time{font-size:11px;color:var(--text-muted);margin-top:1px}
+.upcoming-btn{background:var(--charcoal);color:var(--blush);border:none;border-radius:16px;padding:7px 14px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;text-decoration:none;display:inline-block}
+.upcoming-btn.outline{background:var(--cream);color:var(--charcoal);border:1.5px solid var(--border)}
+.upcoming-btn.full{background:var(--border);color:var(--text-muted);cursor:default;border-radius:16px;padding:7px 14px;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0}
 .next-class-badge{background:var(--lime);color:var(--charcoal);font-size:9px;font-weight:700;padding:4px 10px;border-radius:20px;white-space:nowrap;letter-spacing:0.06em;text-transform:uppercase}
 .next-class-info{flex:1}
 .next-class-name{font-size:14px;font-weight:600;color:var(--charcoal);margin-bottom:2px}
@@ -410,29 +425,28 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);co
     <div class="sidebar-nav-wrap"><div id="client-nav">
       <div class="sidebar-section">My Studio</div>
       <div class="nav-item active" data-page="dashboard">&#127968; Dashboard</div>
-      <div class="nav-item" data-page="schedule">&#128197; Class Schedule</div>
+      <div class="nav-item" data-page="schedule">&#128197; Calendar</div>
       <div class="nav-item" data-page="my-classes">&#11088; My Classes</div>
       <div class="nav-item" data-page="class-details">&#128203; Class Details</div>
-      <div class="nav-item" data-page="library">&#9654; Video Library</div>
+      <div class="nav-item" data-page="library">&#9654; Class Library</div>
       <div class="sidebar-section">Community</div>
       <div class="nav-item" data-page="events">&#127800; Community Events</div>
-      <div class="nav-item" data-page="ask-k">&#128172; Ask K</div>
+      <div class="nav-item" data-page="ask-k" style="position:relative">&#128172; Ask K <span data-askk-badge style="display:none;background:var(--pink);color:white;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;line-height:16px;text-align:center;padding:0 4px;margin-left:4px"></span></div>
       <div class="nav-item" data-page="chatbot">&#129302; Help</div>
       <div class="nav-item" data-page="shop">&#128717; Equipment Shop</div>
     </div>
     <div id="admin-nav" style="display:none">
       <div class="sidebar-section">Studio</div>
       <div class="nav-item active" data-page="dashboard">&#127968; Dashboard</div>
-      <div class="nav-item" data-page="schedule">&#128197; Schedule</div>
+      <div class="nav-item" data-page="schedule">&#128197; Calendar</div>
       <div class="nav-item" data-page="class-details">&#128203; Class Details</div>
-      <div class="nav-item" data-page="library">&#9654; Video Library</div>
+      <div class="nav-item" data-page="library">&#9654; Class Library</div>
       <div class="nav-item" data-page="events">&#127800; Events</div>
       <div class="nav-item" data-page="shop">&#128717; Shop</div>
       <div class="sidebar-section">Admin</div>
       <div class="nav-item" data-page="members">&#128101; Members</div>
       <div class="nav-item" data-page="registrations">&#128221; Registrations</div>
       <div class="nav-item" data-page="questions">&#128172; Client Questions</div>
-      <div class="nav-item" data-page="content">&#128197; Content Planner</div>
       <div class="nav-item" data-page="sponsorship">&#129309; Sponsorships</div>
       <div class="nav-item" data-page="announcements">&#128226; Announcements</div>
     </div></div>
@@ -492,23 +506,19 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);co
         </div>
       </div>
 
-      <!-- Next Class -->
-      <div class="next-class-strip">
-        <span class="next-class-badge">Next Class</span>
-        <div class="next-class-info">
-          <div class="next-class-name" id="dash-title">Loading...</div>
-          <div class="next-class-time" id="dash-time"></div>
-          <div class="next-class-equip" id="dash-equip"></div>
-        </div>
-        <button class="join-btn" id="dash-join">View</button>
+      <!-- Upcoming Live Classes -->
+      <div class="upcoming-hdr">
+        <div class="upcoming-hdr-title">Upcoming Live Classes</div>
+        <div class="upcoming-view-cal" onclick="showPage('schedule')">View Calendar</div>
       </div>
+      <div class="upcoming-list" id="upcoming-list"><div style="text-align:center;padding:1rem;color:var(--text-muted);font-size:12px">Loading...</div></div>
 
       <!-- App Grid -->
-      <div class="section-hdr"><div class="section-hdr-title">Studio</div></div>
+      <div class="section-hdr"><div class="section-hdr-title">Quick Access</div></div>
       <div class="app-grid">
         <div class="app-grid-card dark" data-page="schedule">
           <span class="app-grid-icon">&#128197;</span>
-          <div><div class="app-grid-label">Schedule</div><div class="app-grid-sub">July 2026</div></div>
+          <div><div class="app-grid-label">Calendar</div><div class="app-grid-sub">July 2026</div></div>
         </div>
         <div class="app-grid-card pink" data-page="my-classes" id="qc-mine">
           <span class="app-grid-icon">&#11088;</span>
@@ -516,15 +526,16 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);co
         </div>
         <div class="app-grid-card lime" data-page="library">
           <span class="app-grid-icon">&#9654;</span>
-          <div><div class="app-grid-label">Videos</div><div class="app-grid-sub">Watch anytime</div></div>
+          <div><div class="app-grid-label">Class Library</div><div class="app-grid-sub">Watch anytime</div></div>
         </div>
         <div class="app-grid-card light" data-page="events">
           <span class="app-grid-icon">&#127800;</span>
           <div><div class="app-grid-label">Events</div><div class="app-grid-sub">Community</div></div>
         </div>
-        <div class="app-grid-card light" data-page="ask-k" id="qc-ask">
+        <div class="app-grid-card light" data-page="ask-k" id="qc-ask" style="position:relative">
           <span class="app-grid-icon">&#128172;</span>
           <div><div class="app-grid-label">Ask K</div><div class="app-grid-sub">Get answers</div></div>
+          <span data-askk-badge style="display:none;position:absolute;top:10px;right:10px;background:var(--pink);color:white;font-size:9px;font-weight:700;min-width:18px;height:18px;border-radius:9px;line-height:18px;text-align:center;padding:0 4px"></span>
         </div>
         <div class="app-grid-card dark" data-page="shop">
           <span class="app-grid-icon">&#128717;</span>
@@ -553,10 +564,6 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);co
             <span class="app-grid-icon">&#128226;</span>
             <div><div class="app-grid-label">Announcements</div><div class="app-grid-sub">Post updates</div></div>
           </div>
-          <div class="app-grid-card light" data-page="content">
-            <span class="app-grid-icon">&#128197;</span>
-            <div><div class="app-grid-label">Content</div><div class="app-grid-sub">Planner</div></div>
-          </div>
           <div class="app-grid-card dark" data-page="sponsorship">
             <span class="app-grid-icon">&#129309;</span>
             <div><div class="app-grid-label">Sponsors</div><div class="app-grid-sub">Tracker</div></div>
@@ -567,7 +574,7 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);co
     <!-- SCHEDULE -->
     <div class="page" id="page-schedule">
       <div class="page-title-bar">
-        <div><div class="page-title" id="cal-title">Schedule</div><div class="page-sub">July 2026</div></div>
+        <div><div class="page-title" id="cal-title">Calendar</div><div class="page-sub">July 2026</div></div>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
           <div style="font-size:11px;color:var(--text-muted);display:flex;gap:10px;flex-wrap:wrap">
             <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--pink);margin-right:4px"></span>Live</span>
@@ -643,7 +650,7 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);co
 
     <!-- LIBRARY -->
     <div class="page" id="page-library">
-      <div class="page-title-bar"><div><div class="page-title">Video Library</div><div class="page-sub">Favorites &amp; new sessions</div></div>
+      <div class="page-title-bar"><div><div class="page-title">Class Library</div><div class="page-sub">Favorites &amp; new sessions</div></div>
         <button class="btn-pink" id="btn-add-video" style="display:none">+ Add Video</button>
       </div>
       <div class="lib-filter" id="lib-filters">
@@ -689,6 +696,8 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);co
         <textarea class="form-textarea" id="ask-q" placeholder="Type your question here..."></textarea>
         <button class="btn-pink" id="btn-ask" style="margin-top:12px">Send to K</button>
       </div>
+      <div style="margin:1.4rem 0 0.6rem;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted)">Answered Questions</div>
+      <div id="askk-feed"><div style="text-align:center;padding:1rem;color:var(--text-muted);font-size:12px">Loading...</div></div>
     </div>
 
     <!-- CLIENT QUESTIONS (admin) -->
@@ -739,19 +748,6 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);co
     <div class="page" id="page-registrations">
       <div class="page-title-bar"><div class="page-title">Class Registrations</div></div>
       <div id="reg-list"><div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading...</div></div>
-    </div>
-
-    <!-- CONTENT PLANNER (admin) -->
-    <div class="page" id="page-content">
-      <div class="page-title-bar"><div><div class="page-title">Content Planner</div><div class="page-sub">Schedule &amp; strategy</div></div>
-        <div style="display:flex;gap:8px">
-          <button class="btn-purple" id="btn-cal-view" style="font-size:11px;padding:6px 12px">Calendar</button>
-          <button class="btn-purple" id="btn-list-view" style="font-size:11px;padding:6px 12px;opacity:0.5">List</button>
-          <button class="btn-pink" id="btn-add-content">+ Add</button>
-        </div>
-      </div>
-      <div id="content-cal-view"></div>
-      <div id="content-list-view" style="display:none"></div>
     </div>
 
     <!-- ANNOUNCEMENTS (admin) -->
@@ -864,25 +860,6 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);co
     <div class="modal-footer">
       <button class="btn-cancel" data-close="m-sponsor">Cancel</button>
       <button class="btn-purple" style="flex:2;padding:10px;border-radius:20px" id="btn-save-sponsor">Save Brand</button>
-    </div>
-  </div>
-</div>
-
-<!-- Content Modal -->
-<div class="modal-overlay" id="m-content">
-  <div class="modal">
-    <div class="modal-header"><div class="modal-title" id="cm-title-h">Add Content</div><button class="modal-close" data-close="m-content">x</button></div>
-    <label class="form-label">Type</label>
-    <select class="form-select" id="cm-type">
-      <option value="instagram">Instagram Post</option><option value="email">Email Campaign</option>
-      <option value="reel">Reel / Video</option><option value="event">Event Promo</option>
-    </select>
-    <label class="form-label">Title</label><input class="form-input" id="cm-title" placeholder="e.g. Behind the scenes reel"/>
-    <label class="form-label">Date</label><input class="form-input" type="date" id="cm-date"/>
-    <label class="form-label">Notes</label><textarea class="form-textarea" id="cm-notes"></textarea>
-    <div class="modal-footer">
-      <button class="btn-cancel" data-close="m-content">Cancel</button>
-      <button class="btn-pink" style="flex:2;padding:10px;border-radius:20px" id="btn-save-content">Save</button>
     </div>
   </div>
 </div>
@@ -1047,7 +1024,7 @@ var auth=firebase.auth(), db=firebase.firestore();
 var ADMINS=["jealfaro1260@gmail.com","pilatesseshbyk@gmail.com"];
 var isAdmin=false, currentUser=null, loginMode="client";
 var calYear=2026, calMonth=6, sessionData={};
-var editKey=null, editIdx=-1, editEventId=null, editSponsorId=null, editContentId=null, editShopId=null;
+var editKey=null, editIdx=-1, editEventId=null, editSponsorId=null, editShopId=null;
 var MN=["January","February","March","April","May","June","July","August","September","October","November","December"];
 var MS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 var TYPE_COLORS={live:"#c1694a",recorded:"#45532f",community:"#6b7c00",holiday:"#F57F17"};
@@ -1119,11 +1096,17 @@ function showApp(u){
   var appEl=document.getElementById("app");
   appEl.style.display="flex";
   appEl.classList.add("visible");
-  var rawName=u.displayName||u.email.split("@")[0];
-  // Extract first name only - split on space, underscore, dot, or number
-  var firstName=rawName.split(/[\s_.\d]/)[0];
-  firstName=firstName.charAt(0).toUpperCase()+firstName.slice(1).toLowerCase();
-  var name=firstName;
+  var ADMIN_NAMES={"jealfaro1260@gmail.com":"Jose","pilatesseshbyk@gmail.com":"Karen"};
+  var name;
+  if(ADMIN_NAMES[u.email.toLowerCase()]){
+    name=ADMIN_NAMES[u.email.toLowerCase()];
+  } else {
+    var rawName=u.displayName||u.email.split("@")[0];
+    // Extract first name only - split on space, underscore, dot, or number
+    var firstName=rawName.split(/[\s_.\d]/)[0];
+    firstName=firstName.charAt(0).toUpperCase()+firstName.slice(1).toLowerCase();
+    name=firstName;
+  }
   document.getElementById("sav").textContent=name.charAt(0).toUpperCase();
   document.getElementById("sname").textContent=name;
   document.getElementById("srole").textContent=isAdmin?"Admin":"Member";
@@ -1135,7 +1118,7 @@ function showApp(u){
   if(document.getElementById("qc-ask")) document.getElementById("qc-ask").style.display=isAdmin?"none":"flex";
   var adminGrid=document.getElementById("admin-grid-section");
   if(adminGrid) adminGrid.style.display=isAdmin?"block":"none";
-  var adminOnly=["btn-add-video","btn-add-event","btn-add-shop","btn-chg-month","admin-cal-note","btn-edit-cd","btn-edit-equip","btn-add-sponsor","btn-add-content","btn-add-announce","btn-add-announce-dash"];
+  var adminOnly=["btn-add-video","btn-add-event","btn-add-shop","btn-chg-month","admin-cal-note","btn-edit-cd","btn-edit-equip","btn-add-sponsor","btn-add-announce","btn-add-announce-dash"];
   adminOnly.forEach(function(id){var el=document.getElementById(id);if(el) el.style.display=isAdmin?"block":"none";});
   // Favorites pill for clients only
   var favPill=document.getElementById("pill-favorites");
@@ -1172,6 +1155,7 @@ function showApp(u){
     setTimeout(showQuizIfNeeded, 1500);
     loadProgress();
     loadAnnouncements();
+    updateAskKBadge();
   } else {
     loadAnnouncements();
     loadNotifications();
@@ -1181,7 +1165,7 @@ function showApp(u){
 }
 
 // NAVIGATION
-var TITLES={dashboard:"Dashboard",schedule:"Class Schedule","my-classes":"My Classes","class-details":"Class Details",library:"Video Library",events:"Community Events","ask-k":"Ask K",questions:"Client Questions",chatbot:"Help",shop:"Equipment Shop",members:"Members",registrations:"Registrations",content:"Content Planner",sponsorship:"Sponsorship Tracker",announcements:"Announcements"};
+var TITLES={dashboard:"Dashboard",schedule:"Calendar","my-classes":"My Classes","class-details":"Class Details",library:"Class Library",events:"Community Events","ask-k":"Ask K",questions:"Client Questions",chatbot:"Help",shop:"Equipment Shop",members:"Members",registrations:"Registrations",sponsorship:"Sponsorship Tracker",announcements:"Announcements"};
 function showPage(id){
   document.querySelectorAll(".page").forEach(function(p){p.classList.remove("active");});
   document.querySelectorAll(".nav-item").forEach(function(n){n.classList.remove("active");});
@@ -1200,7 +1184,7 @@ function showPage(id){
   if(id==="members") loadMembers();
   if(id==="registrations"){ loadRegistrations(); clearNotifications(); }
   if(id==="questions") loadQuestions();
-  if(id==="content") loadContent();
+  if(id==="ask-k") loadAskKFeed();
   if(id==="sponsorship") loadSponsors();
   if(id==="announcements") loadAnnouncementsAdmin();
   if(id==="my-classes") loadMyClasses();
@@ -1268,7 +1252,7 @@ function loadCal(){
 function saveCal(){return db.collection("calendar").doc("sessions").set(sessionData);}
 
 function buildCal(){
-  document.getElementById("cal-title").textContent=MN[calMonth]+" "+calYear+" - Class Schedule";
+  document.getElementById("cal-title").textContent=MN[calMonth]+" "+calYear+" - Calendar";
   var first=new Date(calYear,calMonth,1).getDay();
   var days=new Date(calYear,calMonth+1,0).getDate();
   var cells=document.getElementById("cal-cells");
@@ -1508,65 +1492,47 @@ function loadMyClasses(){
 
 // DASHBOARD
 function loadDashboard(){
-  var titleEl=document.getElementById("dash-title");
-  var timeEl=document.getElementById("dash-time");
-  var equipEl=document.getElementById("dash-equip");
-  var joinBtn=document.getElementById("dash-join");
-  if(!titleEl) return;
-  if(!isAdmin&&currentUser){
-    db.collection("registrations").where("userId","==",currentUser.uid).get().then(function(snap){
-      var mine=[];
-      snap.forEach(function(d){mine.push(d.data());});
-      var today=new Date().getDate();
-      mine.sort(function(a,b){return (a.sessionDay||0)-(b.sessionDay||0);});
-      var next=null;
-      for(var i=0;i<mine.length;i++){if((mine[i].sessionDay||0)>=today){next=mine[i];break;}}
-      if(!next&&mine.length>0) next=mine[0];
-      if(next){
-        titleEl.textContent=(next.sessionName||"Live Session");
-        timeEl.textContent=MS[next.sessionMonth||calMonth]+" "+next.sessionDay+" at "+fmt12(next.sessionTime);
-        var sessions=sessionData[next.sessionKey];
-        var sess=sessions&&sessions[next.sessionIdx||0]?sessions[next.sessionIdx||0]:null;
-        if(sess&&sess.equipment) equipEl.textContent="Props needed: "+sess.equipment; else equipEl.textContent="";
-        if(joinBtn){
-          if(sess&&sess.link){joinBtn.textContent="Join Class";(function(l){joinBtn.onclick=function(){window.open(l,"_blank");};})(sess.link);}
-          else{joinBtn.textContent="View Schedule";joinBtn.onclick=function(){showPage("schedule");};}
-        }
-      } else {
-        findNextSession(titleEl,timeEl,equipEl,joinBtn);
-      }
-    }).catch(function(){findNextSession(titleEl,timeEl,equipEl,joinBtn);});
-  } else {
-    findNextSession(titleEl,timeEl,equipEl,joinBtn);
-  }
+  loadUpcomingList();
 }
 
-function findNextSession(titleEl,timeEl,equipEl,joinBtn){
+function loadUpcomingList(){
+  var listEl=document.getElementById("upcoming-list");
+  if(!listEl) return;
   var today=new Date().getDate();
-  var found=null;
-  for(var d=1;d<=31;d++){
+  var results=[];
+  for(var d=today;d<=31&&results.length<3;d++){
     var key=sKey(calYear,calMonth,d);
-    var sessions=sessionData[key];
-    if(sessions&&sessions.length>0&&d>=today){
-      for(var i=0;i<sessions.length;i++){
-        if(sessions[i].type==="live"||sessions[i].type==="community"){found={day:d,sess:sessions[i]};break;}
+    var sessions=sessionData[key]||[];
+    for(var i=0;i<sessions.length&&results.length<3;i++){
+      if(sessions[i].type==="live"||sessions[i].type==="community"){
+        results.push({day:d,key:key,idx:i,sess:sessions[i]});
       }
     }
-    if(found) break;
   }
-  if(found){
-    titleEl.textContent=found.sess.name||"Live Session";
-    timeEl.textContent=MS[calMonth]+" "+found.day+" at "+fmt12(found.sess.time);
-    if(found.sess.equipment&&equipEl) equipEl.textContent="Props needed: "+found.sess.equipment;
-    if(joinBtn){
-      if(found.sess.link){joinBtn.textContent="Join Class";(function(l){joinBtn.onclick=function(){window.open(l,"_blank");};})(found.sess.link);}
-      else{joinBtn.textContent="View Schedule";joinBtn.onclick=function(){showPage("schedule");};}
+  if(results.length===0){
+    listEl.innerHTML='<div style="text-align:center;padding:1rem;color:var(--text-muted);font-size:12px">No upcoming live classes scheduled.</div>';
+    return;
+  }
+  listEl.innerHTML=results.map(function(r){
+    var dt=new Date(calYear,calMonth,r.day);
+    var dayName=dt.toLocaleDateString("en-US",{weekday:"short"}).toUpperCase();
+    var reg=r.sess.registered||[];
+    var taken=reg.length,total=r.sess.spots||10,rem=total-taken;
+    var userReg=currentUser&&reg.indexOf(currentUser.uid)>-1;
+    var btnHtml;
+    if(isAdmin){
+      btnHtml='<button class="upcoming-btn outline" data-key="'+r.key+'" data-idx="'+r.idx+'" data-day="'+r.day+'" onclick="openRoster(this.dataset.key,parseInt(this.dataset.idx),this.dataset.day)">Roster</button>';
+    } else if(r.sess.link&&userReg){
+      btnHtml='<a href="'+r.sess.link+'" target="_blank" class="upcoming-btn">Join</a>';
+    } else if(userReg){
+      btnHtml='<button class="upcoming-btn outline" data-key="'+r.key+'" data-idx="'+r.idx+'" onclick="unregClass(this.dataset.key,parseInt(this.dataset.idx))">Registered</button>';
+    } else if(rem>0){
+      btnHtml='<button class="upcoming-btn outline" data-key="'+r.key+'" data-idx="'+r.idx+'" onclick="regClass(this.dataset.key,parseInt(this.dataset.idx))">RSVP</button>';
+    } else {
+      btnHtml='<div class="upcoming-btn full">Full</div>';
     }
-  } else {
-    if(titleEl) titleEl.textContent="No upcoming sessions scheduled";
-    if(timeEl) timeEl.textContent="";
-    if(joinBtn){joinBtn.textContent="View Schedule";joinBtn.onclick=function(){showPage("schedule");};}
-  }
+    return '<div class="upcoming-card"><div class="upcoming-daybox"><div class="upcoming-day-name">'+dayName+'</div><div class="upcoming-day-num">'+r.day+'</div><div class="upcoming-mon">'+MS[calMonth]+'</div></div><div class="upcoming-info"><div class="upcoming-title">'+(r.sess.name||"Session")+'</div><div class="upcoming-time">'+fmt12(r.sess.time)+(r.sess.duration?" &bull; "+r.sess.duration:"")+'</div></div>'+btnHtml+'</div>';
+  }).join("");
 }
 
 // ROSTER
@@ -1951,6 +1917,49 @@ function submitQuestion(){
   });
 }
 
+function loadAskKFeed(){
+  var feed=document.getElementById("askk-feed");
+  if(!feed) return;
+  db.collection("questions").where("answered","==",true).get().then(function(snap){
+    var qs=[];
+    snap.forEach(function(d){qs.push(Object.assign({id:d.id},d.data()));});
+    qs.sort(function(a,b){return new Date(b.answeredAt||0)-new Date(a.answeredAt||0);});
+    if(qs.length===0){feed.innerHTML='<div style="text-align:center;padding:1rem;color:var(--text-muted);font-size:12px">No answered questions yet.</div>';}
+    else {
+      feed.innerHTML=qs.map(function(q){
+        var firstName=(q.userName||"A client").split(/[\s_.\d]/)[0];
+        var date=q.answeredAt?new Date(q.answeredAt).toLocaleDateString("en-US",{month:"short",day:"numeric"}):"";
+        return '<div class="card" style="margin-bottom:10px"><div style="font-size:11px;color:var(--text-muted)">'+firstName+" - "+(q.category||"General")+(date?" - "+date:"")+'</div><div style="font-size:13px;color:var(--purple);margin-top:4px;font-weight:500">'+q.question+'</div><div style="margin-top:8px;background:var(--cream);border-radius:10px;padding:8px 10px"><div style="font-size:10px;font-weight:700;color:var(--pink);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px">K\'s Answer</div><div style="font-size:13px;color:var(--purple)">'+(q.answer||"")+'</div></div></div>';
+      }).join("");
+    }
+    // Mark this user's answered questions as seen (clears the Ask K badge)
+    if(currentUser&&!isAdmin){
+      var mine=qs.filter(function(q){return q.userId===currentUser.uid;});
+      if(mine.length>0){
+        var latest=mine.reduce(function(max,q){var t=new Date(q.answeredAt||0).getTime();return t>max?t:max;},0);
+        localStorage.setItem("psk_seen_askk_"+currentUser.uid,String(latest));
+      }
+      updateAskKBadge();
+    }
+  });
+}
+
+function updateAskKBadge(){
+  if(!currentUser||isAdmin) return;
+  db.collection("questions").where("userId","==",currentUser.uid).where("answered","==",true).get().then(function(snap){
+    var seen=parseInt(localStorage.getItem("psk_seen_askk_"+currentUser.uid)||"0");
+    var unseen=0;
+    snap.forEach(function(d){
+      var q=d.data();
+      var t=new Date(q.answeredAt||0).getTime();
+      if(t>seen) unseen++;
+    });
+    document.querySelectorAll("[data-askk-badge]").forEach(function(el){
+      if(unseen>0){el.textContent=unseen;el.style.display="inline-flex";} else {el.style.display="none";}
+    });
+  });
+}
+
 function loadQuestions(){
   var list=document.getElementById("questions-list");
   if(!list) return;
@@ -1961,11 +1970,40 @@ function loadQuestions(){
     list.innerHTML=qs.map(function(q){
       var date=q.askedAt?new Date(q.askedAt).toLocaleDateString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}):"";
       var badge=q.answered?'<span style="background:#E8F5E9;color:#2e7d32;font-size:10px;padding:2px 8px;border-radius:10px">Answered</span>':'<span style="background:#FFF8E1;color:#F57F17;font-size:10px;padding:2px 8px;border-radius:10px">Pending</span>';
-      var markBtn='<button data-qid="'+q.id+'" data-ans="'+q.answered+'" onclick="markQ(this.dataset.qid,this.dataset.ans)" class="btn-sm btn-grn" style="margin-left:6px">'+(q.answered?"Mark Unread":"Mark Answered")+'</button>';
       var delBtn='<button data-qid="'+q.id+'" onclick="delQ(this.dataset.qid)" class="btn-sm btn-red" style="margin-left:4px">Delete</button>';
-      return '<div class="card" style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px"><div style="flex:1"><div style="font-size:11px;color:var(--text-muted)">'+(q.userName||"Client")+" - "+q.category+" - "+date+'</div><div style="font-size:13px;color:var(--purple);margin-top:4px;font-weight:500">'+q.question+'</div></div><div style="display:flex;align-items:center;flex-wrap:wrap">'+badge+markBtn+delBtn+'</div></div></div>';
+      var answerBlock;
+      if(q.answered){
+        var markBtn='<button data-qid="'+q.id+'" data-ans="'+q.answered+'" onclick="markQ(this.dataset.qid,this.dataset.ans)" class="btn-sm btn-grn" style="margin-left:6px">Mark Unread</button>';
+        answerBlock='<div style="margin-top:8px;background:var(--cream);border-radius:10px;padding:8px 10px"><div style="font-size:10px;font-weight:700;color:var(--pink);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px">K\'s Answer</div><div style="font-size:13px;color:var(--purple)">'+(q.answer||"")+'</div></div><div style="margin-top:6px">'+markBtn+delBtn+'</div>';
+      } else {
+        answerBlock='<textarea class="form-textarea" id="ans-input-'+q.id+'" placeholder="Type your answer to '+(q.userName||"this client")+'..." style="margin-top:8px;min-height:60px"></textarea><div style="margin-top:6px"><button data-qid="'+q.id+'" onclick="sendAnswer(this.dataset.qid)" class="btn-sm btn-grn">Send Answer</button>'+delBtn+'</div>';
+      }
+      return '<div class="card" style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px"><div style="flex:1"><div style="font-size:11px;color:var(--text-muted)">'+(q.userName||"Client")+" - "+q.category+" - "+date+'</div><div style="font-size:13px;color:var(--purple);margin-top:4px;font-weight:500">'+q.question+'</div></div><div>'+badge+'</div></div>'+answerBlock+'</div>';
     }).join("");
   });
+}
+
+function sendAnswer(id){
+  var ta=document.getElementById("ans-input-"+id);
+  var answer=ta?ta.value.trim():"";
+  if(!answer){showToast("Please type an answer first");return;}
+  db.collection("questions").doc(id).get().then(function(snap){
+    var q=snap.data()||{};
+    return db.collection("questions").doc(id).update({answer:answer,answered:true,answeredAt:new Date().toISOString()}).then(function(){
+      showToast("Answer sent to "+(q.userName||"client")+"!");
+      loadQuestions();
+      if(q.userEmail) sendAnswerNotification(q.userEmail,q.userName,q.question,answer);
+    });
+  });
+}
+
+function sendAnswerNotification(userEmail,userName,question,answer){
+  if(!emailJSReady||!EMAILJS_SERVICE_ID||!EMAILJS_TEMPLATE_ID) return;
+  emailjs.send(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,{
+    to_email:userEmail,to_name:userName||"there",
+    question_text:question,answer_text:answer,
+    studio_name:"Pilates Sesh by K"
+  }).catch(function(e){console.log("Answer notification email failed:",e);});
 }
 
 // MEMBERSHIP CALENDAR
@@ -2162,77 +2200,6 @@ function renderEquipList(items){
   }).join("");
 }
 
-// CONTENT PLANNER
-var contentView="calendar";
-
-function loadContent(){
-  db.collection("content").orderBy("date").get().then(function(snap){
-    var items=[];
-    snap.forEach(function(d){items.push(Object.assign({id:d.id},d.data()));});
-    if(contentView==="calendar") renderContentCal(items); else renderContentList(items);
-  }).catch(function(){if(contentView==="calendar") renderContentCal([]); else renderContentList([]);});
-}
-
-function renderContentCal(items){
-  var view=document.getElementById("content-cal-view");
-  if(!view) return;
-  var TYPE_COLS={instagram:"#E91E8C",email:"#00BCD4",reel:"#9E9D24",event:"#4A1942"};
-  var days=new Date(calYear,calMonth+1,0).getDate();
-  var headers=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-  var hHtml=headers.map(function(d){return '<div style="background:var(--purple);color:white;text-align:center;padding:6px;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;border-radius:6px">'+d+'</div>';}).join("");
-  var first=new Date(calYear,calMonth,1).getDay();
-  var mondayFirst=(first+6)%7;
-  var cells="";
-  var startOffset=-mondayFirst;
-  for(var w=0;w<6;w++){
-    for(var wd=0;wd<7;wd++){
-      var day=startOffset+w*7+wd+1;
-      if(day<1||day>days){cells+='<div style="min-height:70px;background:#F5E8EE;border-radius:8px;padding:4px"></div>';continue;}
-      var dateStr=calYear+"-"+(calMonth<9?"0":"")+(calMonth+1)+"-"+(day<10?"0":"")+day;
-      var dayItems=items.filter(function(item){return item.date&&item.date.substring(0,10)===dateStr;});
-      var itemsHtml=dayItems.map(function(item){
-        var col=TYPE_COLS[item.type]||"#E91E8C";
-        var del=isAdmin?'<button data-cid="'+item.id+'" onclick="delContent(this.dataset.cid)" style="background:none;border:none;color:white;cursor:pointer;font-size:9px;float:right">x</button>':"";
-        return '<div style="background:'+col+';color:white;font-size:8px;border-radius:4px;padding:2px 4px;margin-bottom:2px;overflow:hidden">'+del+item.title.substring(0,18)+'</div>';
-      }).join("");
-      cells+='<div style="min-height:70px;background:white;border:1px solid var(--border);border-radius:8px;padding:4px"><div style="font-size:9px;color:var(--text-muted);margin-bottom:3px">'+MS[calMonth]+' '+day+'</div>'+itemsHtml+'</div>';
-    }
-    if(w===4&&startOffset+w*7+7>=days) break;
-  }
-  view.innerHTML='<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px">'+hHtml+'</div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px">'+cells+'</div>';
-}
-
-function renderContentList(items){
-  var view=document.getElementById("content-list-view");
-  if(!view) return;
-  var TYPE_COLS={instagram:"#E91E8C",email:"#00BCD4",reel:"#9E9D24",event:"#4A1942"};
-  if(items.length===0){view.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-muted)">No content planned yet.</div>';return;}
-  view.innerHTML=items.map(function(item){
-    var col=TYPE_COLS[item.type]||"#E91E8C";
-    var date=item.date?new Date(item.date).toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"}):"No date";
-    var delBtn=isAdmin?'<button data-cid="'+item.id+'" onclick="delContent(this.dataset.cid)" class="btn-sm btn-red">Delete</button>':"";
-    return '<div class="planner-item-row"><div class="content-dot" style="background:'+col+'"></div><div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--purple)">'+item.title+'</div><div style="font-size:11px;color:var(--text-muted)">'+item.type+" - "+date+(item.notes?" - "+item.notes:"")+'</div></div>'+delBtn+'</div>';
-  }).join("");
-}
-
-function openAddContent(){
-  editContentId=null;
-  document.getElementById("cm-title-h").textContent="Add Content";
-  ["cm-title","cm-date","cm-notes"].forEach(function(id){document.getElementById(id).value="";});
-  document.getElementById("cm-type").value="instagram";
-  openModal("m-content");
-}
-
-function saveContent(){
-  var title=document.getElementById("cm-title").value.trim();
-  if(!title){showToast("Please enter a title");return;}
-  var data={type:document.getElementById("cm-type").value,title:title,date:document.getElementById("cm-date").value,notes:document.getElementById("cm-notes").value.trim()};
-  var p=editContentId?db.collection("content").doc(editContentId).update(data):db.collection("content").add(data);
-  p.then(function(){closeModal("m-content");showToast(editContentId?"Updated!":"Content added!");loadContent();});
-}
-
-function delContent(id){if(!confirm("Delete?")) return;db.collection("content").doc(id).delete().then(function(){showToast("Deleted");loadContent();});}
-
 // SPONSORSHIP
 var DEF_SPONSORS=[
   {id:"sp1",brand:"LMNT Electrolytes",category:"Nutrition",contact:"partner@drinklmnt.com",status:"interested",lastContact:"Jun 15",notes:"Applied to wholesale program"},
@@ -2323,7 +2290,7 @@ function saveSponsor(){
 function delSponsor(id){if(!confirm("Delete?")) return;db.collection("sponsors").doc(id).delete().then(function(){showToast("Deleted");loadSponsors();}).catch(function(e){showToast("Error: "+e.message);});}
 
 // CHATBOT
-var CHAT_R={join:"To join a live class, click the Join button on the calendar. The Google Meet or Zoom link is in your confirmation email!",register:"To register for a class, go to Class Schedule and click the Register button on any upcoming session.",equipment:"For most sessions you need: Pilates mat, resistance bands, 9 inch inflatable ball, magic circle, light weights 1-3 lbs, and grip socks.",cancel:"You can cancel your membership anytime - no contracts! Send K a message through the Ask K page.",miss:"Every class is recorded and added to your Video Library within 24 hours. Watch anytime!",library:"Click Video Library in the sidebar to access all recorded sessions organized by category.",price:"Founding member rate is $39.99 per month locked in for the first 10 members. After that it is $49 per month. No contracts, cancel anytime!",schedule:"Classes are on Fridays and Saturdays. Check the Class Schedule for exact times.",default:"Great question! Send this directly to K via the Ask K page - she responds within 48 hours."};
+var CHAT_R={join:"To join a live class, click the Join button on the calendar. The Google Meet or Zoom link is in your confirmation email!",register:"To register for a class, go to the Calendar and click the Register button on any upcoming session.",equipment:"For most sessions you need: Pilates mat, resistance bands, 9 inch inflatable ball, magic circle, light weights 1-3 lbs, and grip socks.",cancel:"You can cancel your membership anytime - no contracts! Send K a message through the Ask K page.",miss:"Every class is recorded and added to your Class Library within 24 hours. Watch anytime!",library:"Click Class Library in the sidebar to access all recorded sessions organized by category.",price:"Founding member rate is $39.99 per month locked in for the first 10 members. After that it is $49 per month. No contracts, cancel anytime!",schedule:"Classes are on Fridays and Saturdays. Check the Calendar for exact times.",default:"Great question! Send this directly to K via the Ask K page - she responds within 48 hours."};
 function getChatR(msg){
   msg=msg.toLowerCase();
   if(msg.indexOf("join")>-1||msg.indexOf("link")>-1) return CHAT_R.join;
@@ -2719,8 +2686,6 @@ document.addEventListener("DOMContentLoaded",function(){
   document.getElementById("btn-save-event").addEventListener("click",saveEvent);
   document.getElementById("btn-add-sponsor").addEventListener("click",openAddSponsor);
   document.getElementById("btn-save-sponsor").addEventListener("click",saveSponsor);
-  document.getElementById("btn-add-content").addEventListener("click",openAddContent);
-  document.getElementById("btn-save-content").addEventListener("click",saveContent);
   document.getElementById("btn-add-video").addEventListener("click",function(){openModal("m-video");});
   document.getElementById("btn-save-video").addEventListener("click",saveVideo);
   document.getElementById("btn-add-shop").addEventListener("click",openAddShop);
@@ -2731,20 +2696,6 @@ document.addEventListener("DOMContentLoaded",function(){
   // Note: To enable confirmation emails, set EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, EMAILJS_PUBLIC_KEY at top of script
   document.getElementById("btn-chat").addEventListener("click",sendChat);
   document.getElementById("chat-in").addEventListener("keydown",function(e){if(e.key==="Enter") sendChat();});
-  document.getElementById("btn-cal-view").addEventListener("click",function(){
-    contentView="calendar";
-    document.getElementById("content-cal-view").style.display="block";
-    document.getElementById("content-list-view").style.display="none";
-    this.style.opacity="1"; document.getElementById("btn-list-view").style.opacity="0.5";
-    loadContent();
-  });
-  document.getElementById("btn-list-view").addEventListener("click",function(){
-    contentView="list";
-    document.getElementById("content-cal-view").style.display="none";
-    document.getElementById("content-list-view").style.display="block";
-    this.style.opacity="1"; document.getElementById("btn-cal-view").style.opacity="0.5";
-    loadContent();
-  });
   document.querySelectorAll("#lib-filters .filter-pill").forEach(function(pill){
     pill.addEventListener("click",function(){
       document.querySelectorAll("#lib-filters .filter-pill").forEach(function(p){p.classList.remove("active");});
@@ -2910,11 +2861,11 @@ document.addEventListener("DOMContentLoaded",function(){
     </div>
     <div class="tab-item" data-page="schedule">
       <span class="tab-icon">&#128197;</span>
-      <span class="tab-label">Schedule</span>
+      <span class="tab-label">Calendar</span>
     </div>
     <div class="tab-item" data-page="library">
       <span class="tab-icon">&#9654;</span>
-      <span class="tab-label">Videos</span>
+      <span class="tab-label">Classes</span>
     </div>
     <div class="tab-item" id="tab-more" onclick="toggleMobileMenu()">
       <span class="tab-icon">&#8801;</span>
