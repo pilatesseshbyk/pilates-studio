@@ -8,28 +8,48 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --pink:#ec2287;--pink-light:#f9a8d4;--pink-dark:#c4006e;
-  --green:#f5fca6;--green-dark:#c8d400;--teal:#ec2287;
-  --purple:#2d2f32;--gold:#f5fca6;--blush:#f9f9f9;--blush2:#fff9e6;
-  --white:#FFFFFF;--cream:#f9f9f9;--text:#2d2f32;--text-muted:#6b6d70;
-  --border:#e0e0e0;--sidebar:220px;
-  --lime:#f5fca6;--charcoal:#2d2f32;
+  --pink:#c1694a;--pink-light:#f0b7a0;--pink-dark:#a04f36;
+  --green:#8a9b64;--green-dark:#5c6b47;--teal:#c1694a;
+  --purple:#45532f;--gold:#f0b7a0;--blush:#faf4ea;--blush2:#fdf6ec;
+  --white:#FFFFFF;--cream:#f7f1e6;--text:#3a3a2e;--text-muted:#8a8474;
+  --border:#e8dfc9;--sidebar:220px;
+  --lime:#f0b7a0;--charcoal:#45532f;--offwhite:#f7f1e6;
 }
 body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);color:var(--text);min-height:100vh;margin:0;-webkit-font-smoothing:antialiased}
 
 /* ── LOGIN ── */
-#login-screen{min-height:100vh;background:var(--charcoal);display:flex;align-items:center;justify-content:center;padding:1.5rem;position:relative;overflow:hidden}
-#login-screen::before{content:'';position:absolute;top:-100px;right:-100px;width:300px;height:300px;border-radius:50%;background:var(--pink);opacity:0.15}
-#login-screen::after{content:'';position:absolute;bottom:-80px;left:-80px;width:240px;height:240px;border-radius:50%;background:var(--lime);opacity:0.12}
+#login-screen{min-height:100vh;background:var(--cream);position:relative;overflow:hidden}
+
+/* -- Landing (splash) view -- */
+.landing-view{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem 1.8rem;position:relative;overflow:hidden}
+.landing-blob{position:absolute;border-radius:50%;z-index:0}
+.landing-blob.olive-tl{top:-70px;left:-90px;width:230px;height:230px;background:var(--green-dark);opacity:0.9;border-radius:0 0 55% 45%/0 0 60% 40%}
+.landing-blob.blush-tr{top:60px;right:-60px;width:140px;height:140px;background:var(--pink-light);opacity:0.85}
+.landing-blob.pink-bl{bottom:-70px;left:-50px;width:230px;height:230px;background:var(--pink-light);opacity:0.9;border-radius:60% 40% 0 0/70% 70% 0 0}
+.landing-blob.olive-b{bottom:-110px;right:-70px;width:260px;height:260px;background:var(--green-dark);opacity:0.9;border-radius:50%}
+.landing-star{position:absolute;top:48px;right:70px;font-size:1.4rem;color:var(--pink-dark);z-index:1}
+.landing-leaf{position:absolute;bottom:150px;left:38px;font-size:1.6rem;transform:rotate(-15deg);z-index:1;opacity:0.85}
+.landing-heart{position:absolute;bottom:190px;right:52px;font-size:1.2rem;color:var(--pink-light);z-index:1}
+.landing-content{position:relative;z-index:2;text-align:center;max-width:380px}
+.landing-title{font-family:'Playfair Display',serif;font-weight:700;font-size:2.6rem;color:var(--green-dark);line-height:1}
+.landing-script{font-family:'Dancing Script',cursive;font-size:2.6rem;color:var(--pink);line-height:1.15;margin-bottom:6px}
+.landing-sub{font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2rem}
+.landing-tagline{font-size:14px;color:var(--text);line-height:1.7;margin-bottom:1.6rem}
+.landing-cta{padding:15px 3rem;background:var(--charcoal);color:var(--blush);border:none;border-radius:30px;font-family:'Jost',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;text-transform:none}
+.landing-cta:hover{background:var(--pink)}
+
+/* -- Auth (sign in / sign up) view -- */
+.auth-view{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem;position:relative}
+.auth-back{position:absolute;top:1.5rem;left:1.5rem;background:var(--white);border:1.5px solid var(--border);border-radius:50%;width:36px;height:36px;font-size:16px;color:var(--charcoal);cursor:pointer;z-index:3}
 .login-card{background:var(--white);border-radius:28px;padding:2.5rem 2rem;width:100%;max-width:380px;text-align:center;position:relative;z-index:1;border-top:5px solid var(--pink)}
 .login-brand{font-family:'Dancing Script',cursive;font-size:2.4rem;color:var(--pink);margin-bottom:2px;line-height:1}
 .login-sub{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1.8rem}
-.login-toggle{display:flex;background:var(--offwhite);border-radius:30px;padding:4px;margin-bottom:1.4rem;gap:4px}
+.login-toggle{display:flex;background:var(--cream);border-radius:30px;padding:4px;margin-bottom:1.4rem;gap:4px}
 .login-toggle button{flex:1;padding:9px;border:none;border-radius:26px;font-family:'Jost',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;background:transparent;color:var(--text-muted);letter-spacing:0.05em}
-.login-toggle button.active{background:var(--charcoal);color:var(--lime)}
-.login-input{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:14px;font-family:'Jost',sans-serif;font-size:14px;margin-bottom:10px;outline:none;background:var(--offwhite);box-sizing:border-box;transition:border 0.2s}
+.login-toggle button.active{background:var(--charcoal);color:var(--blush)}
+.login-input{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:14px;font-family:'Jost',sans-serif;font-size:14px;margin-bottom:10px;outline:none;background:var(--cream);box-sizing:border-box;transition:border 0.2s}
 .login-input:focus{border-color:var(--pink);background:white}
-.login-btn{width:100%;padding:14px;background:var(--charcoal);color:var(--lime);border:none;border-radius:30px;font-family:'Jost',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;text-transform:uppercase}
+.login-btn{width:100%;padding:14px;background:var(--charcoal);color:var(--blush);border:none;border-radius:30px;font-family:'Jost',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;text-transform:uppercase}
 .login-btn:hover{background:var(--pink);color:white}
 .login-btn.secondary{background:var(--pink);color:white;margin-top:8px}
 .login-hint{font-size:11px;color:var(--text-muted);margin-top:12px;line-height:1.5}
@@ -40,26 +60,26 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);co
 #app.visible{display:flex;height:100vh}
 
 /* ── TOP HEADER ── */
-.app-header{height:var(--header-height);background:var(--charcoal);display:flex;align-items:center;justify-content:space-between;padding:0 1.2rem;z-index:100;flex-shrink:0}
+.app-header{height:var(--header-height);background:var(--cream);border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 1.2rem;z-index:100;flex-shrink:0}
 .app-header-brand{font-family:'Dancing Script',cursive;font-size:1.5rem;color:var(--pink);line-height:1}
 .app-header-right{display:flex;align-items:center;gap:10px}
 .app-header-badge{background:var(--pink);color:white;font-size:9px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:0.08em;text-transform:uppercase}
-.app-header-date{font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.06em}
+.app-header-date{font-size:10px;color:var(--text-muted);letter-spacing:0.06em}
 .header-menu-btn{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:4px;padding:4px}
-.header-menu-btn span{display:block;width:20px;height:2px;background:var(--lime);border-radius:2px}
+.header-menu-btn span{display:block;width:20px;height:2px;background:var(--charcoal);border-radius:2px}
 
 /* ── MAIN CONTENT ── */
 .main-content{flex:1;overflow-y:auto;padding-bottom:calc(var(--tab-height) + 20px);-webkit-overflow-scrolling:touch}
 
 /* ── BOTTOM TAB BAR ── */
-.tab-bar{height:var(--tab-height);background:var(--charcoal);display:flex;align-items:center;justify-content:space-around;flex-shrink:0;padding:0 4px;padding-bottom:env(safe-area-inset-bottom)}
+.tab-bar{height:var(--tab-height);background:var(--cream);border-top:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-around;flex-shrink:0;padding:0 4px;padding-bottom:env(safe-area-inset-bottom)}
 .tab-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 8px;cursor:pointer;flex:1;transition:all 0.15s;border-radius:12px;position:relative}
-.tab-item:hover{background:rgba(245,252,166,0.08)}
-.tab-item.active{background:rgba(245,252,166,0.12)}
-.tab-icon{font-size:1.3rem;line-height:1}
-.tab-label{font-size:9px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.4)}
-.tab-item.active .tab-label{color:var(--lime)}
-.tab-item.active .tab-icon{filter:drop-shadow(0 0 4px rgba(245,252,166,0.5))}
+.tab-item:hover{background:rgba(193,105,74,0.08)}
+.tab-item.active{background:rgba(193,105,74,0.1)}
+.tab-icon{font-size:1.3rem;line-height:1;opacity:0.55}
+.tab-label{font-size:9px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)}
+.tab-item.active .tab-label{color:var(--pink)}
+.tab-item.active .tab-icon{opacity:1;filter:drop-shadow(0 0 4px rgba(193,105,74,0.3))}
 .tab-notif{position:absolute;top:2px;right:12px;background:var(--pink);color:white;font-size:8px;font-weight:700;min-width:14px;height:14px;border-radius:7px;line-height:14px;text-align:center;padding:0 3px}
 
 /* ── PAGES ── */
@@ -111,9 +131,9 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);co
 .progress-card{margin:0 1.2rem 1rem;background:var(--lime);border-radius:20px;padding:1.2rem}
 .progress-nums{display:flex;justify-content:space-between;margin-bottom:10px}
 .progress-num{font-size:36px;font-weight:700;color:var(--charcoal);line-height:1}
-.progress-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:rgba(45,47,50,0.6)}
+.progress-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:rgba(69,83,47,0.6)}
 .month-dots{display:flex;flex-wrap:wrap;gap:4px}
-.month-dot{width:10px;height:10px;border-radius:3px;background:rgba(45,47,50,0.15);flex-shrink:0}
+.month-dot{width:10px;height:10px;border-radius:3px;background:rgba(69,83,47,0.15);flex-shrink:0}
 .month-dot.attended{background:var(--pink)}
 .month-dot.upcoming{background:var(--charcoal);opacity:0.5}
 .month-dot.today{background:var(--charcoal)}
@@ -296,19 +316,19 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);co
 /* ── SIDEBAR (admin overlay on mobile) ── */
 .sidebar{width:280px;background:var(--charcoal);height:100vh;display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transform:translateX(-100%);transition:transform 0.3s ease;overflow:hidden}
 .sidebar.open{transform:translateX(0)}
-.sidebar-brand{flex-shrink:0;padding:1.5rem 1.2rem 1rem;border-bottom:1px solid rgba(245,252,166,0.15)}
+.sidebar-brand{flex-shrink:0;padding:1.5rem 1.2rem 1rem;border-bottom:1px solid rgba(240,183,160,0.15)}
 .sidebar-brand-name{font-family:'Dancing Script',cursive;font-size:1.6rem;color:var(--pink)}
 .sidebar-brand-sub{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:2px}
-.sidebar-user{flex-shrink:0;padding:0.8rem 1.2rem;background:rgba(245,252,166,0.06);display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(245,252,166,0.1)}
+.sidebar-user{flex-shrink:0;padding:0.8rem 1.2rem;background:rgba(240,183,160,0.06);display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(240,183,160,0.1)}
 .sidebar-avatar{width:34px;height:34px;border-radius:50%;background:var(--pink);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;flex-shrink:0}
 .sidebar-user-name{font-size:13px;color:white;font-weight:600}
 .sidebar-user-role{font-size:10px;color:rgba(255,255,255,0.5)}
 .sidebar-nav-wrap{flex:1;overflow-y:auto}
 .sidebar-section{padding:0.8rem 1.2rem 0.3rem;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--lime);font-weight:700;opacity:0.8}
 .nav-item{display:flex;align-items:center;gap:10px;padding:11px 1.2rem;cursor:pointer;transition:background 0.15s;border-left:3px solid transparent;color:rgba(255,255,255,0.65);font-size:13px;font-weight:500}
-.nav-item:hover{background:rgba(245,252,166,0.08);color:white}
-.nav-item.active{background:rgba(236,34,135,0.2);border-left-color:var(--lime);color:white;font-weight:600}
-.sidebar-footer{flex-shrink:0;padding:1rem 1.2rem;border-top:1px solid rgba(245,252,166,0.1)}
+.nav-item:hover{background:rgba(240,183,160,0.08);color:white}
+.nav-item.active{background:rgba(193,105,74,0.2);border-left-color:var(--lime);color:white;font-weight:600}
+.sidebar-footer{flex-shrink:0;padding:1rem 1.2rem;border-top:1px solid rgba(240,183,160,0.1)}
 .logout-btn{width:100%;padding:10px;background:transparent;border:1.5px solid rgba(255,255,255,0.2);border-radius:20px;color:rgba(255,255,255,0.65);font-family:'Jost',sans-serif;font-size:11px;font-weight:600;cursor:pointer;letter-spacing:0.06em}
 #mobile-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:199}
 #mobile-overlay.open{display:block}
@@ -330,26 +350,48 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);co
 <body>
 
 <div id="login-screen">
-  <div class="login-card">
-    <div class="login-brand">Pilates Sesh by K</div>
-    <div class="login-sub">Virtual Studio Portal</div>
-    <div class="login-toggle">
-      <button class="active" id="tog-client">Client</button>
-      <button id="tog-admin">Admin</button>
+  <!-- LANDING / SPLASH VIEW -->
+  <div id="landing-view" class="landing-view">
+    <div class="landing-blob olive-tl"></div>
+    <div class="landing-blob blush-tr"></div>
+    <div class="landing-blob pink-bl"></div>
+    <div class="landing-blob olive-b"></div>
+    <div class="landing-star">&#10022;</div>
+    <div class="landing-leaf">&#127807;</div>
+    <div class="landing-heart">&#9825;</div>
+    <div class="landing-content">
+      <div class="landing-title">Pilates</div>
+      <div class="landing-script">Sesh By K</div>
+      <div class="landing-sub">Virtual Studio</div>
+      <div class="landing-tagline">Stronger. Balanced. You.<br/>Move with intention.<br/>Anywhere, anytime.</div>
+      <button class="landing-cta" id="btn-lets-move" onclick="showAuthView()">Let's Move</button>
     </div>
-    <input class="login-input" type="text" placeholder="Your name (sign up only)" id="inp-name"/>
-    <input class="login-input" type="email" placeholder="Email address" id="inp-email"/>
-    <input class="login-input" type="password" placeholder="Password (min 6 chars)" id="inp-pass"/>
-    <div id="login-error"></div>
-    <div style="display:flex;gap:8px;margin-bottom:8px">
-      <button class="login-btn" style="flex:1" id="btn-signin">Sign in</button>
-      <button class="login-btn" style="flex:1;background:var(--purple)" id="btn-signup">Sign up</button>
+  </div>
+
+  <!-- AUTH (SIGN IN / SIGN UP) VIEW -->
+  <div id="auth-view" class="auth-view" style="display:none">
+    <button class="auth-back" onclick="showLandingView()">&larr;</button>
+    <div class="login-card">
+      <div class="login-brand">Pilates Sesh by K</div>
+      <div class="login-sub">Virtual Studio Portal</div>
+      <div class="login-toggle">
+        <button class="active" id="tog-client">Client</button>
+        <button id="tog-admin">Admin</button>
+      </div>
+      <input class="login-input" type="text" placeholder="Your name (sign up only)" id="inp-name"/>
+      <input class="login-input" type="email" placeholder="Email address" id="inp-email"/>
+      <input class="login-input" type="password" placeholder="Password (min 6 chars)" id="inp-pass"/>
+      <div id="login-error"></div>
+      <div style="display:flex;gap:8px;margin-bottom:8px">
+        <button class="login-btn" style="flex:1" id="btn-signin">Sign in</button>
+        <button class="login-btn" style="flex:1;background:var(--pink);color:white" id="btn-signup">Sign up</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;justify-content:center">
+        <input type="checkbox" id="remember-me" style="width:14px;height:14px;accent-color:var(--pink);cursor:pointer" checked/>
+        <label for="remember-me" style="font-size:12px;color:var(--text-muted);cursor:pointer">Keep me signed in</label>
+      </div>
+      <div class="login-hint" id="login-hint">New clients: enter name, email, password then Sign Up</div>
     </div>
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;justify-content:center">
-      <input type="checkbox" id="remember-me" style="width:14px;height:14px;accent-color:var(--pink);cursor:pointer" checked/>
-      <label for="remember-me" style="font-size:12px;color:var(--text-muted);cursor:pointer">Keep me signed in</label>
-    </div>
-    <div class="login-hint" id="login-hint">New clients: enter name, email, password then Sign Up</div>
   </div>
 </div>
 
@@ -408,7 +450,7 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);co
     <div class="app-header-right">
       <span class="app-header-date" id="topbar-date"></span>
       <span class="app-header-badge" id="tbadge">Member</span>
-      <button id="btn-logout-header" onclick="document.getElementById('btn-logout').click()" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:20px;color:rgba(255,255,255,0.7);font-family:Jost,sans-serif;font-size:10px;font-weight:600;padding:5px 12px;cursor:pointer;letter-spacing:0.05em">Sign out</button>
+      <button id="btn-logout-header" onclick="document.getElementById('btn-logout').click()" style="background:rgba(69,83,47,0.08);border:1px solid rgba(69,83,47,0.18);border-radius:20px;color:var(--charcoal);font-family:Jost,sans-serif;font-size:10px;font-weight:600;padding:5px 12px;cursor:pointer;letter-spacing:0.05em">Sign out</button>
     </div>
   </div>
 
@@ -427,7 +469,7 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);co
       <div id="announcements-section" style="display:none;padding:0 1.2rem;margin-bottom:1rem">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
           <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted)">Studio Updates</div>
-          <button id="btn-add-announce" style="display:none;background:var(--pink);color:white;border:none;border-radius:12px;padding:3px 10px;font-size:10px;cursor:pointer;font-family:Jost,sans-serif;font-weight:600">+ Post</button>
+          <button id="btn-add-announce-dash" style="display:none;background:var(--pink);color:white;border:none;border-radius:12px;padding:3px 10px;font-size:10px;cursor:pointer;font-family:Jost,sans-serif;font-weight:600">+ Post</button>
         </div>
         <div id="announcements-list" class="announce-feed-wrap"></div>
       </div>
@@ -445,7 +487,7 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);co
               <div class="progress-label">All Time</div>
             </div>
           </div>
-          <div style="font-size:9px;color:rgba(45,47,50,0.55);margin-bottom:6px">Registrations &mdash; pink = upcoming, dark = attended, today is outlined</div>
+          <div style="font-size:9px;color:rgba(69,83,47,0.55);margin-bottom:6px">Registrations &mdash; pink = upcoming, dark = attended, today is outlined</div>
           <div class="month-dots" id="month-grid"></div>
         </div>
       </div>
@@ -501,7 +543,7 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);co
           <div class="app-grid-card pink" data-page="registrations" style="position:relative">
             <span class="app-grid-icon">&#128221;</span>
             <div><div class="app-grid-label">Registrations</div><div class="app-grid-sub">Class signups</div></div>
-            <span id="reg-badge-dash" style="display:none;position:absolute;top:10px;right:10px;background:#f5fca6;color:#2d2f32;font-size:9px;font-weight:700;min-width:18px;height:18px;border-radius:9px;line-height:18px;text-align:center;padding:0 4px"></span>
+            <span id="reg-badge-dash" style="display:none;position:absolute;top:10px;right:10px;background:#f0b7a0;color:#45532f;font-size:9px;font-weight:700;min-width:18px;height:18px;border-radius:9px;line-height:18px;text-align:center;padding:0 4px"></span>
           </div>
           <div class="app-grid-card lime" data-page="questions">
             <span class="app-grid-icon">&#128172;</span>
@@ -1008,7 +1050,7 @@ var calYear=2026, calMonth=6, sessionData={};
 var editKey=null, editIdx=-1, editEventId=null, editSponsorId=null, editContentId=null, editShopId=null;
 var MN=["January","February","March","April","May","June","July","August","September","October","November","December"];
 var MS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-var TYPE_COLORS={live:"#ec2287",recorded:"#2d2f32",community:"#6b7c00",holiday:"#F57F17"};
+var TYPE_COLORS={live:"#c1694a",recorded:"#45532f",community:"#6b7c00",holiday:"#F57F17"};
 var ICON_MAP={mat:"&#129336;",ring:"&#11093;",bands:"&#127965;",ball:"&#11044;",weights:"&#128170;",socks:"&#129510;",water:"&#128167;",bag:"&#128717;",roller:"&#129398;",heart:"&#10084;",star:"&#11088;",flower:"&#127800;"};
 var ICONS=Object.keys(ICON_MAP);
 
@@ -1023,14 +1065,23 @@ auth.onAuthStateChanged(function(u){
     loadCal();
   } else {
     currentUser=null; isAdmin=false;
-    document.getElementById("login-screen").style.display="flex";
+    document.getElementById("login-screen").style.display="block";
     document.getElementById("app").classList.remove("visible");
+    showLandingView();
   }
 });
 
+function showAuthView(){
+  document.getElementById("landing-view").style.display="none";
+  document.getElementById("auth-view").style.display="flex";
+}
+function showLandingView(){
+  document.getElementById("auth-view").style.display="none";
+  document.getElementById("landing-view").style.display="flex";
+  document.getElementById("login-error").style.display="none";
+}
+
 function setMode(m){
-  var email=document.getElementById("inp-email").value.trim().toLowerCase();
-  if(m==="admin"&&email&&ADMINS.indexOf(email)===-1){showErr("Admin access is restricted.");return;}
   loginMode=m;
   document.getElementById("login-error").style.display="none";
   document.getElementById("tog-client").classList.toggle("active",m==="client");
@@ -1084,7 +1135,7 @@ function showApp(u){
   if(document.getElementById("qc-ask")) document.getElementById("qc-ask").style.display=isAdmin?"none":"flex";
   var adminGrid=document.getElementById("admin-grid-section");
   if(adminGrid) adminGrid.style.display=isAdmin?"block":"none";
-  var adminOnly=["btn-add-video","btn-add-event","btn-add-shop","btn-chg-month","admin-cal-note","btn-edit-cd","btn-edit-equip","btn-add-sponsor","btn-add-content","btn-add-announce"];
+  var adminOnly=["btn-add-video","btn-add-event","btn-add-shop","btn-chg-month","admin-cal-note","btn-edit-cd","btn-edit-equip","btn-add-sponsor","btn-add-content","btn-add-announce","btn-add-announce-dash"];
   adminOnly.forEach(function(id){var el=document.getElementById(id);if(el) el.style.display=isAdmin?"block":"none";});
   // Favorites pill for clients only
   var favPill=document.getElementById("pill-favorites");
@@ -1243,7 +1294,7 @@ function buildCal(){
       var seenKey="psk_seen_sess_"+key+"_"+idx;
       var isNew=!isAdmin&&sess.createdAt&&((Date.now()-new Date(sess.createdAt).getTime())/(1000*60*60*24))<7&&!localStorage.getItem(seenKey);
       html+='<div class="sess-block" style="background:'+col+'">';
-      var newTag=isNew?'<span style="background:#f5fca6;color:#2d2f32;font-size:7px;font-weight:700;padding:1px 4px;border-radius:3px;margin-left:3px">NEW</span>':'';
+      var newTag=isNew?'<span style="background:#f0b7a0;color:#45532f;font-size:7px;font-weight:700;padding:1px 4px;border-radius:3px;margin-left:3px">NEW</span>':'';
       html+='<div class="sess-name">'+(sess.name||"Session")+newTag+'</div>';
       html+='<div class="sess-time">'+fmt12(sess.time)+(sess.duration?" | "+sess.duration:"")+'</div>';
       if(sess.equipment) html+='<div class="sess-equip">Props: '+sess.equipment+'</div>';
@@ -1575,12 +1626,12 @@ function loadRegistrations(){
       var seen=getSeenCount(g.key,g.idx);
       var newCount=Math.max(0,g.regs.length-seen);
       var badgeHtml=newCount>0
-        ?'<span id="rbadge-'+g.key+'-'+g.idx+'" style="background:#ec2287;color:white;font-size:9px;font-weight:700;min-width:18px;height:18px;border-radius:9px;padding:0 5px;line-height:18px;text-align:center;display:inline-block;margin-left:6px">'+newCount+' new</span>'
+        ?'<span id="rbadge-'+g.key+'-'+g.idx+'" style="background:#c1694a;color:white;font-size:9px;font-weight:700;min-width:18px;height:18px;border-radius:9px;padding:0 5px;line-height:18px;text-align:center;display:inline-block;margin-left:6px">'+newCount+' new</span>'
         :'<span id="rbadge-'+g.key+'-'+g.idx+'" style="display:none"></span>';
       var preview=g.regs.slice(-2).reverse().map(function(r){
         return '<span style="font-size:10px;color:var(--text-muted);margin-right:8px">&#128100; '+(r.userName||r.userEmail||"Client")+'</span>';
       }).join("");
-      return '<div class="card" style="margin-bottom:10px"><div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px"><div style="flex:1"><div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px"><div style="font-size:14px;font-weight:500;color:#2d2f32">'+(g.name||"Session")+'</div>'+badgeHtml+'</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">'+mn+' '+(g.day||'?')+' at '+fmt12(g.time)+'</div><div style="margin-top:4px">'+preview+'</div></div><div style="display:flex;gap:8px;align-items:center;flex-shrink:0"><span style="background:var(--pink);color:white;font-size:11px;padding:3px 10px;border-radius:10px">'+g.regs.length+'/'+g.spots+'</span><button data-key="'+g.key+'" data-idx="'+g.idx+'" data-day="'+(g.day||1)+'" data-count="'+g.regs.length+'" onclick="openRoster(this.dataset.key,parseInt(this.dataset.idx),this.dataset.day);markRosterSeen(this.dataset.key,this.dataset.idx,parseInt(this.dataset.count))" class="btn-purple" style="font-size:11px;padding:5px 12px">View Roster</button></div></div></div>';
+      return '<div class="card" style="margin-bottom:10px"><div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px"><div style="flex:1"><div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px"><div style="font-size:14px;font-weight:500;color:#45532f">'+(g.name||"Session")+'</div>'+badgeHtml+'</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">'+mn+' '+(g.day||'?')+' at '+fmt12(g.time)+'</div><div style="margin-top:4px">'+preview+'</div></div><div style="display:flex;gap:8px;align-items:center;flex-shrink:0"><span style="background:var(--pink);color:white;font-size:11px;padding:3px 10px;border-radius:10px">'+g.regs.length+'/'+g.spots+'</span><button data-key="'+g.key+'" data-idx="'+g.idx+'" data-day="'+(g.day||1)+'" data-count="'+g.regs.length+'" onclick="openRoster(this.dataset.key,parseInt(this.dataset.idx),this.dataset.day);markRosterSeen(this.dataset.key,this.dataset.idx,parseInt(this.dataset.count))" class="btn-purple" style="font-size:11px;padding:5px 12px">View Roster</button></div></div></div>';
     }).join("");
   }).catch(function(e){list.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-muted)">Error: '+e.message+'</div>';});
 }
@@ -1612,7 +1663,7 @@ function loadMembers(){
         var memColor=memStatus==="active"?"#E8F5E9|#2E7D32":memStatus==="overdue"?"#FFEBEE|#C62828":"#FFF8E1|#F57F17";
         var memCols=memColor.split("|");
         var memBadge='<span style="background:'+memCols[0]+';color:'+memCols[1]+';font-size:10px;padding:2px 8px;border-radius:10px;font-weight:500">'+memStatus.charAt(0).toUpperCase()+memStatus.slice(1)+'</span>';
-        var updateBtn='<button data-uid="'+m.id+'" data-status="'+memStatus+'" onclick="cycleMemberStatus(this.dataset.uid,this.dataset.status)" style="display:block;margin-top:4px;background:#2d2f32;color:white;border:none;border-radius:8px;padding:3px 10px;font-size:9px;cursor:pointer;font-family:Jost,sans-serif">Edit Status</button>';
+        var updateBtn='<button data-uid="'+m.id+'" data-status="'+memStatus+'" onclick="cycleMemberStatus(this.dataset.uid,this.dataset.status)" style="display:block;margin-top:4px;background:#45532f;color:white;border:none;border-radius:8px;padding:3px 10px;font-size:9px;cursor:pointer;font-family:Jost,sans-serif">Edit Status</button>';
         var toggleBtn='<button data-uid="'+m.id+'" data-f="'+isFounding+'" onclick="toggleFounder(this.dataset.uid,this.dataset.f)" class="btn-sm btn-grn" style="margin-right:3px">'+togLabel+'</button>';
         var delBtn='<button data-uid="'+m.id+'" onclick="delMember(this.dataset.uid)" class="btn-sm btn-red">Remove</button>';
         return '<tr>'
@@ -1997,7 +2048,7 @@ function buildMemCal(){
       ? baseStyle+"background:var(--pink);color:white;"
       : isToday
       ? baseStyle+"background:var(--blush2);color:var(--pink);font-weight:700;"
-      : baseStyle+"background:white;color:#2d2f32;";
+      : baseStyle+"background:white;color:#45532f;";
     cells += '<div style="'+style+'" onclick="selectMemDate('+d+')">'+d+'</div>';
   }
   container.innerHTML = cells;
@@ -2715,7 +2766,15 @@ document.addEventListener("DOMContentLoaded",function(){
   document.getElementById("topbar-date").textContent=new Date().toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
 
   // Announcements
-  document.getElementById("btn-post-announce").addEventListener("click",function(){
+  var btnPostAnn=document.getElementById("btn-add-announce");
+  if(btnPostAnn) btnPostAnn.addEventListener("click",function(){
+    document.getElementById("ann-title").value="";
+    document.getElementById("ann-body").value="";
+    document.getElementById("ann-pinned").checked=false;
+    openModal("m-announce");
+  });
+  var btnPostAnnDash=document.getElementById("btn-add-announce-dash");
+  if(btnPostAnnDash) btnPostAnnDash.addEventListener("click",function(){
     document.getElementById("ann-title").value="";
     document.getElementById("ann-body").value="";
     document.getElementById("ann-pinned").checked=false;
