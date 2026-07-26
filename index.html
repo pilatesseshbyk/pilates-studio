@@ -418,7 +418,7 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);co
       <div class="sidebar-brand-name">Pilates Sesh by K</div>
       <div class="sidebar-brand-sub">Virtual Studio</div>
     </div>
-    <div class="sidebar-user">
+    <div class="sidebar-user" onclick="openProfileModal()" style="cursor:pointer">
       <div class="sidebar-avatar" id="sav">C</div>
       <div><div class="sidebar-user-name" id="sname">Client</div><div class="sidebar-user-role" id="srole">Member</div></div>
     </div>
@@ -617,6 +617,9 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);co
         <div id="mc-goals-display" style="font-size:12px;color:var(--text-muted)"></div>
       </div>
       <div id="my-classes-list"><div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading your classes...</div></div>
+
+      <div style="margin:1.6rem 0 0.6rem;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted)">Class History</div>
+      <div id="my-classes-history"><div style="text-align:center;padding:1rem;color:var(--text-muted);font-size:12px">Loading...</div></div>
     </div>
 
     <!-- CLASS DETAILS -->
@@ -776,6 +779,35 @@ body{font-family:'Jost',sans-serif;font-weight:400;background:var(--offwhite);co
 </div>
 
 <!-- MODALS -->
+<!-- Profile Modal -->
+<div class="modal-overlay" id="m-profile">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">My Profile</div><button class="modal-close" data-close="m-profile">x</button></div>
+    <label class="form-label">Name</label>
+    <input class="form-input" id="prof-name" placeholder="Your name"/>
+    <label class="form-label">Email</label>
+    <input class="form-input" id="prof-email" disabled style="opacity:0.6"/>
+    <div style="margin:12px 0;background:var(--cream);border-radius:12px;padding:10px 12px">
+      <div style="font-size:11px;font-weight:700;color:var(--purple);margin-bottom:4px">My Goals</div>
+      <div id="prof-goals-summary" style="font-size:12px;color:var(--text-muted);margin-bottom:8px">Loading...</div>
+      <button class="btn-sm btn-grn" onclick="closeModal('m-profile');startUpdateQuiz();">Update My Goals</button>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" data-close="m-profile">Cancel</button>
+      <button class="btn-pink" style="flex:2;padding:10px;border-radius:20px" id="btn-save-profile">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Member Goals Modal (admin) -->
+<div class="modal-overlay" id="m-member-goals">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title" id="mg-title">Client Goals</div><button class="modal-close" data-close="m-member-goals">x</button></div>
+    <div id="mg-body"><div style="text-align:center;padding:1rem;color:var(--text-muted)">Loading...</div></div>
+    <div class="modal-footer"><button class="btn-cancel" data-close="m-member-goals" style="flex:1">Close</button></div>
+  </div>
+</div>
+
 <!-- Session Modal -->
 <div class="modal-overlay" id="m-session">
   <div class="modal">
@@ -1449,6 +1481,7 @@ function unregClass(key,idx){
 function loadMyClasses(){
   if(!currentUser) return;
   var list=document.getElementById("my-classes-list");
+  var histList=document.getElementById("my-classes-history");
   if(!list) return;
   list.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading your classes...</div>';
   // Use where query to get only this user's registrations
@@ -1463,36 +1496,70 @@ function loadMyClasses(){
         sessionData[r.sessionKey][r.sessionIdx].registered=reg;
       }
     });
-    if(mine.length===0){list.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-muted)">No registered classes yet. Go to Schedule to register!</div>';return;}
-    mine.sort(function(a,b){return (a.sessionDay||0)-(b.sessionDay||0);});
+    if(mine.length===0){
+      list.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-muted)">No registered classes yet. Go to Schedule to register!</div>';
+      if(histList) histList.innerHTML='<div style="text-align:center;padding:1rem;color:var(--text-muted);font-size:12px">No past classes yet.</div>';
+      return;
+    }
+    // Split into upcoming vs history based on whether the session end time has passed
+    var upcoming=[], history=[];
+    mine.forEach(function(r){
+      var keyParts=(r.sessionKey||"").split("-");
+      var y=parseInt(keyParts[0]),m=parseInt(keyParts[1]),d=parseInt(keyParts[2]||r.sessionDay);
+      var sess=sessionData[r.sessionKey]&&sessionData[r.sessionKey][r.sessionIdx];
+      var duration=sess?sess.duration:"";
+      if(!isNaN(y)&&!isNaN(m)&&!isNaN(d)&&sessionHasEnded(y,m,d,r.sessionTime,duration)){
+        history.push(r);
+      } else {
+        upcoming.push(r);
+      }
+    });
+    upcoming.sort(function(a,b){return (a.sessionDay||0)-(b.sessionDay||0);});
+    history.sort(function(a,b){return (b.sessionDay||0)-(a.sessionDay||0);});
     // Populate stats
     var today=new Date().getDate();
     var thisMonth=mine.filter(function(r){return r.sessionMonth===calMonth;}).length;
-    var upcoming=mine.filter(function(r){return r.sessionMonth===calMonth&&(r.sessionDay||0)>=today;}).length;
     var tmEl=document.getElementById("mc-thismonth");
     var atEl=document.getElementById("mc-alltime");
     var upEl=document.getElementById("mc-upcoming");
     var statsRow=document.getElementById("mc-stats-row");
     if(tmEl) tmEl.textContent=thisMonth;
     if(atEl) atEl.textContent=mine.length;
-    if(upEl) upEl.textContent=upcoming;
+    if(upEl) upEl.textContent=upcoming.length;
     if(statsRow) statsRow.style.display="grid";
-    mine.sort(function(a,b){return (a.sessionDay||0)-(b.sessionDay||0);});
-    list.innerHTML=mine.map(function(r){
+    function renderRow(r,isPast){
       var sessions=sessionData[r.sessionKey];
       var idx=r.sessionIdx||0;
       var sess=sessions&&sessions[idx]?sessions[idx]:null;
       var equip=sess&&sess.equipment?'<div style="font-size:10px;color:var(--pink);margin-top:2px">Props needed: '+sess.equipment+'</div>':"";
-      var joinBtn=sess&&sess.link?'<a href="'+sess.link+'" target="_blank" style="background:var(--teal);color:white;border:none;border-radius:20px;padding:6px 14px;font-family:Jost,sans-serif;font-size:11px;font-weight:500;cursor:pointer;text-decoration:none;white-space:nowrap">Join</a>':"";
-      var unregBtn='<button data-key="'+r.sessionKey+'" data-idx="'+idx+'" onclick="unregClass(this.dataset.key,parseInt(this.dataset.idx));setTimeout(loadMyClasses,500)" style="background:#c62828;color:white;border:none;border-radius:10px;padding:4px 10px;font-size:10px;cursor:pointer;margin-left:4px">Unregister</button>';
-      return '<div class="my-class-card"><div style="background:var(--pink);color:white;border-radius:8px;padding:6px 10px;text-align:center;flex-shrink:0;min-width:48px"><div style="font-size:9px;text-transform:uppercase">'+MS[r.sessionMonth||calMonth]+'</div><div style="font-size:20px;font-weight:500">'+r.sessionDay+'</div></div><div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--purple)">'+(r.sessionName||"Live Session")+'</div><div style="font-size:11px;color:var(--text-muted)">'+fmt12(r.sessionTime)+'</div>'+equip+'</div>'+joinBtn+unregBtn+'</div>';
-    }).join("");
+      var joinBtn=(!isPast&&sess&&sess.link)?'<a href="'+sess.link+'" target="_blank" style="background:var(--teal);color:white;border:none;border-radius:20px;padding:6px 14px;font-family:Jost,sans-serif;font-size:11px;font-weight:500;cursor:pointer;text-decoration:none;white-space:nowrap">Join</a>':"";
+      var unregBtn=isPast?'':'<button data-key="'+r.sessionKey+'" data-idx="'+idx+'" onclick="unregClass(this.dataset.key,parseInt(this.dataset.idx));setTimeout(loadMyClasses,500)" style="background:#c62828;color:white;border:none;border-radius:10px;padding:4px 10px;font-size:10px;cursor:pointer;margin-left:4px">Unregister</button>';
+      var completedTag=isPast?'<span style="background:var(--border);color:var(--text-muted);font-size:9px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:4px">Completed</span>':"";
+      return '<div class="my-class-card"'+(isPast?' style="opacity:0.7"':'')+'><div style="background:'+(isPast?"var(--border)":"var(--pink)")+';color:'+(isPast?"var(--text-muted)":"white")+';border-radius:8px;padding:6px 10px;text-align:center;flex-shrink:0;min-width:48px"><div style="font-size:9px;text-transform:uppercase">'+MS[r.sessionMonth||calMonth]+'</div><div style="font-size:20px;font-weight:500">'+r.sessionDay+'</div></div><div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--purple)">'+(r.sessionName||"Live Session")+completedTag+'</div><div style="font-size:11px;color:var(--text-muted)">'+fmt12(r.sessionTime)+'</div>'+equip+'</div>'+joinBtn+unregBtn+'</div>';
+    }
+    list.innerHTML=upcoming.length>0?upcoming.map(function(r){return renderRow(r,false);}).join(""):'<div style="text-align:center;padding:2rem;color:var(--text-muted)">No upcoming registered classes. Go to Calendar to register!</div>';
+    if(histList) histList.innerHTML=history.length>0?history.map(function(r){return renderRow(r,true);}).join(""):'<div style="text-align:center;padding:1rem;color:var(--text-muted);font-size:12px">No past classes yet.</div>';
   }).catch(function(e){list.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-muted)">Error: '+e.message+'</div>';});
 }
 
 // DASHBOARD
 function loadDashboard(){
   loadUpcomingList();
+}
+
+function parseDurationMinutes(durStr){
+  if(!durStr) return 0;
+  var m=String(durStr).match(/(\d+)/);
+  return m?parseInt(m[1]):0;
+}
+function sessionEndDate(y,m,d,timeStr,durationStr){
+  var parts=(timeStr||"00:00").split(":");
+  var hh=parseInt(parts[0])||0,mm=parseInt(parts[1])||0;
+  var start=new Date(y,m,d,hh,mm);
+  return new Date(start.getTime()+parseDurationMinutes(durationStr)*60000);
+}
+function sessionHasEnded(y,m,d,timeStr,durationStr){
+  return sessionEndDate(y,m,d,timeStr,durationStr).getTime()<Date.now();
 }
 
 function loadUpcomingList(){
@@ -1504,8 +1571,9 @@ function loadUpcomingList(){
     var key=sKey(calYear,calMonth,d);
     var sessions=sessionData[key]||[];
     for(var i=0;i<sessions.length&&results.length<3;i++){
-      if(sessions[i].type==="live"||sessions[i].type==="community"){
-        results.push({day:d,key:key,idx:i,sess:sessions[i]});
+      var s=sessions[i];
+      if((s.type==="live"||s.type==="community")&&!sessionHasEnded(calYear,calMonth,d,s.time,s.duration)){
+        results.push({day:d,key:key,idx:i,sess:s});
       }
     }
   }
@@ -1603,6 +1671,63 @@ function loadRegistrations(){
 }
 
 // MEMBERS
+// PROFILE
+function openProfileModal(){
+  if(!currentUser) return;
+  document.getElementById("prof-name").value=currentUser.displayName||"";
+  document.getElementById("prof-email").value=currentUser.email||"";
+  var summaryEl=document.getElementById("prof-goals-summary");
+  summaryEl.textContent="Loading your goals...";
+  openModal("m-profile");
+  db.collection("userGoals").doc(currentUser.uid).get().then(function(snap){
+    if(snap.exists){
+      var g=snap.data();
+      var goalLabels=(g.goals||[]).map(function(k){return GOAL_LABELS[k]||k;}).join(", ");
+      summaryEl.innerHTML=goalLabels?goalLabels:"You haven't set any goals yet.";
+    } else {
+      summaryEl.textContent="You haven't set any goals yet.";
+    }
+  }).catch(function(){summaryEl.textContent="You haven't set any goals yet.";});
+}
+
+function saveProfile(){
+  if(!currentUser) return;
+  var name=document.getElementById("prof-name").value.trim();
+  if(!name){showToast("Please enter your name");return;}
+  currentUser.updateProfile({displayName:name}).then(function(){
+    return db.collection("users").doc(currentUser.uid).set({name:name},{merge:true});
+  }).then(function(){
+    showToast("Profile updated!");
+    closeModal("m-profile");
+    showApp(currentUser);
+  }).catch(function(e){showToast("Error: "+e.message);});
+}
+
+function openMemberGoals(uid,name){
+  document.getElementById("mg-title").textContent=(name||"Client")+"'s Goals";
+  var body=document.getElementById("mg-body");
+  body.innerHTML='<div style="text-align:center;padding:1rem;color:var(--text-muted)">Loading...</div>';
+  openModal("m-member-goals");
+  db.collection("userGoals").doc(uid).get().then(function(snap){
+    if(!snap.exists){body.innerHTML='<div style="text-align:center;padding:1rem;color:var(--text-muted)">This client hasn\'t set any goals yet.</div>';return;}
+    var g=snap.data();
+    var goalLabels=(g.goals||[]).map(function(k){return GOAL_LABELS[k]||k;}).join(", ")||"Not set";
+    var focusLabels=(g.focus||[]).map(function(k){return FOCUS_LABELS[k]||k;}).join(", ")||"Not set";
+    var level=LEVEL_LABELS[g.level]||g.level||"Not set";
+    var freq=FREQ_LABELS[g.freq]||g.freq||"Not set";
+    var rating=g.rating?(Array(g.rating+1).join("&#9733;")+Array(6-g.rating).join("&#9734;")):"Not rated";
+    var updated=g.lastUpdated?new Date(g.lastUpdated).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}):"";
+    body.innerHTML='<div style="font-size:12px;line-height:2;color:var(--purple)">'
+      +'<div><strong>Goals:</strong> '+goalLabels+'</div>'
+      +'<div><strong>Level:</strong> '+level+'</div>'
+      +'<div><strong>Practice Frequency:</strong> '+freq+'</div>'
+      +'<div><strong>Focus Areas:</strong> '+focusLabels+'</div>'
+      +'<div><strong>Class Rating:</strong> <span style="color:#F57F17">'+rating+'</span></div>'
+      +(updated?'<div style="margin-top:8px;font-size:10px;color:var(--text-muted)">Last updated '+updated+'</div>':"")
+      +'</div>';
+  }).catch(function(){body.innerHTML='<div style="text-align:center;padding:1rem;color:var(--text-muted)">Could not load goals.</div>';});
+}
+
 function loadMembers(){
   var wrap=document.getElementById("members-wrap");
   if(!wrap) return;
@@ -1632,6 +1757,7 @@ function loadMembers(){
         var updateBtn='<button data-uid="'+m.id+'" data-status="'+memStatus+'" onclick="cycleMemberStatus(this.dataset.uid,this.dataset.status)" style="display:block;margin-top:4px;background:#45532f;color:white;border:none;border-radius:8px;padding:3px 10px;font-size:9px;cursor:pointer;font-family:Jost,sans-serif">Edit Status</button>';
         var toggleBtn='<button data-uid="'+m.id+'" data-f="'+isFounding+'" onclick="toggleFounder(this.dataset.uid,this.dataset.f)" class="btn-sm btn-grn" style="margin-right:3px">'+togLabel+'</button>';
         var delBtn='<button data-uid="'+m.id+'" onclick="delMember(this.dataset.uid)" class="btn-sm btn-red">Remove</button>';
+        var goalsBtn='<button data-uid="'+m.id+'" data-name="'+(m.name||"Client").replace(/"/g,"&quot;")+'" onclick="openMemberGoals(this.dataset.uid,this.dataset.name)" class="btn-sm btn-grn">Goals</button>';
         return '<tr>'
           +'<td><strong>'+(m.name||"Unknown")+'</strong></td>'
           +'<td>'+(m.email||"")+'</td>'
@@ -1639,10 +1765,11 @@ function loadMembers(){
           +'<td>'+joined+'</td>'
           +'<td>'+memBadge+'<div style="font-size:9px;color:var(--text-muted);margin-top:2px">Renews: '+memRenewal+'</div>'+updateBtn+'</td>'
           +'<td style="text-align:center;font-weight:600;color:var(--pink)">'+count+'</td>'
+          +'<td>'+goalsBtn+'</td>'
           +'<td>'+toggleBtn+delBtn+'</td>'
           +'</tr>';
       }).join("");
-      wrap.innerHTML='<table class="data-table" style="width:100%"><thead><tr><th>Name</th><th>Email</th><th>Status</th><th>Joined</th><th>Membership</th><th>Classes</th><th>Actions</th></tr></thead><tbody>'+rows+'</tbody></table>';
+      wrap.innerHTML='<table class="data-table" style="width:100%"><thead><tr><th>Name</th><th>Email</th><th>Status</th><th>Joined</th><th>Membership</th><th>Classes</th><th>Goals</th><th>Actions</th></tr></thead><tbody>'+rows+'</tbody></table>';
     });
   }).catch(function(e){wrap.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-muted)">Error loading: '+e.message+'</div>';});
 }
@@ -2391,6 +2518,10 @@ function delAnnounce(id) {
 // =============================================
 var quizStep = 0;
 var quizData = { goals: [], level: "", freq: "", focus: [], rating: 0 };
+var GOAL_LABELS={strength:"Strength and Tone",flexibility:"Flexibility",core:"Core Strength",weightloss:"Weight Loss",stress:"Stress Relief",postpartum:"Postpartum Recovery",balance:"Balance and Posture",energy:"More Energy"};
+var LEVEL_LABELS={beginner:"Beginner",intermediate:"Intermediate",advanced:"Advanced"};
+var FREQ_LABELS={"1x":"Once a week","2x":"Twice a week","3x":"3x a week",daily:"Daily"};
+var FOCUS_LABELS={abs:"Abs and Core",arms:"Arms and Shoulders",legs:"Legs and Glutes",back:"Back and Posture",fullbody:"Full Body",mobility:"Mobility and Flexibility"};
 var quizIsUpdate = false;
 var totalQuizSteps = 6;
 
@@ -2677,6 +2808,7 @@ document.addEventListener("DOMContentLoaded",function(){
   document.getElementById("btn-signup").addEventListener("click",doSignup);
   document.getElementById("inp-pass").addEventListener("keydown",function(e){if(e.key==="Enter") doLogin();});
   document.getElementById("btn-logout").addEventListener("click",doLogout);
+  document.getElementById("btn-save-profile").addEventListener("click",saveProfile);
   document.querySelectorAll(".nav-item[data-page],.quick-card[data-page]").forEach(function(el){el.addEventListener("click",function(){showPage(this.getAttribute("data-page"));closeMobileMenu();});});
   document.getElementById("sm-type").addEventListener("change",updateSessTypeUI);
   document.getElementById("btn-save-session").addEventListener("click",saveSess);
